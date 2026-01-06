@@ -251,3 +251,6 @@ SokoNote ソコノート
   - Tailwind CSS
 - その他ライブラリ／Gem
   - RSpec
+
+# 画面遷移図
+Figma：https://www.figma.com/design/2nRhzOQEsA78fdodbD6kym/%E5%8D%92%E6%A5%AD%E5%88%B6%E4%BD%9C_%E7%94%BB%E9%9D%A2%E9%81%B7%E7%A7%BB%E5%9B%B3?node-id=127-2208&t=o3Y9NkUTTp4F2Rtg-1
