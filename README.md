@@ -254,3 +254,71 @@ SokoNote ソコノート
 
 # 画面遷移図
 Figma：https://www.figma.com/design/2nRhzOQEsA78fdodbD6kym/%E5%8D%92%E6%A5%AD%E5%88%B6%E4%BD%9C_%E7%94%BB%E9%9D%A2%E9%81%B7%E7%A7%BB%E5%9B%B3?node-id=127-2208&t=o3Y9NkUTTp4F2Rtg-1
+
+# ER図
+```mermaid
+erDiagram
+  users ||--o{ items : "1人のユーザーは0以上の商品を持つ" 
+  items ||--|{ purchases : "1つの商品は1以上の購入履歴を持つ" 
+  users ||--o{ stores :  "1人のユーザーは0以上の店舗を持つ"
+  users ||--o{ categories : "1人のユーザーは0以上のカテゴリを持つ"
+  users ||--o{ purchases :  "1人のユーザーは0以上の購入履歴を持つ"
+  stores||--o{ purchases : "1つの店舗は0以上の購入履歴を持つ"
+  categories ||--o{ items : "1つのカテゴリは0以上の商品をもつ"
+
+
+
+  users {
+    bigint id PK "ユーザーID（主キー）"
+    string name "ニックネーム"
+    string email "メールアドレス"
+    string encrypted_password "ログイン用パスワード"
+    string reset_password_token "パスワード再設定用トークン"
+    datetime reset_password_sent_at "パスワード再設定メール送信日時"
+    datetime remember_created_at "ログイン状態保持開始日時"
+    datetime created_at "作成日時"
+    datetime updated_at "更新日時"
+  }
+
+  items {
+    bigint id PK "商品ID（主キー）"
+    bigint user_id FK "ユーザーID（外部キー）"
+    bigint category_id FK "カテゴリID（外部キー）"
+    string name "商品名"
+    datetime created_at "作成日時"
+    datetime updated_at "更新日時"
+  }
+
+  purchases {
+    bigint id PK "購入履歴ID（主キー）"
+    bigint user_id FK "ユーザーID（外部キー）"
+    bigint item_id FK "商品ID（外部キー）"
+    bigint store_id FK "店舗ID（外部キー）"
+    string brand "ブランド名"
+    integer content_quantity "内容量"
+    string content_unit "内容量単位"
+    integer pack_quantity "パック数"
+    string pack_unit "パック単位"
+    integer price "価格"
+    decimal unit_price "計算後の単価"
+    integer tax_rate "消費税"
+    date purchased_on "購入日"
+    datetime created_at "作成日時"
+    datetime updated_at "更新日時"
+  }
+
+  stores {
+    bigint id PK "店舗ID（主キー）"
+    bigint user_id FK "ユーザーID（外部キー）"
+    string name "店舗名"
+    datetime created_at "作成日時"
+    datetime updated_at "更新日時"    
+  }
+
+  categories {
+    bigint id PK "カテゴリID（主キー）"
+    bigint user_id FK "ユーザーID（外部キー）"
+    string name "カテゴリ名"
+    datetime created_at "作成日時"
+    datetime updated_at "更新日時"
+  }
