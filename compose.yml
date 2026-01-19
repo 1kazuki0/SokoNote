@@ -1,0 +1,68 @@
+services:
+  # db用のコンテナ
+  db:
+    # postgresQLの既存イメージをそのまま使用
+    image: postgres:17.7
+    # コンテナを常に自動再起動
+    restart: always
+    # コンテナ内で使える環境変数の設定
+      # タイムゾーンを日本に設定
+      # DBにログインするパスワード
+    environment:
+      TZ: Asia/Tokyo
+      POSTGRES_PASSWORD: password
+    # コンテナが削除されてもデータを残す仕組み
+      # /var/lib/postgresqlに保存。左の名前は一番下で定義
+    volumes:
+      - postgresql_data:/var/lib/postgresql
+    # 外部からのアクセス設定
+    # 左：ホスト側　右：コンテナ側のポート番号
+    ports:
+      - 5432:5432
+    # コンテナが正常に動いているかチェック
+      # 何をチェックするか[ ]をチェック
+      # 10秒ごとにチェック
+      # 5秒以内に応答がなければ失敗
+      # 5回連続で失敗したら不健康
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d myapp_development -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  # web用のdb
+  web:
+    # Dockerイメージを自分で作るための設定
+      # .(現在のディレクトリ)を基準
+      # Dockerfile.devを使ってイメージを作る
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    # コンテナ起動時にbundle install（Gemfileのgemインストール）,bundle exec rails db:prepare（データベースの準備）,
+    # rm -f tmp/pids/server.pid（前回起動時のプロセスID削除）,./bin/dev（開発サーバーの起動）を実行
+    command: bash -c "bundle install && bundle exec rails db:prepare && rm -f tmp/pids/server.pid && ./bin/dev"
+    # 人が操作できる画面端末を用意する設定
+    tty: true
+    # コンテナ標準入力を開いたままにする
+    stdin_open: true
+    
+    volumes:
+      # .(現在のディレクトリ)以降をコンテナ内の/myappにマウント（同期）
+      # bundle_dataという名前で/usr/local/bundleに早く保存（何を保存してるん？）
+      # node_modulesという名前で/myapp/node_modulesに保存
+      - .:/myapp
+      - bundle_data:/usr/local/bundle:cached
+      - node_modules:/myapp/node_modules
+    environment:
+      TZ: Asia/Tokyo
+    ports:
+      - "3000:3000"
+    # サービスの起動順序を制御する設定
+      # dbが健康になってから起動する
+    depends_on:
+      db:
+        condition: service_healthy
+# 名前付きボリュームの定義（箱を作るイメージ）
+volumes:
+  bundle_data:
+  postgresql_data:
+  node_modules:
