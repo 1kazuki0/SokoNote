@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users #controller: { registrations: 'users/registrations' }
+  devise_for :users # controller: { registrations: 'users/registrations' }
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   # 未ログイン時のトップ画面の仮設定
   root "home#top"
@@ -12,5 +12,4 @@ Rails.application.routes.draw do
   # Render dynamic PWA files from app/views/pwa/*
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
-
 end
