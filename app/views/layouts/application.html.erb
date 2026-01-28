@@ -15,9 +15,16 @@
     <link rel="apple-touch-icon" href="/icon.png">
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
-  </head>
+    <!-- Googleフォントの取得 "Noto Sans JPとRoboto" &familyでサーバーのやり取りを1度きりに-->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" />
+    <!-- Googleアイコンの取得 （全アイコンを取得してしまっているため要検討）-->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    </head>
 
   <body>
     <%= yield %>
+    <% if user_signed_in? %>
+      <%= render 'shared/footer' %>
+    <% end %>
   </body>
 </html>

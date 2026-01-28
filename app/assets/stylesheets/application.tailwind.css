@@ -1,1 +1,20 @@
+/* tailwindcss本体 */
 @import "tailwindcss";
+
+/* 以下は本アプリ共通の設定を記述 */
+@theme {
+  /* 以下は配色を記述 */
+  --color-green:      #7CB518;
+  --color-yellow:     #F9D01F;
+  --color-orange:     #F39800;
+  --color-red:        #E65540;
+  
+  --color-white:      #FDFDFD;
+  --color-black:      #333333;
+  --color-light-gray: #F0F0F0;
+  --color-dark-gray:  #B1B1B1;
+  /* 以下はフォントを記述 */
+  --font-sans: "Noto Sans JP";
+  --font-money: "Roboto";
+
+}
