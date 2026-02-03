@@ -12,9 +12,9 @@ services:
       TZ: Asia/Tokyo
       POSTGRES_PASSWORD: password
     # コンテナが削除されてもデータを残す仕組み
-      # /var/lib/postgresqlに保存。左の名前は一番下で定義
+      # /var/lib/postgresql/dataに保存。左の名前は一番下で定義
     volumes:
-      - postgresql_data:/var/lib/postgresql
+      - postgresql_data:/var/lib/postgresql/data
     # 外部からのアクセス設定
     # 左：ホスト側　右：コンテナ側のポート番号
     ports:
