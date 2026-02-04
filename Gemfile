@@ -47,7 +47,7 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
 
   # データをランダムで生成してくるgem
-  gem 'faker'
+  gem "faker"
 end
 
 group :development do

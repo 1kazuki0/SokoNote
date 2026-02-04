@@ -21,7 +21,7 @@ category = Category.find(4)
 10.times do
   Item.create(user: user,
               category: category,
-              name: Faker::Food.unique.vegetables) #uniqueで今まで出したデータと被らないようにする。
+              name: Faker::Food.unique.vegetables) # uniqueで今まで出したデータと被らないようにする。
 end
 
 # docker compose exec web rails db:seedで実行すると10件分のItemが生成される
