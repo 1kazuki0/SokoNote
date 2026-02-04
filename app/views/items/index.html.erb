@@ -1,1 +1,25 @@
-<h1>商品一覧画面</h1>
+<div class="bg-light-gray min-h-screen font-sans pb-24">
+  <%# メインコンテンツエリア：ヘッダー分（mt-4など）の余白を確保 %>
+  <main class="px-4 pt-8 space-y-4">
+    <% @items.each do |item| %>
+      <%= link_to "#", class: "block bg-white rounded-2xl p-5 shadow-md border border-gray-100 no-underline active:bg-gray-50 transition-colors" do %>
+        <%# 商品名 %>
+        <h2 class="text-xl font-bold text-black mb-1">
+          <%= item.name %>
+        </h2>
+        
+        <%# 最安単価：単位は1mlで固定。価格は一旦「#」で表示 %>
+        <p class="text-dark-gray text-sm">
+          最安単価<span class="text-green font-bold ml-1">1単位あたり：#円</span>
+        </p>
+      <% end %>
+    <% end %>
+  </main>
+
+  <%# 商品登録ボタン（FAB） %>
+  <div class="fixed right-6 bottom-28">
+    <%= link_to "#", class: "bg-green text-white px-6 py-4 rounded-full shadow-lg flex items-center justify-center font-bold no-underline hover:opacity-90 transition-opacity" do %>
+      <span class="text-lg">商品登録</span>
+      <span class="material-symbols-outlined">Add</span>
+    <% end %>
+  </div>
