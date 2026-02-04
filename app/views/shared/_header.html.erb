@@ -1,0 +1,8 @@
+<header class="fixed top-0 left-0 w-full bg-green border-b border-gray-200">
+  <nav class="flex justify-around items-center h-16">
+    <!-- ヘッダーの題名を選択するとホーム画面（商品一覧画面）に戻るよう遷移 -->
+    <%= link_to items_path, class: "flex flex-col items-center text-white" do %>
+      <span class="text-2xl font-bold mt-3">SokoNote</span>
+    <% end %>
+  </nav>
+</header>
