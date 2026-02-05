@@ -2,7 +2,7 @@
   <%# メインコンテンツエリア：ヘッダー分（mt-4など）の余白を確保 %>
   <main class="px-4 pt-20 space-y-4">
     <% @items.each do |item| %>
-      <%= link_to "#", class: "block bg-white rounded-2xl p-5 shadow-md border border-gray-100 no-underline active:bg-gray-50 transition-colors" do %>
+      <%= link_to item_path(item), class: "block bg-white rounded-2xl p-5 shadow-md border border-gray-100 no-underline active:bg-gray-50 transition-colors" do %>
         <%# 商品名 %>
         <h2 class="text-xl font-bold text-black mb-1">
           <%= item.name %>
@@ -23,3 +23,4 @@
       <span class="material-symbols-outlined">Add</span>
     <% end %>
   </div>
+</div>
