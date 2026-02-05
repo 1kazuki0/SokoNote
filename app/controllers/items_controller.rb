@@ -25,7 +25,7 @@ class ItemsController < ApplicationController
     # puts "@itemsのクラスを確認#{@items.class}"
     # puts "@itemsの件数を確認#{@items.count}"
   end
-  
+
   def show
     puts "リクエスト情報#{params}"
     @item = Item.find(params[:id])
