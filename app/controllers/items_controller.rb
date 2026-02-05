@@ -1,6 +1,8 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!
   def index
+    puts "Userモデルで使用できるメソッド#{User.methods.grep(/items/)}"
+    puts "current_uesrのclassは#{current_user.class}"
     # puts "indexアクションが呼ばれているか確認"
     # puts "リクエスト情報#{params}"
     # puts "ログインユーザー確認#{current_user}"
@@ -22,5 +24,12 @@ class ItemsController < ApplicationController
     # puts "@itemsの中身を確認#{@items.inspect}"
     # puts "@itemsのクラスを確認#{@items.class}"
     # puts "@itemsの件数を確認#{@items.count}"
+  end
+  
+  def show
+    puts "リクエスト情報#{params}"
+    @item = Item.find(params[:id])
+    @purchases = @item.purchases.order(purchased_on: :desc)
+    # puts "#{@purchases.inspect}"
   end
 end
