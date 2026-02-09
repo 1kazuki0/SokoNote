@@ -28,7 +28,7 @@ class ItemsController < ApplicationController
 
   def new_step1
   end
-  
+
   def save_new_step1
     puts "データきてる？#{item_new_step1_params}"
     session[:item_new_step1] = item_new_step1_params
