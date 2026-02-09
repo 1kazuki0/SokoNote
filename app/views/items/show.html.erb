@@ -49,4 +49,11 @@
       </div>
     </div>
   </main>
+    <%# 商品登録ボタン（FAB） %>
+  <div class="fixed right-6 bottom-28">
+    <%= link_to new_step1_purchases_path(item_id: @item.id), class: "bg-green text-white px-6 py-4 rounded-full shadow-lg flex items-center justify-center font-bold no-underline hover:opacity-90 transition-opacity" do %>
+      <span class="text-lg">この商品の値段を登録する</span>
+      <span class="material-symbols-outlined">Add</span>
+    <% end %>
+  </div>
 </div>

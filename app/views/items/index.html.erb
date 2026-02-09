@@ -1,4 +1,4 @@
-<div class="bg-light-gray min-h-screen font-sans pb-24">
+<div class="bg-light-gray min-h-screen font-sans">
   <%# メインコンテンツエリア：ヘッダー分（mt-4など）の余白を確保 %>
   <main class="px-4 pt-20 space-y-4">
     <% @items.each do |item| %>
@@ -18,7 +18,7 @@
 
   <%# 商品登録ボタン（FAB） %>
   <div class="fixed right-6 bottom-28">
-    <%= link_to "#", class: "bg-green text-white px-6 py-4 rounded-full shadow-lg flex items-center justify-center font-bold no-underline hover:opacity-90 transition-opacity" do %>
+    <%= link_to new_step1_items_path, class: "bg-green text-white px-6 py-4 rounded-full shadow-lg flex items-center justify-center font-bold no-underline hover:opacity-90 transition-opacity" do %>
       <span class="text-lg">商品登録</span>
       <span class="material-symbols-outlined">Add</span>
     <% end %>

@@ -26,10 +26,32 @@ class ItemsController < ApplicationController
     # puts "@itemsの件数を確認#{@items.count}"
   end
 
+  def new_step1
+  end
+  
+  def save_new_step1
+    puts "データきてる？#{item_new_step1_params}"
+    session[:item_new_step1] = item_new_step1_params
+    redirect_to new_step2_items_path
+  end
+
+  def new_step2
+    puts "{sessionが来ているか確認#{session.to_h}}"
+  end
+
+  def create
+  end
+
   def show
     puts "リクエスト情報#{params}"
     @item = Item.find(params[:id])
     @purchases = @item.purchases.order(purchased_on: :desc)
     # puts "#{@purchases.inspect}"
+  end
+
+  private
+
+  def item_new_step1_params
+    params.require(:item_new_step1).permit(:item_name, :category_name, :content_quantity, :pack_quantity, :price, :tax_rate)
   end
 end
