@@ -1,0 +1,10 @@
+<div class="bg-light-gray min-h-screen font-sans pb-24">
+  <main class="px-4 pt-20 space-y-4">
+    <h2 class = "font-bold text-lg">商品情報の入力</h2>
+    <%= form_with(model: @item) do |f| %>
+      <%= f.label :item, '商品名' %>
+      <%= f.text_field :@item.name %>
+    <% end %>
+  </main>
+</div>
+
