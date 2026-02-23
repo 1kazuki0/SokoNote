@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  # --- Userモデルのアソシエーション ---
   has_many :items       # ユーザーは商品レコードを複数持てる
   has_many :stores      # ユーザーは店舗レコードを複数持てる
   has_many :categories  # ユーザーはカテゴリーレコードを複数持てる

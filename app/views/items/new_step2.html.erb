@@ -1,3 +1,22 @@
 <main class="px-4 pt-20">
   <h1 class= "text-xl mb-6">その他情報の登録</h1>
+  <p>商品名: <%= @step1_data["item_name"] %></p>
+  <p>カテゴリ: <%= @step1_data["category_name"] %></p>
+  <p>内容量: <%= @step1_data["content_quantity"] %></p>
+  <p>パック数: <%= @step1_data["pack_quantity"] %></p>
+  <p>価格: <%= @step1_data["price"] %></p>
+  <p>税率: <%= @step1_data["tax_rate"] %></p>
+  <%= form_with url: items_path, method: :post, scope: :item_new_step2 do |f| %>
+    <%= f.label :brand, "メーカー名", class: "text-sm" %>
+    <%= f.text_field :brand, placeholder: "メーカー・ブランド名を入力", autocomplete: "off" %>
+    <%= f.label :store, "店舗名", class: "text-sm" %>
+    <%= f.text_field :store, placeholder: "例：〇〇スーパー〇〇店", autocomplete: "off" %>
+    <%= f.label :content_unit, "単位／内容量", class: "text-sm" %>
+    <%= f.text_field :content_unit, placeholder: "例：ml", autocomplete: "off" %>
+    <%= f.label :pack_unit, "単位／パック数", class: "text-sm" %>
+    <%= f.text_field :pack_unit, placeholder: "本,箱", autocomplete: "off" %>
+    <%= f.label :purchased_on, "登録日", class: "text-sm" %>
+    <%= f.date_field :purchased_on %>
+    <%= f.submit "この内容で登録する" %>
+  <% end %>
 </main>
