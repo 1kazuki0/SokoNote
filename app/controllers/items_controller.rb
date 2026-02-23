@@ -14,7 +14,7 @@ class ItemsController < ApplicationController
     if @form.valid?
       @form.category_record
       @form.item_record
-      session[:item_new_step1] = @form.attributes #このattributesがよくわからん
+      session[:item_new_step1] = @form.attributes
       redirect_to new_step2_items_path
     else
       render :new_step1

@@ -7,7 +7,7 @@ class Purchase < ApplicationRecord
   validates :pack_unit, length: { maximum: 10 }
   validates :price, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :unit_price, numericality: { greater_than: 0 }, allow_nil: true
-  validates :tax_rate, presence: true, inclusion: { in: [0, 8, 10] }
+  validates :tax_rate, presence: true, inclusion: { in: [ 0, 8, 10 ] }
   validates :purchased_on, presence: true
 
   # --- Itemモデルのアソシエーション ---
@@ -18,7 +18,7 @@ class Purchase < ApplicationRecord
   # --- ユーザーが入力したpriceを税抜価格で統一 ---
   def price_excluding_tax
     return nil if price.blank? || tax_rate.blank?
-    price / ( 1 + tax_rate / 100.0)
+    price / (1 + tax_rate / 100.0)
   end
   # --- 単価計算 ---
   def unit_price_value

@@ -29,19 +29,19 @@ class PurchaseStep1Form
   validates :content_quantity, presence: true, numericality: { greater_than: 0 }
   validates :pack_quantity, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :price, presence: true, numericality: { only_integer: true, greater_than: 0 }
-  validates :tax_rate, presence: true, inclusion: { in: [0, 8, 10] }
+  validates :tax_rate, presence: true, inclusion: { in: [ 0, 8, 10 ] }
   # private内で定義しているcategory_recordとitem_recordのバリデーションを実行
   # validate :category_record
   # validate :item_record
 
   # # このクラス内部だけ使用するので明示
   # private
-  
+
   # 現在のユーザーとcategory_nameが同じデータベースにあるか確認し、なければ作成。(のちに@category_record ||= を前においてリファクタリング)
   def category_record
     Category.find_or_initialize_by(user_id: user_id, name: category_name)
-  end   
-  
+  end
+
   # 現在のユーザーとcategory_record（category_name)と、item_nameが同じデータベースにあるか確認し、なければ作成（のちに@item_record ||= を前においてリファクタリング）
   def item_record
     Item.find_or_initialize_by(
