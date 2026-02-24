@@ -10,4 +10,10 @@ class PurchasesController < ApplicationController
 
   def new_step2
   end
+
+  def destroy
+    purchase = current_user.purchases.find(params[:id])
+    purchase.destroy
+    redirect_to purchases_path, notice: "購入履歴を削除しました"
+  end
 end
