@@ -1,59 +1,21 @@
-<div class="bg-light-gray min-h-screen font-sans pb-24">
-  <main class="px-4 pt-20 space-y-4">
-    <h2 class = "font-bold text-lg">
-      <%= @item.name %>
-    </h2>
-    <div class="bg-light-gray min-h-screen p-4 font-sans text-black">
-      <h1 class="text-xl font-bold mb-4 ml-2">今までの購入履歴</h1>
-      <div class="flex flex-col gap-3">
-        <% @purchases.each do |purchase| %>
-          <%# カード全体を詳細ページなどへのリンクにする場合 %>
-          <%= link_to "#", class: "bg-white rounded-xl p-4 shadow-sm flex items-center justify-between active:bg-gray-50 transition-colors" do %>
-            
-            <%# 左側：コンテンツエリア %>
-            <div class="flex-1">
-              <div class="flex gap-3 text-xs text-black mb-1">
-                <span><%= purchase.purchased_on.strftime('%Y/%m/%d') %></span>
-                <span><%= purchase.brand %></span>
-              </div>
-
-              <h2 class="text-lg font-bold mb-1">
-                <%= purchase.store.name %>
-              </h2>
-
-              <div class="text-sm">
-                <%= purchase.content_quantity %><%= purchase.content_unit %> × <%= purchase.pack_quantity %><%= purchase.pack_unit %>
-              </div>
-
-              <div class="text-sm">
-                <span class="font-money"><%= purchase.price %></span>円（<%= purchase.tax_rate %>%）
-              </div>
-
-              <div class="mt-2 flex items-baseline gap-1">
-                <span class="text-xs">1<%= purchase.content_unit %>あたり</span>
-                <span class="text-orange text-3xl font-bold font-money leading-none">
-                  <%= purchase.unit_price %>
-                </span>
-                <span class="text-orange text-xl font-bold">円</span>
-              </div>
-            </div>
-
-            <%# 右側：アイコンエリア %>
-            <div class="ml-2">
-              <span class="material-symbols-outlined text-dark-gray text-4xl">
-                keyboard_arrow_right
-              </span>
-            </div>
-          <% end %>
-        <% end %>
-      </div>
+<main class ="pl-4 pt-20"> 
+  <h1>今までの<%= @item.name %>の購入履歴</h1>
+  <% @purchases.each do |purchase| %>
+    <div class= "bg-white mb-4 ">
+      <span><%= purchase.purchased_on %></span>
+      <span><%= purchase.store.name %></span>
+      <span><%= purchase.content_unit %></span>
+      <span><%= purchase.pack_unit %></span>
+      <span><%= purchase.price %></span>
+      <span>税<%= purchase.tax_rate %></span>
+      <span>1<%= purchase.content_unit %>あたり</span>
+      <span><%= purchase.unit_price %>円</span>
+      <%= link_to edit_purchase_path(purchase) do %>
+        <span>編集</span>
+      <% end %>
+      <%= link_to purchase_path(purchase), data: {turbo_method: :delete, turbo_confirm: "本当に削除しますか？" } do %>
+        <span>削除</span>
+      <% end %>
     </div>
-  </main>
-    <%# 商品登録ボタン（FAB） %>
-  <div class="fixed right-6 bottom-28">
-    <%= link_to new_step1_purchases_path(item_id: @item.id), class: "bg-green text-white px-6 py-4 rounded-full shadow-lg flex items-center justify-center font-bold no-underline hover:opacity-90 transition-opacity" do %>
-      <span class="text-lg">この商品の値段を登録する</span>
-      <span class="material-symbols-outlined">Add</span>
-    <% end %>
-  </div>
-</div>
+  <% end %>
+</main>
