@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     end
   end
 
+  get "comparison", to: "comparison#index"
   # 設定画面
   get "setting", to: "setting#index"
 
