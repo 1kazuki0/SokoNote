@@ -11,9 +11,36 @@ class PurchasesController < ApplicationController
   def new_step2
   end
 
+  def edit
+    @purchase = current_user.purchases.includes(:item, :store, item: :category).find(params[:id])
+  end
+
+  def update
+    purchase = current_user.purchases.find(params[:id])
+    ActiveRecord::Base.transaction do
+      purchase.update!(purchase_params)
+      purchase.item.update!(name: params[:item_name])
+      category = current_user.categories.find_or_create_by!(name: params[:category_name])
+      purchase.item.update!(category: category)
+      store = current_user.stores.find_or_create_by!(name: params[:store_name])
+      purchase.update!(store: store)
+    end
+      puts "成功 #{params.inspect}"
+      redirect_to item_path(purchase.item), notice: "更新しました"
+  rescue => e
+      puts "失敗"
+      render :edit
+  end
+
   def destroy
     purchase = current_user.purchases.find(params[:id])
     purchase.destroy
     redirect_to purchases_path, notice: "購入履歴を削除しました"
+  end
+
+  private
+
+  def purchase_params
+    params.require(:purchase).permit(:brand, :content_quantity, :content_unit, :pack_quantity, :pack_unit, :price, :purchased_on)
   end
 end

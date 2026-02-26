@@ -67,8 +67,9 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @item = Item.find(params[:id])
+    @item = current_user.items.find(params[:id])
     @purchases = @item.purchases.order(purchased_on: :desc)
+    @lowest_purchase = @item.purchases.order(:unit_price).first
   end
 
   private

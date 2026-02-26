@@ -1,21 +1,75 @@
-<main class ="pl-4 pt-20"> 
-  <h1>今までの<%= @item.name %>の購入履歴</h1>
-  <% @purchases.each do |purchase| %>
-    <div class= "bg-white mb-4 ">
-      <span><%= purchase.purchased_on %></span>
-      <span><%= purchase.store.name %></span>
-      <span><%= purchase.content_unit %></span>
-      <span><%= purchase.pack_unit %></span>
-      <span><%= purchase.price %></span>
-      <span>税<%= purchase.tax_rate %></span>
-      <span>1<%= purchase.content_unit %>あたり</span>
-      <span><%= purchase.unit_price %>円</span>
-      <%= link_to edit_purchase_path(purchase) do %>
-        <span>編集</span>
-      <% end %>
-      <%= link_to purchase_path(purchase), data: {turbo_method: :delete, turbo_confirm: "本当に削除しますか？" } do %>
-        <span>削除</span>
-      <% end %>
+<!-- 商品名 -->
+<h1 class="text-xl font-bold mb-4">
+  <%= @item.name %>（<%= @item.category.name %>）
+</h1>
+
+<!-- 現在の最安値 -->
+<% if @lowest_purchase.present? %>
+  <div class="bg-white rounded-xl p-4 shadow mb-6">
+
+    <p class="text-sm mb-2">
+      現在の最安値
+    </p>
+
+    <p class="text-xs mb-1">
+      1<%= @lowest_purchase.content_unit %>あたり
+    </p>
+
+    <p class="text-3xl font-bold mb-3">
+      <%= @lowest_purchase.unit_price.round(2) %>円
+    </p>
+
+    <div class="text-xs leading-relaxed">
+      <div><%= @lowest_purchase.purchased_on %></div>
+      <div><%= @lowest_purchase.brand %> ・ <%= @lowest_purchase.store.name %></div>
+      <div>
+        <%= @lowest_purchase.content_quantity %><%= @lowest_purchase.content_unit %>
+        <%= @lowest_purchase.pack_quantity %><%= @lowest_purchase.pack_unit %>
+      </div>
     </div>
-  <% end %>
-</main>
+  </div>
+<% end %>
+
+
+<!-- 今までの購入履歴 -->
+<h2 class="text-sm mb-3">
+  今までの購入履歴
+</h2>
+
+<% @purchases.each do |purchase| %>
+  <div class="bg-white rounded-xl p-4 shadow mb-4">
+
+    <div class="text-xs mb-1">
+      <%= purchase.purchased_on %>
+      <%= purchase.brand %>
+    </div>
+    <div class= "text-xs">
+      <%= purchase.store.name %>
+    </div>
+    <div class= "text-xs">
+      <%= purchase.content_quantity %><%= purchase.content_unit %>
+      <%= purchase.pack_quantity %><%= purchase.pack_unit %>
+    </div>
+    <div class="text-xl">
+      合計：<%= purchase.price %>円（税<% if purchase.tax_rate == 0 %>抜<% else %><%= purchase.tax_rate %>%<% end %>）
+    </div>
+    <div>
+      <span>
+        1<%= purchase.content_unit %>あたり
+      </span>
+      <span class="text-xl font-bold">
+        <%= purchase.unit_price.round(2) %>円
+      <span>
+    </div>
+    <!-- 編集・削除 -->
+    <div class="flex gap-4 mt-3">
+      <%= link_to "編集", edit_purchase_path(purchase),
+            class: "underline" %>
+
+      <%= link_to "削除", purchase_path(purchase),
+            data: { turbo_method: :delete,
+                    turbo_confirm: "本当に削除しますか？" },
+            class: "underline" %>
+    </div>
+  </div>
+<% end %>
