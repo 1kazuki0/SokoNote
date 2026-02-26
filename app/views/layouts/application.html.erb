@@ -19,13 +19,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" />
     <!-- Googleアイコンの取得 （全アイコンを取得してしまっているため要検討）-->
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-    </head>
+  </head>
 
-  <body class = "bg-light-gray ">
-  <%= render 'shared/header' %>
-  <%= yield %>
-  <% if user_signed_in? %>
+  <body class="bg-light-gray">
+    <%= render 'shared/header' %>
+    <main class= "px-4 pt-20 pb-60">
+      <%= yield %>
+    </main>
+    <% if user_signed_in? %>
     <%= render 'shared/footer' %>
-  <% end %>
+    <% end %>
   </body>
 </html>
