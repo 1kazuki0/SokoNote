@@ -4,25 +4,25 @@
     <!--「商品一覧画面」に遷移する内容 -->
     <%= link_to items_path, class: "flex flex-col items-center text-green" do %>
       <span class="material-symbols-outlined">list_alt</span>
-      <span class="text-xs mt-1">一覧</span>
+      <span class="text-xs mt-1"><%= t('footer.index') %></span>
     <% end %>
 
     <!--「商品比較画面」に遷移する内容（現在はURLを"#"としています） -->
     <%= link_to comparison_path, class: "flex flex-col items-center text-gray" do %>
       <span class="material-symbols-outlined text-28">balance</span>
-      <span class="text-xs mt-1">比較</span>
+      <span class="text-xs mt-1"><%= t('footer.comparison') %></span>
     <% end %>
 
     <!--「チラシ撮影画面」に遷移する内容（現在はURLを"#"としています） -->
     <%= link_to "#", class: "flex flex-col items-center text-gray" do %>
       <span class="material-symbols-outlined text-28">photo_camera</span>
-      <span class="text-xs mt-1">写真</span>
+      <span class="text-xs mt-1"><%= t('footer.photo') %></span>
     <% end %>
     
     <!--「設定画面」に遷移する内容 -->
     <%= link_to setting_path, class: "flex flex-col items-center text-gray" do %>
       <span class="material-symbols-outlined text-28">settings</span>
-      <span class="text-xs mt-1">設定</span>
+      <span class="text-xs mt-1"> <%= t('footer.setting') %></span>
     <% end %>
 
   </nav>

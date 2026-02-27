@@ -1,0 +1,44 @@
+ja:
+  activerecord:
+    models:
+      user: ユーザー
+      store: 店舗
+      category: カテゴリー
+      item: 商品
+      purchase: 購入履歴
+    attributes:
+      user:
+        name: ニックネーム
+        email: メールアドレス
+        password: パスワード
+        password_confirmation: パスワード（確認用）
+      store:
+        name: 店舗名
+      category:
+        name: カテゴリ名
+      item:
+        name: 商品名
+      purchase:
+        brand: ブランド名
+        content_quantity: 内容量
+        content_unit: 単位（内容量）
+        pack_quantity: パック数
+        pack_unit: 単位（パック数）
+        price: 価格
+        tax_rate: 消費税
+        purchased_on: 購入日
+  footer:
+    index: 一覧
+    comparison: 比較
+    photo: 写真
+    setting: 設定
+  activemodel:
+    attributes:
+      purchase_step1_form:
+        item_name: 商品名
+        category_name: カテゴリ
+        content_quantity: 内容量
+        pack_quantity: パック数
+        price: 価格
+        tax_rate: 消費税率          
+          

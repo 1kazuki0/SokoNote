@@ -7,6 +7,7 @@ class ItemsController < ApplicationController
   end
 
   def new_step1
+    @form = PurchaseStep1Form.new
   end
 
   def save_new_step1
@@ -17,7 +18,8 @@ class ItemsController < ApplicationController
       session[:item_new_step1] = @form.attributes
       redirect_to new_step2_items_path
     else
-      render :new_step1
+      flash.now[:error] = "商品登録に失敗しました"
+      render :new_step1, status: :unprocessable_entity
     end
   end
 
@@ -60,7 +62,7 @@ class ItemsController < ApplicationController
       )
     end
     session.delete(:item_new_step1)
-    redirect_to items_path
+    redirect_to items_path, success: "商品が登録されました"
     rescue ActiveRecord::RecordInvalid => e
       @step1_data = session[:item_new_step1]
       render :new_step2
