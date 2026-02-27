@@ -13,6 +13,11 @@
   --color-black:      #333333;
   --color-light-gray: #F0F0F0;
   --color-dark-gray:  #B1B1B1;
+
+  --color-flash-success-bg: #f7fee7;
+  --color-flash-success-text: #166534;
+  --color-flash-error-bg: #fff1f0;
+  --color-flash-error-text: #E65540;
   /* 以下はフォントを記述 */
   --font-sans: "Noto Sans JP";
   --font-money: "Roboto";

@@ -26,7 +26,7 @@ class PurchasesController < ApplicationController
       purchase.update!(store: store)
     end
       puts "成功 #{params.inspect}"
-      redirect_to item_path(purchase.item), notice: "更新しました"
+      redirect_to item_path(purchase.item), success: "商品の情報を更新しました"
   rescue => e
       puts "失敗"
       render :edit
@@ -35,7 +35,7 @@ class PurchasesController < ApplicationController
   def destroy
     purchase = current_user.purchases.find(params[:id])
     purchase.destroy
-    redirect_to purchases_path, notice: "購入履歴を削除しました"
+    redirect_to purchases_path, success: "購入履歴を削除しました"
   end
 
   private
