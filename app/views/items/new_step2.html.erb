@@ -1,11 +1,12 @@
 <h1 class= "text-xl mb-6">その他情報の登録</h1>
+<%= render 'shared/error_messages', object: @form %>
 <p>商品名: <%= @step1_data["item_name"] %></p>
 <p>カテゴリ: <%= @step1_data["category_name"] %></p>
 <p>内容量: <%= @step1_data["content_quantity"] %></p>
 <p>パック数: <%= @step1_data["pack_quantity"] %></p>
 <p>価格: <%= @step1_data["price"] %></p>
 <p>税率: <%= @step1_data["tax_rate"] %></p>
-<%= form_with url: items_path, method: :post, scope: :item_new_step2 do |f| %>
+<%= form_with model: @form, url: items_path, method: :post, scope: :item_new_step2 do |f| %>
   <%= f.label :brand, "メーカー名", class: "text-sm" %>
   <%= f.text_field :brand, placeholder: "メーカー・ブランド名を入力", autocomplete: "off" %>
   <%= f.label :store, "店舗名", class: "text-sm" %>

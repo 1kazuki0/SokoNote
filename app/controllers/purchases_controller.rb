@@ -27,9 +27,11 @@ class PurchasesController < ApplicationController
     end
       puts "成功 #{params.inspect}"
       redirect_to item_path(purchase.item), success: "商品の情報を更新しました"
-  rescue => e
+    rescue => e
       puts "失敗"
-      render :edit
+      flash.now[:error] = "入力に問題があります"
+      @purchase = current_user.purchases.includes(:item, :store, item: :category).find(params[:id])
+      render :edit, status: :unprocessable_entity
   end
 
   def destroy
