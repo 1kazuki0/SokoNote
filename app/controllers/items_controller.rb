@@ -24,10 +24,18 @@ class ItemsController < ApplicationController
   end
 
   def new_step2
+    @form = PurchaseStep2Form.new
     @step1_data = session[:item_new_step1]
   end
 
   def create
+    @form = PurchaseStep2Form.new(item_new_step2_params.merge(user_id: current_user.id))
+    unless @form.valid?
+      flash.now[:error] = "入力に問題があります"
+      @step1_data = session[:item_new_step1]
+      render :new_step2, status: :unprocessable_entity
+      return
+    end
     step1 = session[:item_new_step1]
     step2 = item_new_step2_params
     merge = step2.merge(step1)
@@ -65,7 +73,8 @@ class ItemsController < ApplicationController
     redirect_to items_path, success: "商品が登録されました"
     rescue ActiveRecord::RecordInvalid => e
       @step1_data = session[:item_new_step1]
-      render :new_step2
+      flash.now[:error] = "商品登録に失敗しました"
+      render :new_step2, status: :unprocessable_entity
   end
 
   def show

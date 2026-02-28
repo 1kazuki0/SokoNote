@@ -1,7 +1,7 @@
 <h1 class="text-xl font-bold">商品情報の更新</h1>
-<div class= "mb-6"><%= @purchase.item.category.name %> <%= @purchase.item.name %>
+<div class= "mb-6"><%= @purchase.item.category.name %><%= @purchase.item.name %>
 </div>
-
+<%= render 'shared/error_messages', object: @purchase %>
 
 <%= form_with model: @purchase, local: true do |f| %>
 
