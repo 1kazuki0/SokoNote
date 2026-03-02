@@ -34,17 +34,28 @@ ja:
     setting: 設定
   activemodel:
     attributes:
-      purchase_step1_form:
+      item_step1_form:
         item_name: 商品名
         category_name: カテゴリ
         content_quantity: 内容量
         pack_quantity: パック数
         price: 価格
         tax_rate: 消費税率
-      purchase_step2_form:
+      item_step2_form:
         store: 店舗名
         brand: メーカー名
         content_unit: 単位（内容量）
         pack_unit: 単位（パック数）
         purchased_on: 登録日
-          
+      purchase_form:
+        item_name: 商品名
+        category_name: カテゴリ
+        store: 店舗名
+        brand: メーカー名
+        content_quantity: 内容量
+        content_unit: 単位（内容量）
+        pack_quantity: パック数
+        pack_unit: 単位（パック数）
+        price: 価格
+        tax_rate: 消費税率
+        purchased_on: 登録日

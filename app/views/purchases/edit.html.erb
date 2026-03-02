@@ -1,111 +1,56 @@
 <h1 class="text-xl font-bold">商品情報の更新</h1>
-<div class= "mb-6"><%= @purchase.item.category.name %><%= @purchase.item.name %>
-</div>
-<%= render 'shared/error_messages', object: @purchase %>
 
-<%= form_with model: @purchase, local: true do |f| %>
-
-  <!-- 商品名（item） -->
+<%= form_with model: @form, url: purchase_path(@purchase), method: :patch, local: false do |f| %>
+  <%= render 'shared/error_messages', object: @form %>
   <div class="flex flex-col gap-1 mb-6">
-    <%= label_tag :item_name, "商品名", class: "text-sm" %>
-    <%= text_field_tag :item_name,
-          @purchase.item.name,
-          class: "w-full p-3 bg-white border border-dark-gray rounded-lg focus:ring-2 focus:ring-green" %>
+    <%= f.label :item_name, class: "text-sm" %>
+    <%= f.text_field :item_name, class: "w-full p-3 bg-white border border-dark-gray rounded-lg focus:ring-2 focus:ring-green" %>
   </div>
-
-  <!-- カテゴリ（item.category） -->
   <div class="flex flex-col gap-1 mb-6">
-    <%= label_tag :category_name, "カテゴリ", class: "text-sm" %>
-    <%= text_field_tag :category_name,
-          @purchase.item.category&.name,
-          class: "w-full p-3 bg-white border border-dark-gray rounded-lg focus:ring-2 focus:ring-green" %>
+    <%= f.label :category_name, class: "text-sm" %>
+    <%= f.text_field :category_name, class: "w-full p-3 bg-white border border-dark-gray rounded-lg focus:ring-2 focus:ring-green" %>
   </div>
-
-  <!-- メーカー名（purchase） -->
   <div class="flex flex-col gap-1 mb-6">
-    <%= f.label :brand, "メーカー名", class: "text-sm" %>
-    <%= f.text_field :brand,
-          class: "w-full p-3 bg-white border border-dark-gray rounded-lg focus:ring-2 focus:ring-green" %>
+    <%= f.label :brand, class: "text-sm" %>
+    <%= f.text_field :brand, class: "w-full p-3 bg-white border border-dark-gray rounded-lg focus:ring-2 focus:ring-green" %>
   </div>
-
-  <!-- 店舗名（store） -->
   <div class="flex flex-col gap-1 mb-6">
-    <%= label_tag :store_name, "店舗名", class: "text-sm" %>
-    <%= text_field_tag :store_name,
-          @purchase.store&.name,
-          class: "w-full p-3 bg-white border border-dark-gray rounded-lg focus:ring-2 focus:ring-green" %>
+    <%= f.label :store, class: "text-sm" %>
+    <%= f.text_field :store, class: "w-full p-3 bg-white border border-dark-gray rounded-lg focus:ring-2 focus:ring-green" %>
   </div>
-
-  <!-- 内容量 / 単位 -->
   <div class="flex gap-4 mb-6">
     <div class="flex-1 flex flex-col gap-1">
-      <%= f.label :content_quantity, "内容量", class: "text-sm" %>
-      <%= f.number_field :content_quantity,
-            class: "w-full p-3 bg-white border border-dark-gray rounded-lg focus:ring-2 focus:ring-green" %>
+      <%= f.label :content_quantity, class: "text-sm" %>
+      <%= f.number_field :content_quantity, class: "w-full p-3 bg-white border border-dark-gray rounded-lg focus:ring-2 focus:ring-green" %>
     </div>
-
     <div class="flex-1 flex flex-col gap-1">
-      <%= f.label :content_unit, "単位 / 内容量", class: "text-sm" %>
-      <%= f.text_field :content_unit,
-            class: "w-full p-3 bg-white border border-dark-gray rounded-lg focus:ring-2 focus:ring-green" %>
+      <%= f.label :content_unit, class: "text-sm" %>
+      <%= f.text_field :content_unit, class: "w-full p-3 bg-white border border-dark-gray rounded-lg focus:ring-2 focus:ring-green" %>
     </div>
   </div>
-
-  <!-- パック数 / 単位 -->
   <div class="flex gap-4 mb-6">
     <div class="flex-1 flex flex-col gap-1">
-      <%= f.label :pack_quantity, "パック数", class: "text-sm" %>
-      <%= f.number_field :pack_quantity,
-            class: "w-full p-3 bg-white border border-dark-gray rounded-lg focus:ring-2 focus:ring-green" %>
+      <%= f.label :pack_quantity, class: "text-sm" %>
+      <%= f.number_field :pack_quantity, class: "w-full p-3 bg-white border border-dark-gray rounded-lg focus:ring-2 focus:ring-green" %>
     </div>
-
     <div class="flex-1 flex flex-col gap-1">
-      <%= f.label :pack_unit, "単位 / パック数", class: "text-sm" %>
-      <%= f.text_field :pack_unit,
-            class: "w-full p-3 bg-white border border-dark-gray rounded-lg focus:ring-2 focus:ring-green" %>
+      <%= f.label :pack_unit, class: "text-sm" %>
+      <%= f.text_field :pack_unit, class: "w-full p-3 bg-white border border-dark-gray rounded-lg focus:ring-2 focus:ring-green" %>
     </div>
   </div>
-
-  <!-- 価格 -->
   <div class="flex flex-col gap-1 mb-6">
-    <%= f.label :price, "価格", class: "text-sm" %>
-    <%= f.number_field :price,
-          class: "w-full p-3 bg-white border border-dark-gray rounded-lg focus:ring-2 focus:ring-green" %>
+    <%= f.label :price, class: "text-sm" %>
+    <%= f.number_field :price, class: "w-full p-3 bg-white border border-dark-gray rounded-lg focus:ring-2 focus:ring-green" %>
   </div>
-
-  <!-- 税率 -->
   <div class="flex flex-col gap-1 mb-6">
-    <%= f.label :tax_rate, "税率", class: "text-sm" %>
-
-    <div class="flex gap-6 mt-2">
-      <label class="flex items-center gap-2">
-        <%= f.radio_button :tax_rate, 0 %>
-        税抜
-      </label>
-
-      <label class="flex items-center gap-2">
-        <%= f.radio_button :tax_rate, 8 %>
-        8%
-      </label>
-
-      <label class="flex items-center gap-2">
-        <%= f.radio_button :tax_rate, 10 %>
-        10%
-      </label>
-    </div>
+    <%= f.label :tax_rate, class: "text-sm" %>
+    <%= f.radio_button :tax_rate, 0 %>税抜<%= f.radio_button :tax_rate, 8 %>8%<%= f.radio_button :tax_rate, 10 %>10%
   </div>
-
-  <!-- 登録日 -->
   <div class="flex flex-col gap-1 mb-10">
-    <%= f.label :purchased_on, "登録日", class: "text-sm" %>
-    <%= f.date_field :purchased_on,
-          class: "w-full p-3 bg-white border border-dark-gray rounded-lg focus:ring-2 focus:ring-green" %>
+    <%= f.label :purchased_on, class: "text-sm" %>
+    <%= f.date_field :purchased_on, class: "w-full p-3 bg-white border border-dark-gray rounded-lg focus:ring-2 focus:ring-green" %>
   </div>
-
-  <!-- 更新ボタン -->
   <div class="fixed right-6 bottom-28">
-    <%= f.submit "この内容で更新する",
-          class: "bg-green text-white px-8 py-4 rounded-full shadow-lg font-bold hover:opacity-90" %>
+    <%= f.submit "この内容で更新する", class: "bg-green text-white px-8 py-4 rounded-full shadow-lg font-bold hover:opacity-90" %>
   </div>
-
 <% end %>

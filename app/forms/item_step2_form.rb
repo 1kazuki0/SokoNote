@@ -1,4 +1,4 @@
-class PurchaseStep2Form
+class ItemStep2Form
   include ActiveModel::Model
   include ActiveModel::Attributes
 

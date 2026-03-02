@@ -1,5 +1,5 @@
 # 新しいフォームオブジェクトのクラス items/new_step1ファイル
-class PurchaseStep1Form
+class ItemStep1Form
   # モデルのような機能(:Model)とカラムのような機能(:Attributes)を追加
   # モデルと同じように扱える、属性（カラム）を定義できる
   include ActiveModel::Model
@@ -17,6 +17,7 @@ class PurchaseStep1Form
   attribute :pack_quantity, :integer
   attribute :price, :integer
   attribute :tax_rate, :integer
+  attribute :unit_price, :decimal
 
   # --- 2.バリデーションチェック ---
   # 必須項目：item_name, category_name, content_quantity, pack_quantity, price,tax_rate
@@ -30,6 +31,7 @@ class PurchaseStep1Form
   validates :pack_quantity, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :price, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :tax_rate, presence: true, inclusion: { in: [ 0, 8, 10 ] }
+  validates :unit_price, numericality: { greater_than: 0 }, allow_nil: true
   # private内で定義しているcategory_recordとitem_recordのバリデーションを実行
   # validate :category_record
   # validate :item_record
@@ -49,5 +51,22 @@ class PurchaseStep1Form
     category: category_record,
     name: item_name
     )
+  end
+
+  # --- ユーザーが入力したpriceを税抜価格で統一 ---
+  def price_excluding_tax
+    return nil if price.blank? || tax_rate.blank?
+    price.to_f / (1 + tax_rate * 0.01)
+  end
+  # --- 単価計算 ---
+  def unit_price_value
+    return nil if price_excluding_tax.blank?
+    return nil if content_quantity.blank? || pack_quantity.blank?
+    price_excluding_tax / content_quantity / pack_quantity
+  end
+
+  # --- unit_priceカラムに計算した単価を保存 ---
+  def set_unit_price
+    self.unit_price = unit_price_value
   end
 end
