@@ -7,14 +7,15 @@ class ItemsController < ApplicationController
   end
 
   def new_step1
-    @form = PurchaseStep1Form.new
+    @form = ItemStep1Form.new
   end
 
   def save_new_step1
-    @form = PurchaseStep1Form.new(item_new_step1_params.merge(user_id: current_user.id))
+    @form = ItemStep1Form.new(item_new_step1_params.merge(user_id: current_user.id))
     if @form.valid?
       @form.category_record
       @form.item_record
+      @form.set_unit_price
       session[:item_new_step1] = @form.attributes
       redirect_to new_step2_items_path
     else
@@ -24,12 +25,12 @@ class ItemsController < ApplicationController
   end
 
   def new_step2
-    @form = PurchaseStep2Form.new
+    @form = ItemStep2Form.new
     @step1_data = session[:item_new_step1]
   end
 
   def create
-    @form = PurchaseStep2Form.new(item_new_step2_params.merge(user_id: current_user.id))
+    @form = ItemStep2Form.new(item_new_step2_params.merge(user_id: current_user.id))
     unless @form.valid?
       flash.now[:error] = "入力に問題があります"
       @step1_data = session[:item_new_step1]
@@ -65,7 +66,7 @@ class ItemsController < ApplicationController
         tax_rate: merge[:tax_rate],
         content_unit: merge[:content_unit],
         pack_unit: merge[:pack_unit],
-        unit_price: 100,
+        unit_price: merge[:unit_price],
         purchased_on: merge[:purchased_on]
       )
     end

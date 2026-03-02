@@ -14,23 +14,4 @@ class Purchase < ApplicationRecord
   belongs_to :user  # user_idを持つ（ユーザーを参照している）
   belongs_to :item  # item_idを持つ（商品を参照している）
   belongs_to :store # store_idを持つ（店舗を参照している）
-
-  # --- ユーザーが入力したpriceを税抜価格で統一 ---
-  def price_excluding_tax
-    return nil if price.blank? || tax_rate.blank?
-    price / (1 + tax_rate / 100.0)
-  end
-  # --- 単価計算 ---
-  def unit_price_value
-    return nil if price_excluding_tax.blank?
-    return nil if content_quantity.blank? || pack_quantity.blank?
-    total_quantity = content_quantity * pack_quantity
-    return nil if total_quantity <= 0
-    price_excluding_tax / total_quantity
-  end
-
-  private
-  def set_unit_price
-    self.unit_price = unit_price_value
-  end
 end
