@@ -1,27 +1,43 @@
-<div>
-  <h2><%= t("devise.sessions.new.sign_in") %></h2>
+<!-- ログイン画面 -->
+<div class="flex flex-col md:flex-row items-center justify-center gap-6 p-4"> 
+  <div class="bg-white rounded-3xl shadow-xl w-full px-7 py-8">
+    <h2 class="text-center text-2xl font-bold text-gray-800 mb-6"><%= t("devise.sessions.new.sign_in") %></h2>
 
-  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-    <div class="field">
-      <%= f.label :email %><br />
-      <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-    </div>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <div class="mb-5">
+        <%= f.label :email, class: "block text-gray-700 text-sm font-semibold mb-2"%>
+        <div class="flex items-center border border-gray-200 rounded-xl px-3 py-3 bg-white focus-within:border-[#6abf3b] focus-within:ring-1 focus-within:ring-[#6abf3b] transition">
+          <span class="material-symbols-outlined text-gray-400 mr-2" style="font-size: 20px;">
+            mail
+          </span>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "example@email.com", class: "flex-1 outline-none text-gray-700 text-sm bg-transparent placeholder-gray-400" %>
+        </div>
+      </div>
 
-    <div class="field">
-      <%= f.label :password %><br />
-      <%= f.password_field :password, autocomplete: "current-password" %>
-    </div>
+      <div class="mb-5">
+        <%= f.label :password, class: "block text-gray-700 text-sm font-semibold mb-2" %>
+        <div class="flex items-center border border-gray-200 rounded-xl px-3 py-3 bg-white focus-within:border-[#6abf3b] focus-within:ring-1 focus-within:ring-[#6abf3b] transition">
+          <span class="material-symbols-outlined text-gray-400 mr-2" style="font-size: 20px;">lock</span>
+          <%= f.password_field :password, autocomplete: "current-password", placeholder: "••••••••", id: "password-field", class: "flex-1 outline-none text-gray-700 text-sm bg-transparent placeholder-gray-400" %>
+        </div>
+      </div>
 
-    <% if devise_mapping.rememberable? %>
-      <div class="field">
-        <%= f.check_box :remember_me %>
-        <%= f.label :remember_me %>
+      <% if devise_mapping.rememberable? %>
+        <label class="flex items-center gap-2 text-gray-500 cursor-pointer select-none mb-6">
+          <%= f.check_box :remember_me,
+              class: "w-4 h-4 rounded border-gray-300 accent-[#6abf3b] cursor-pointer" %>
+          <span>ログインを記憶する</span>
+        </label>
+      <% end %>
+      <div class="mb-5">
+        <%= f.button :submit, class: "w-full bg-green hover:bg-[#5aad2e] active:bg-[#4d9a26] text-white font-bold text-lg rounded-2xl py-4 flex items-center justify-center gap-2 shadow-md transition duration-150" do %>
+          <%= t("devise.sessions.new.sign_in") %>
+          <span class="material-symbols-outlined" style="font-size: 22px;">login</span>
+        <% end %>
       </div>
     <% end %>
-
-    <div class="actions">
-      <%= f.submit t("devise.sessions.new.sign_in") %>
-    </div>
-  <% end %>
+  </div>
 </div>
-<%= render "users/shared/links" %>
+<div class="mt-4 text-center text-sm text-gray-500 space-y-2">
+  <%= render "users/shared/links" %>
+</div>
