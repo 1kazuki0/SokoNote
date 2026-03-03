@@ -1,34 +1,64 @@
-<h2><%= t("devise.registrations.new.sign_up") %></h2>
+<!-- アカウント登録画面 -->
+<div class="flex flex-col md:flex-row items-center justify-center gap-6 p-4">
+  <div class="bg-white rounded-3xl shadow-xl w-full px-7 py-8">
+    <h2 class="text-center text-2xl font-bold text-gray-800 mb-6"><%= t("devise.registrations.new.sign_up") %></h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "users/shared/error_messages", resource: resource %>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <%= render "users/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
+      <div class="mb-5">
+        <%= f.label :name, class: "block text-gray-700 text-sm font-semibold mb-2"%>
+        <div class="flex items-center border border-gray-200 rounded-xl px-3 py-3 bg-white focus-within:border-[#6abf3b] focus-within:ring-1 focus-within:ring-[#6abf3b] transition">
+          <span class="material-symbols-outlined text-gray-400 mr-2" style="font-size: 20px;">
+            account_circle
+          </span>
+          <%= f.text_field :name, placeholder: "お名前", class: "flex-1 outline-none text-gray-700 text-sm bg-transparent placeholder-gray-400"%>
+        </div>
+      </div>
+
+      <div class="mb-5">
+        <%= f.label :email, class: "block text-gray-700 text-sm font-semibold mb-2"%>
+        <div class="flex items-center border border-gray-200 rounded-xl px-3 py-3 bg-white focus-within:border-[#6abf3b] focus-within:ring-1 focus-within:ring-[#6abf3b] transition">
+          <span class="material-symbols-outlined text-gray-400 mr-2" style="font-size: 20px;">
+            mail
+          </span>
+          <%= f.email_field :email, autofocus: true, placeholder: "example@email.com", class: "flex-1 outline-none text-gray-700 text-sm bg-transparent placeholder-gray-400" %>
+        </div>
+      </div>
+
+      <div class="mb-5">
+        <div class="flex items-center gap-1 mb-2">
+          <%= f.label :password, class: "block text-gray-700 text-sm font-semibold" %>
+          <% if @minimum_password_length %>
+            <span class="text-sm text-gray-700 font-semibold">
+              （<%= @minimum_password_length %>文字以上）
+            </span>
+          <% end %>
+        </div>
+        <div class="flex items-center border border-gray-200 rounded-xl px-3 py-3 bg-white focus-within:border-[#6abf3b] focus-within:ring-1 focus-within:ring-[#6abf3b] transition">
+          <span class="material-symbols-outlined text-gray-400 mr-2" style="font-size: 20px;">lock</span>
+          <%= f.password_field :password, autocomplete: "new-password", placeholder: "••••••••", class: "flex-1 outline-none text-gray-700 text-sm bg-transparent placeholder-gray-400" %>
+        </div>
+      </div>
+
+      <div class="mb-5">
+        <%= f.label :password_confirmation, class: "block text-gray-700 text-sm font-semibold mb-2" %>
+        <div class="flex items-center border border-gray-200 rounded-xl px-3 py-3 bg-white focus-within:border-[#6abf3b] focus-within:ring-1 focus-within:ring-[#6abf3b] transition">
+          <span class="material-symbols-outlined text-gray-400 mr-2" style="font-size: 20px;">lock</span>
+          <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "••••••••", class: "flex-1 outline-none text-gray-700 text-sm bg-transparent placeholder-gray-400" %>
+        </div>
+      </div>
+
+      <div class="mb-5">
+        <%= f.button :submit, class: "w-full bg-green hover:bg-[#5aad2e] active:bg-[#4d9a26] text-white font-bold text-lg rounded-2xl py-4 flex items-center justify-center gap-2 shadow-md transition duration-150" do %>
+          <%= t("devise.registrations.new.sign_up") %>
+          <span class="material-symbols-outlined" style="font-size: 22px;">login</span>
+        <% end %>
+      </div>
+    <% end %>
   </div>
+</div>
+<div class="mt-4 text-center text-sm text-gray-500 space-y-2">
+  <%= render "users/shared/links" %>
+</div>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %>文字以上)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit t("devise.registrations.new.sign_up") %>
-  </div>
-<% end %>
-
-<%= render "users/shared/links" %>
