@@ -20,7 +20,7 @@
       </div>
 
       <div class="mb-5">
-        <div class="grid grid-cols-2 gap-3"">
+        <div class="grid grid-cols-2 gap-3">
           <div class="flex flex-col">
             <%= f.label :content_quantity, class: "block text-gray-700 text-sm font-semibold mb-2" %>
             <div class="flex items-center border border-gray-200 rounded-xl px-3 py-3 bg-white focus-within:border-[#6abf3b] focus-within:ring-1 focus-within:ring-[#6abf3b] transition">
@@ -37,38 +37,38 @@
       </div>
       <div class="mb-5">
         <%= f.label :price, class: "block text-gray-700 text-sm font-semibold mb-2" %>
-        <div class="w-fll flex items-center border border-gray-200 rounded-xl px-3 py-3 bg-white focus-within:border-[#6abf3b] focus-within:ring-1 focus-within:ring-[#6abf3b] transition">
-          <%= f.number_field :price, placeholder: "例：298 / 1200", autocomplete: "off", class: "w-fll flex-1 outline-none text-gray-700 text-sm bg-transparent placeholder-gray-400"%>
+        <div class="flex items-center border border-gray-200 rounded-xl px-3 py-3 bg-white focus-within:border-[#6abf3b] focus-within:ring-1 focus-within:ring-[#6abf3b] transition">
+          <%= f.number_field :price, placeholder: "例：298 / 1200", autocomplete: "off", class: "flex-1 outline-none text-gray-700 text-sm bg-transparent placeholder-gray-400"%>
         </div>
       </div>
       <div class="space-y-2 mb-5">
-      <%= f.label :tax_rate, class: "block text-gray-700 text-sm font-semibold mb-2" %>
-      <div class="segmented-control flex bg-gray-100 dark:bg-gray-800 p-1 rounded-xl">
+        <%= f.label :tax_rate, class: "block text-gray-700 text-sm font-semibold mb-2" %>
+        <div class="flex bg-gray-100 dark:bg-gray-800 p-1 rounded-xl">
         
-        <%# 税抜 (値: 0) %>
-        <div class="flex-1">
-          <%= f.radio_button :tax_rate, 0, checked: true, class: "hidden peer", id: "tax-none" %>
-          <%= f.label :tax_rate, "税抜", value: 0, for: "tax-none", 
+          <%# 税抜 (値: 0) %>
+          <div class="flex-1">
+            <%= f.radio_button :tax_rate, 0, checked: true, class: "hidden peer", id: "tax-none" %>
+            <%= f.label :tax_rate, "税抜", value: 0, for: "tax-none", 
               class: "block text-center py-2 text-sm font-medium text-gray-500 dark:text-gray-400 rounded-lg cursor-pointer transition-all peer-checked:bg-white peer-checked:text-[#6abf3b] peer-checked:shadow-sm" %>
-        </div>
+          </div>
 
-        <%# 8% (値: 8) %>
-        <div class="flex-1">
-          <%= f.radio_button :tax_rate, 8, class: "hidden peer", id: "tax-8" %>
-          <%= f.label :tax_rate, "8%", value: 8, for: "tax-8", 
+          <%# 8% (値: 8) %>
+          <div class="flex-1">
+            <%= f.radio_button :tax_rate, 8, class: "hidden peer", id: "tax-8" %>
+            <%= f.label :tax_rate, "8%", value: 8, for: "tax-8", 
               class: "block text-center py-2 text-sm font-medium text-gray-500 dark:text-gray-400 rounded-lg cursor-pointer transition-all peer-checked:bg-white peer-checked:text-[#6abf3b] peer-checked:shadow-sm" %>
-        </div>
+          </div>
 
-        <%# 10% (値: 10) %>
-        <div class="flex-1">
-          <%= f.radio_button :tax_rate, 10, class: "hidden peer", id: "tax-10" %>
-          <%= f.label :tax_rate, "10%", value: 10, for: "tax-10", 
+          <%# 10% (値: 10) %>
+          <div class="flex-1">
+            <%= f.radio_button :tax_rate, 10, class: "hidden peer", id: "tax-10" %>
+            <%= f.label :tax_rate, "10%", value: 10, for: "tax-10", 
               class: "block text-center py-2 text-sm font-medium text-gray-500 dark:text-gray-400 rounded-lg cursor-pointer transition-all peer-checked:bg-white peer-checked:text-[#6abf3b] peer-checked:shadow-sm" %>
+          </div>
         </div>
       </div>
       <div class="fixed bottom-28 left-0 right-0 mx-auto max-w-xl px-6 flex justify-end">
-        <%= f.submit "内容を確認して次へ", class: "bg-[#6abf3b] text-white px-6 py-4 rounded-full shadow-lg flex items-center justify-center font-bold no-underline hover:opacity-90 transition-opacity cursor-pointer" do %>
-        <% end %>
+        <%= f.submit "内容を確認して次へ", class: "bg-[#6abf3b] text-white px-6 py-4 rounded-full shadow-lg flex items-center justify-center font-bold no-underline hover:opacity-90 transition-opacity cursor-pointer"%>
       </div>
     <% end %>
   </div>
