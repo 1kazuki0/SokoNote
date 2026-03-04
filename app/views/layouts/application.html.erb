@@ -23,7 +23,7 @@
 
   <body class="bg-light-gray max-w-xl mx-auto">
     <%= render 'shared/header' %>
-    <main class= "px-4 pt-20 pb-60">
+    <main class= "px-4 pt-20 pb-50">
       <% flash.each do |message_type, message| %>
         <% bg_color = case message_type.to_sym
                       when :success, :notice

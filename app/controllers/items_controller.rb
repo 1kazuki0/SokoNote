@@ -3,7 +3,7 @@ class ItemsController < ApplicationController
   def index
     puts "Userモデルで使用できるメソッド#{User.methods.grep(/items/)}"
     puts "current_userのclassは#{current_user.class}"
-    @items = current_user.items.includes(:user)
+    @items = current_user.items.includes(:category, :purchases, purchases: :store)
   end
 
   def new_step1
