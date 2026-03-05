@@ -1,75 +1,97 @@
-<!-- 商品名 -->
+
+<%# ── 商品名 ── %>
 <h1 class="text-xl font-bold mb-4">
-  <%= @item.name %>（<%= @item.category.name %>）
+  <%= @item.name %>
+  <span class="text-xs font-medium text-green-700 bg-green-100 rounded-full px-2 py-0.5 ml-2 align-middle">
+    <%= @item.category.name %>
+  </span>
 </h1>
 
-<!-- 現在の最安値 -->
+<%# ── 現在の最安値 ── %>
 <% if @lowest_purchase.present? %>
-  <div class="bg-white rounded-xl p-4 shadow mb-6">
-
-    <p class="text-sm mb-2">
-      現在の最安値
-    </p>
-
-    <p class="text-xs mb-1">
-      1<%= @lowest_purchase.content_unit %>あたり
-    </p>
-
-    <p class="text-3xl font-bold mb-3">
-      <%= @lowest_purchase.unit_price.round(2) %>円
-    </p>
-
-    <div class="text-xs leading-relaxed">
-      <div><%= @lowest_purchase.purchased_on %></div>
-      <div><%= @lowest_purchase.brand %> ・ <%= @lowest_purchase.store.name %></div>
-      <div>
-        <%= @lowest_purchase.content_quantity %><%= @lowest_purchase.content_unit %>
-        <%= @lowest_purchase.pack_quantity %><%= @lowest_purchase.pack_unit %>
+  <div class="bg-white rounded-2xl shadow-md p-5 mb-7 relative overflow-hidden border-t-4 border-green">
+    <div class="absolute inset-0 bg-gradient-to-br from-orange-50 to-white pointer-events-none"></div>
+    <div class="relative py-3">
+      <div class="absolute top-0 right-0 w-8 h-8 bg-orange-400 rounded-full flex items-center justify-center text-base shadow-md">
+        <span class="material-symbols-outlined text-20 text-white">crown</span>
       </div>
+      <p class="text-center text-xs text-gray-400 font-medium tracking-widest uppercase mb-4">現在の最安単価</p>
+      <p class="font-bold text-center text-xs text-gray-600 mb-1">1<%= @lowest_purchase.content_unit %>あたり
+        <span class="text-4xl text-green tracking-tight mb-4">
+          <%= @lowest_purchase.unit_price %><span class="text-xl ml-1">円</span>
+        </span>
+      </p>
     </div>
   </div>
 <% end %>
 
-
-<!-- 今までの購入履歴 -->
-<h2 class="text-sm mb-3">
-  今までの購入履歴
-</h2>
+<%# ── 購入履歴 ── %>
+<div class="flex items-baseline justify-between mb-3">
+  <h2 class="text-sm font-bold text-gray-600 tracking-wide">購入履歴</h2>
+  <span class="text-xs text-gray-400">全 <%= @purchases.size %> 件</span>
+</div>
 
 <% @purchases.each do |purchase| %>
-  <div class="bg-white rounded-xl p-4 shadow mb-4">
+  <%
+    is_cheapest = @lowest_purchase.present? && purchase.id == @lowest_purchase.id
+    tax_label   = purchase.tax_rate == 0 ? "税抜" : "#{purchase.tax_rate}%"
+  %>
+  <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 mb-3">
 
-    <div class="text-xs mb-1">
-      <%= purchase.purchased_on %>
-      <%= purchase.brand %>
+    <%# ヘッダー行 %>
+    <div class="flex items-center justify-between mb-3">
+      <div class="flex items-center gap-2">
+        <span class="text-xs text-gray-400 font-medium tracking-wide"><%= purchase.purchased_on %></span>
+        <% if is_cheapest %>
+          <span class="text-xs font-bold bg-orange-400 text-white rounded px-2 py-0.5 tracking-wide">最安値</span>
+        <% end %>
+      </div>
+      <div class="flex gap-3">
+        <%= link_to "編集", edit_purchase_path(purchase), class: "text-xs text-gray-400 font-medium hover:text-gray-700 hover:border-b hover:border-gray-300" %>
+        <%= link_to "削除", purchase_path(purchase),
+              data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" },
+              class: "text-xs text-red-400 font-medium hover:text-red-700 hover:border-b hover:border-red-700" %>
+      </div>
     </div>
-    <div class= "text-xs">
-      <%= purchase.store.name %>
+
+    <%# 詳細グリッド %>
+    <div class="grid grid-cols-2 gap-x-4 gap-y-2.5 mb-3">
+      <div>
+        <p class="text-xs text-gray-400 mb-0.5">店舗名</p>
+        <p class="text-sm font-bold"><%= purchase.store.name %></p>
+      </div>
+      <div>
+        <p class="text-xs text-gray-400 mb-0.5">ブランド</p>
+        <p class="text-sm font-bold"><%= purchase.brand %></p>
+      </div>
     </div>
-    <div class= "text-xs">
-      <%= purchase.content_quantity %><%= purchase.content_unit %>
-      <%= purchase.pack_quantity %><%= purchase.pack_unit %>
+    <div class="grid grid-cols-4 gap-x-4 gap-y-2.5 mb-3">
+      <div>
+        <p class="text-xs text-gray-400 mb-0.5">容量</p>
+        <p class="text-sm font-bold"><%= purchase.content_quantity %><%= purchase.content_unit %></p>
+      </div>
+      <div>
+        <p class="text-xs text-gray-400 mb-0.5">パック数</p>
+        <p class="text-sm font-bold"><%= purchase.pack_quantity %><%= purchase.pack_unit %></p>
+      </div>
+      <div>
+        <p class="text-xs text-gray-400 mb-0.5">税率</p>
+        <p class="text-sm font-bold"><%= tax_label %></p>
+      </div>
+      <div>
+        <p class="text-xs text-gray-400 mb-0.5">合計金額</p>
+        <p class="text-sm font-bold"><%= number_with_delimiter(purchase.price) %>円</p>
+      </div>
     </div>
-    <div class="text-xl">
-      合計：<%= purchase.price %>円（税<% if purchase.tax_rate == 0 %>抜<% else %><%= purchase.tax_rate %>%<% end %>）
-    </div>
-    <div>
-      <span>
-        1<%= purchase.content_unit %>あたり
+
+    <hr class="border-gray-100 mb-3">
+
+    <%# 単価 %>
+    <div class="flex items-baseline justify-between">
+      <span class="text-xs text-gray-400">1<%= purchase.content_unit %>あたりの単価</span>
+      <span class="text-xl font-bold text-green tracking-tight">
+        <%= purchase.unit_price.round(2) %><span class="text-xs ml-0.5">円</span>
       </span>
-      <span class="text-xl font-bold">
-        <%= purchase.unit_price.round(2) %>円
-      <span>
-    </div>
-    <!-- 編集・削除 -->
-    <div class="flex gap-4 mt-3">
-      <%= link_to "編集", edit_purchase_path(purchase),
-            class: "underline" %>
-
-      <%= link_to "削除", purchase_path(purchase),
-            data: { turbo_method: :delete,
-                    turbo_confirm: "本当に削除しますか？" },
-            class: "underline" %>
     </div>
   </div>
 <% end %>
