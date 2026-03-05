@@ -19,12 +19,12 @@
           <p class="text-xs text-gray-400">最安単価</p>
           <p class="text-sm text-gray-600">
           1<% if cheapest_purchase&.content_unit.present? %><%=cheapest_purchase.content_unit %><% else %>単位<% end %>
-          あたり：<span class="text-orange font-bold text-2xl">
+          あたり：<span class="text-green font-bold text-2xl">
             <% if cheapest_purchase&.unit_price.present? %>
               <%= cheapest_purchase.unit_price %></span>
               <span class="text-gray-600 text-sm">円</span>
             <% else %>
-              未登録
+              <span class="text-gray-600 text-lg">未登録</span>
             <% end %>
           </p>
         </div>
