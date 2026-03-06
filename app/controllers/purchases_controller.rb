@@ -1,18 +1,9 @@
 class PurchasesController < ApplicationController
     before_action :authenticate_user!
-  def new_step1
-    puts "リクエスト情報#{params}"
-    @item = Item.find(params[:item_id])
-  end
-
-  def session
-  end
-
-  def new_step2
-  end
 
   def edit
     puts "パラメータ詳細#{params.inspect}"
+    puts "sessionの確認#{session.inspect}"
     @purchase = current_user.purchases.includes(:item, :store, item: :category).find(params[:id])
     @form = PurchaseForm.new(
       item_name:        @purchase.item.name,
