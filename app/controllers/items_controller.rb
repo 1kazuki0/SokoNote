@@ -89,6 +89,7 @@ class ItemsController < ApplicationController
     @item = current_user.items.find(params[:id])
     @purchases = @item.purchases.order(purchased_on: :desc)
     @lowest_purchase = @item.purchases.order(:unit_price).first
+    puts "セッションの確認#{session.inspect}"
   end
 
   private
