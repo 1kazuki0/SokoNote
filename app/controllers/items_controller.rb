@@ -86,10 +86,12 @@ class ItemsController < ApplicationController
   end
 
   def show
+    # 商品名・カテゴリ名表示のため取得
     @item = current_user.items.find(params[:id])
+    # 購入履歴を降順（最新を上に表示）で取得
     @purchases = @item.purchases.order(purchased_on: :desc)
+    # 最安値の購入履歴データ取得
     @lowest_purchase = @item.purchases.order(:unit_price).first
-    puts "セッションの確認#{session.inspect}"
   end
 
   private

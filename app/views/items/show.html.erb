@@ -1,5 +1,5 @@
-
-<%# ── 商品名 ── %>
+<%# === 購入履歴一覧画面 === %>
+<%# ─── 商品名・カテゴリ名の表示 ─── %>
 <h1 class="text-xl font-bold mb-4">
   <%= @item.name %>
   <span class="text-xs font-medium text-green-700 bg-green-100 rounded-full px-2 py-0.5 ml-2 align-middle">
@@ -7,30 +7,40 @@
   </span>
 </h1>
 
-<%# ── 現在の最安値 ── %>
+<%# ─── 現在の最安値表示 ─── %>
 <% if @lowest_purchase.present? %>
   <div class="bg-white rounded-2xl shadow-md p-5 mb-7 relative overflow-hidden border-t-4 border-green">
     <div class="absolute inset-0 bg-gradient-to-br from-orange-50 to-white pointer-events-none"></div>
-    <div class="relative py-3">
-      <div class="absolute top-0 right-0 w-8 h-8 bg-orange-400 rounded-full flex items-center justify-center text-base shadow-md">
-        <span class="material-symbols-outlined text-20 text-white">crown</span>
+      <div class="relative py-3">
+        <div class="absolute top-0 right-0 w-8 h-8 bg-orange-400 rounded-full flex items-center justify-center text-base shadow-md">
+          <span class="material-symbols-outlined text-20 text-white">crown</span>
+        </div>
+        <p class="text-center text-xs text-gray-400 font-medium tracking-widest uppercase mb-4">現在の最安単価</p>
+        <p class="font-bold text-center text-xs text-gray-600 mb-4">1<%= @lowest_purchase.content_unit %>あたり
+          <span class="text-4xl text-green tracking-tight mb-4">
+            <%= @lowest_purchase.unit_price %><span class="text-xl ml-1">円</span>
+          </span>
+        </p>
+        <hr class="border-gray-200 mb-6">
+        <div class= "flex justify-center">
+          <%= link_to comparison_path(purchase_id: @lowest_purchase.id), class: "flex text-center justify-center gap-2 px-8 py-3 rounded-full border border-green text-green hover:bg-green hover:text-white" do %>
+            <span class="flex items-end justify-center gap-1">
+              <span class="material-symbols-outlined text-base">balance</span>
+              <span>この商品で比較します</span>
+            </span>
+          <% end %> 
+        </div>
       </div>
-      <p class="text-center text-xs text-gray-400 font-medium tracking-widest uppercase mb-4">現在の最安単価</p>
-      <p class="font-bold text-center text-xs text-gray-600 mb-1">1<%= @lowest_purchase.content_unit %>あたり
-        <span class="text-4xl text-green tracking-tight mb-4">
-          <%= @lowest_purchase.unit_price %><span class="text-xl ml-1">円</span>
-        </span>
-      </p>
-    </div>
   </div>
 <% end %>
 
-<%# ── 購入履歴 ── %>
+<%# ─── 商品の購入履歴件数 ─── %>
 <div class="flex items-baseline justify-between mb-3">
   <h2 class="text-sm font-bold text-gray-600 tracking-wide">購入履歴</h2>
   <span class="text-xs text-gray-400">全 <%= @purchases.size %> 件</span>
 </div>
 
+<%# ─── 購入履歴 ─── %>
 <% @purchases.each do |purchase| %>
   <%
     is_cheapest = @lowest_purchase.present? && purchase.id == @lowest_purchase.id
@@ -38,7 +48,7 @@
   %>
   <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 mb-3">
 
-    <%# ヘッダー行 %>
+    <%# ─── ヘッダー行（購入日・編集・削除）  ─── %>
     <div class="flex items-center justify-between mb-3">
       <div class="flex items-center gap-2">
         <span class="text-xs text-gray-400 font-medium tracking-wide"><%= purchase.purchased_on %></span>
@@ -54,7 +64,7 @@
       </div>
     </div>
 
-    <%# 詳細グリッド %>
+    <%# ─── 詳細（店舗名・ブランド・内容量・パック数・税率・金額・単価） ─── %>
     <div class="grid grid-cols-2 gap-x-4 gap-y-2.5 mb-3">
       <div>
         <p class="text-xs text-gray-400 mb-0.5">店舗名</p>
@@ -84,7 +94,7 @@
       </div>
     </div>
 
-    <hr class="border-gray-100 mb-3">
+    <hr class="border-gray-200 mb-3">
 
     <%# 単価 %>
     <div class="flex items-baseline justify-between">
