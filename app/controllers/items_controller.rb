@@ -1,5 +1,10 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!
+  # sessionに空の場合はstep2へのアクセスを許可しない（ブラウザバック対策）
+  before_action :redirect_to_new_step1_session_empty, only: [ :new_step2 ]
+  # 新規登録フロー中はsessionを削除しない（フロー離脱時のみ削除）
+  skip_before_action :clear_new_step1_item_session, only: [ :new_step1, :save_new_step1, :new_step2, :create ]
+
   def index
     puts "Userモデルで使用できるメソッド#{User.methods.grep(/items/)}"
     puts "current_userのclassは#{current_user.class}"
@@ -7,7 +12,7 @@ class ItemsController < ApplicationController
   end
 
   def new_step1
-    @form = ItemStep1Form.new
+    @form = ItemStep1Form.new(session[:item_new_step1])
   end
 
   def save_new_step1
@@ -18,6 +23,8 @@ class ItemsController < ApplicationController
       @form.set_unit_price
       session[:item_new_step1] = @form.attributes
       redirect_to new_step2_items_path
+      puts "パラメーター確認#{params.inspect}"
+      puts "セッション確認#{session.inspect}"
     else
       flash.now[:error] = "商品登録に失敗しました"
       render :new_step1, status: :unprocessable_entity
@@ -92,5 +99,11 @@ class ItemsController < ApplicationController
 
   def item_new_step2_params
     params.require(:item_new_step2).permit(:brand, :store, :content_unit, :pack_unit, :purchased_on)
+  end
+
+  # sessionにstep1のデータが無い場合、step1へリダイレクト
+  def redirect_to_new_step1_session_empty
+    return if session[:item_new_step1].present?
+    redirect_to new_step1_items_path
   end
 end

@@ -1,5 +1,7 @@
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
+  # アクション実行前にsessionを削除
+  before_action :clear_new_step1_item_session
   def after_sign_in_path_for(resources)
     items_path
   end
@@ -13,5 +15,13 @@ class ApplicationController < ActionController::Base
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [ :name ])
+  end
+
+  private
+
+  # フォームオブジェクトで使用したsessionが残っていれば削除
+  def clear_new_step1_item_session
+    return unless session[:item_new_step1].present?
+    session.delete(:item_new_step1)
   end
 end
