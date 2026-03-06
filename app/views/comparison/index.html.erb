@@ -1,40 +1,29 @@
-<!-- stimulusのコントローラー定義 -->
+<%# === 比較画面一覧 === %>
+<%# ─── stimulusのコントローラー定義 ─── %>
 <div data-controller="compare">
 
-  <!-- 比較入力エリア -->
+  <%# ─── 比較入力エリア ─── %>
   <div class="grid gap-8 relative">
 
-    <!-- 商品A -->
+    <%# ─── 商品A（内容量・パック数・価格のフォーム） ─── %>
     <div class="bg-white rounded-2xl shadow p-6">
       <h2 class="text-xl font-bold text-center mb-6">商品A</h2>
 
       <div class="space-y-4">
+      <%= form_with model: @purchase, url: "#", method: :post do |f| %>
         <div>
-          <label class="text-sm text-gray-500">内容量</label>
-          <input type="number"
-                  class="w-full mt-1 p-3 rounded-lg bg-gray-100 border-none focus:ring-2 focus:ring-green"
-                  placeholder="例：500"
-                  data-compare-target="contentquantityA"
-                  data-action="input->compare#calculate">
+          <%= f.label :content_quantity, class: "text-sm text-gray-500" %>
+          <%= f.number_field :content_quantity, placeholder: "例：500", class: "w-full mt-1 p-3 rounded-lg bg-gray-100 border-none focus:ring-2 focus:ring-green", data: {compare_target: "contentquantityA", action: "input->compare#calculate" } %>
         </div>
-
         <div>
-          <label class="text-sm text-gray-500">パック数</label>
-          <input type="number"
-                  class="w-full mt-1 p-3 rounded-lg bg-gray-100 border-none focus:ring-2 focus:ring-green"
-                  placeholder="例：3"
-                  data-compare-target="packquantityA"
-                  data-action="input->compare#calculate">
+          <%= f.label :pack_quantity, class: "text-sm text-gray-500" %>
+          <%= f.number_field :pack_quantity, placeholder: "例：3", class: "w-full mt-1 p-3 rounded-lg bg-gray-100 border-none focus:ring-2 focus:ring-green", data: {compare_target: "packquantityA", action: "input->compare#calculate" } %>
         </div>
-
         <div>
-          <label class="text-sm text-gray-500">価格</label>
-          <input type="number"
-                  class="w-full mt-1 p-3 rounded-lg bg-gray-100 border-none focus:ring-2 focus:ring-green"
-                  placeholder="例：598"
-                  data-compare-target="priceA"
-                  data-action="input->compare#calculate">
+          <%= f.label :price, class: "text-sm text-gray-500" %>
+          <%= f.number_field :price, placeholder: "例：598", class: "w-full mt-1 p-3 rounded-lg bg-gray-100 border-none focus:ring-2 focus:ring-green", data: {compare_target: "priceA", action: "input->compare#calculate" } %>
         </div>
+      <% end %>
         <div class="mt-4 p-4 bg-gray-50 rounded-xl text-center">
           <p class="text-sm text-gray-500">単価（税抜）</p>
           <p class="text-2xl font-bold text-gray-800">
@@ -45,7 +34,7 @@
       </div>
     </div>
 
-    <!-- VSバッジ -->
+    <%# ─── VSバッジ ─── %>
     <div class="relative">
       <div class="md:flex absolute inset-0 items-center justify-center pointer-events-none">
         <div class="bg-green text-white w-12 h-12 rounded-full flex items-center justify-center font-bold shadow">
@@ -54,7 +43,7 @@
       </div>
     </div>
 
-    <!-- 商品B -->
+    <%# ─── 商品B（内容量・パック数・価格のフォーム） ─── %>
     <div class="bg-white rounded-2xl shadow p-6">
       <h2 class="text-xl font-bold text-center mb-6">商品B</h2>
 
@@ -63,7 +52,7 @@
           <label class="text-sm text-gray-500">内容量</label>
           <input type="number"
                   class="w-full mt-1 p-3 rounded-lg bg-gray-100 border-none focus:ring-2 focus:ring-green"
-                  placeholder="例：500",
+                  placeholder="例：500"
                   data-compare-target="contentquantityB"
                   data-action="input->compare#calculate">
         </div>
@@ -94,7 +83,7 @@
       </div>
     </div>
   </div>
-  <!-- お得表示 -->
+  <%# ─── お得表示（stimulusより計算結果出力時のみ表示） ─── %>
   <div>
     <div class="bg-orange-100 text-orange-600 text-center py-4 rounded-xl font-semibold text-lg empty:hidden" " data-compare-target="compareResultItem"></div>
   </div>
