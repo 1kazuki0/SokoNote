@@ -12,7 +12,8 @@ export default class extends Controller {
   static targets = [
     "contentquantityA", "packquantityA", "priceA", "resultA",
     "contentquantityB", "packquantityB", "priceB", "resultB",
-    "compareResultItem"
+    "compareResultItem",
+    "cardA", "cardB", "badgeA", "badgeB"
   ]
 
   // A・B両方の単価を計算後、比較処理を実行する
@@ -48,17 +49,30 @@ export default class extends Controller {
     const a = parseFloat(this.resultATarget.textContent)
     const b = parseFloat(this.resultBTarget.textContent)
 
+    this.cardATarget.classList.remove("border-green", "border-2", "shadow-lg")
+    this.cardBTarget.classList.remove("border-green", "border-2", "shadow-lg")
+    this.badgeATarget.classList.add("invisible")
+    this.badgeBTarget.classList.add("invisible")
+
     if (isNaN(a) || isNaN(b)) {
         this.compareResultItemTarget.textContent = ""
+        this.compareResultItemTarget.classList.add("invisible")
         return
     }
 
     if (a < b) {
         this.compareResultItemTarget.textContent = `A商品の方が${(b - a).toFixed(2)}円安い！`
+        this.cardATarget.classList.add("border-green", "border-2", "shadow-lg")
+        this.badgeATarget.classList.remove("invisible")
+        this.compareResultItemTarget.classList.remove("invisible")
     } else if (b < a) {
         this.compareResultItemTarget.textContent = `B商品の方が${(a - b).toFixed(2)}円安い！`
+        this.cardBTarget.classList.add("border-green", "border-2", "shadow-lg")
+        this.badgeBTarget.classList.remove("invisible")
+        this.compareResultItemTarget.classList.remove("invisible")
     } else {
         this.compareResultItemTarget.textContent = "同じ価格！"
+        this.compareResultItemTarget.classList.remove("invisible")
     }
 }
 

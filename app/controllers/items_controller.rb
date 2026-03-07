@@ -12,7 +12,27 @@ class ItemsController < ApplicationController
   end
 
   def new_step1
-    @form = ItemStep1Form.new(session[:item_new_step1])
+    puts "パラメーター確認#{params.inspect}"
+    purchase_params = if params[:purchase_a].present?
+      puts "purchase_aは存在する"
+      params[:purchase_a]&.permit(:content_quantity, :pack_quantity, :price)
+    elsif params[:purchase_b].present?
+      puts "purchase_bは存在する"
+      params[:purchase_b]&.permit(:content_quantity, :pack_quantity, :price)
+    else
+      puts "purchase_aとbどちらも存在しない"
+    end
+
+    if purchase_params.present?
+      puts "purchase_paramsは存在してフォームにデータが入る"
+      @form = ItemStep1Form.new(content_quantity: purchase_params[:content_quantity],
+                                pack_quantity: purchase_params[:pack_quantity],
+                                price: purchase_params[:price]
+      )
+    else
+      puts "purchase_paramsは存在せず、フォームは空白"
+      @form = ItemStep1Form.new(session[:item_new_step1])
+    end
   end
 
   def save_new_step1
