@@ -12,7 +12,6 @@ class ItemsController < ApplicationController
   end
 
   def new_step1
-
     puts "パラメーター確認#{params.inspect}"
     purchase_params = if params[:purchase_a].present?
       puts "purchase_aは存在する"
