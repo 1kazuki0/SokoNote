@@ -15,10 +15,10 @@ class ItemsController < ApplicationController
     puts "パラメーター確認#{params.inspect}"
     purchase_params = if params[:purchase_a].present?
       puts "purchase_aは存在する"
-      params[:purchase_a]&.permit(:content_quantity, :pack_quantity, :price)
+      params[:purchase_a]&.permit(:content_quantity, :pack_quantity, :price, :tax_rate)
     elsif params[:purchase_b].present?
       puts "purchase_bは存在する"
-      params[:purchase_b]&.permit(:content_quantity, :pack_quantity, :price)
+      params[:purchase_b]&.permit(:content_quantity, :pack_quantity, :price, :tax_rate)
     else
       puts "purchase_aとbどちらも存在しない"
     end
@@ -27,7 +27,8 @@ class ItemsController < ApplicationController
       puts "purchase_paramsは存在してフォームにデータが入る"
       @form = ItemStep1Form.new(content_quantity: purchase_params[:content_quantity],
                                 pack_quantity: purchase_params[:pack_quantity],
-                                price: purchase_params[:price]
+                                price: purchase_params[:price],
+                                tax_rate: purchase_params[:tax_rate]
       )
     else
       puts "purchase_paramsは存在せず、フォームは空白"
