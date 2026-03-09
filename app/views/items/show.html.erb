@@ -1,4 +1,11 @@
 <%# === 購入履歴一覧画面 === %>
+<% content_for :arrow_back do %>
+  arrow_back
+<% end %>
+<% content_for :title do %>
+  購入履歴一覧
+<% end %>
+
 <%# ─── 商品名・カテゴリ名の表示 ─── %>
 <h1 class="text-xl font-bold mb-4">
   <%= @item.name %>

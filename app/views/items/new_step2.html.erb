@@ -1,4 +1,10 @@
 <!-- 商品新規登録画面 2-2 -->
+<% content_for :arrow_back do %>
+  arrow_back
+<% end %>
+<% content_for :title do %>
+  商品登録
+<% end %>
 <%= render 'shared/error_messages', object: @form %>
 <div class= "bg-white rounded-xl p-4 shadow mb-6 ">
   <div class="flex items-center justify-between border-b border-gray-100 pb-2 mb-4">
