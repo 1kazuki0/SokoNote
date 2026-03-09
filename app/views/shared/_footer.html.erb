@@ -2,25 +2,28 @@
   <nav class="flex justify-around items-center h-16 max-w-xl mx-auto">
     
     <!--「商品一覧画面」に遷移する内容 -->
-    <%= link_to items_path, class: "flex flex-col items-center text-green" do %>
+    <%= link_to items_path, class: "flex flex-col items-center #{active_class('items', 'purchases')}" do %>
       <span class="material-symbols-outlined">list_alt</span>
       <span class="text-xs mt-1"><%= t('footer.index') %></span>
     <% end %>
 
     <!--「商品比較画面」に遷移する内容（現在はURLを"#"としています） -->
-    <%= link_to comparison_path, class: "flex flex-col items-center text-gray" do %>
+    <%= link_to comparison_path, class: "flex flex-col items-center #{active_class('comparison')}" do %>
       <span class="material-symbols-outlined text-28">balance</span>
       <span class="text-xs mt-1"><%= t('footer.comparison') %></span>
     <% end %>
 
     <!--「チラシ撮影画面」に遷移する内容（現在はURLを"#"としています） -->
-    <%= link_to "#", class: "flex flex-col items-center text-gray" do %>
-      <span class="material-symbols-outlined text-28">photo_camera</span>
-      <span class="text-xs mt-1"><%= t('footer.photo') %></span>
+    <%= link_to "#", class: "flex flex-col items-center #{active_class('#')}" do %>
+      <div class="flex flex-col items-center cursor-not-allowed relative group">
+        <span class="material-symbols-outlined text-28 group-hover:invisible">photo_camera</span>
+        <span class="text-xs mt-1 group-hover:invisible"><%= t('footer.photo') %></span>
+        <span class="text-[10px] absolute bottom-1 bg-gray-200 px-1 rounded invisible group-hover:visible">coming soon</span>
+      </div>
     <% end %>
     
     <!--「設定画面」に遷移する内容 -->
-    <%= link_to setting_path, class: "flex flex-col items-center text-gray" do %>
+    <%= link_to setting_path, class: "flex flex-col items-center #{active_class('setting')}" do %>
       <span class="material-symbols-outlined text-28">settings</span>
       <span class="text-xs mt-1"> <%= t('footer.setting') %></span>
     <% end %>
