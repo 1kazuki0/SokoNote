@@ -31,6 +31,33 @@
             <%= f.number_field :price, placeholder: "例：598", class: "w-full p-2 bg-transparent outline-none text-gray-700 text-sm", data: {compare_target: "priceA", action: "input->compare#calculate" } %>
           </div>
         </div>
+        <div>
+          <%= f.label :tax_rate, "税率", class: "text-gray-500" %>
+          <div class="flex mt-1 bg-gray-100 dark:bg-gray-800 p-1 rounded-xl">
+
+            <%# 税抜 (値: 0) %>
+            <div class="flex-1">
+              <%= f.radio_button :tax_rate, 0, checked: true, class: "hidden peer", id: "tax-none-a", data: {action: "change->compare#calculate"} %>
+              <%= f.label :tax_rate, "税抜", value: 0, for: "tax-none-a", 
+                class: "block text-center py-2 text-sm font-medium text-gray-500 dark:text-gray-400 rounded-lg cursor-pointer transition-all peer-checked:bg-white peer-checked:text-[#6abf3b] peer-checked:shadow-sm" %>
+            </div>
+
+            <%# 8% (値: 8) %>
+            <div class="flex-1">
+              <%= f.radio_button :tax_rate, 8, class: "hidden peer", id: "tax-8-a", data: {action: "change->compare#calculate"}  %>
+              <%= f.label :tax_rate, "8%", value: 8, for: "tax-8-a", 
+                class: "block text-center py-2 text-sm font-medium text-gray-500 dark:text-gray-400 rounded-lg cursor-pointer transition-all peer-checked:bg-white peer-checked:text-[#6abf3b] peer-checked:shadow-sm" %>
+            </div>
+
+            <%# 10% (値: 10) %>
+            <div class="flex-1">
+              <%= f.radio_button :tax_rate, 10, class: "hidden peer", id: "tax-10-a", data: {action: "change->compare#calculate"}  %>
+              <%= f.label :tax_rate, "10%", value: 10, for: "tax-10-a", 
+                class: "block text-center py-2 text-sm font-medium text-gray-500 dark:text-gray-400 rounded-lg cursor-pointer transition-all peer-checked:bg-white peer-checked:text-[#6abf3b] peer-checked:shadow-sm" %>
+            </div>
+          </div>
+        </div>
+
         <div class="mt-4 p-4 bg-gray-50 rounded-xl text-center">
           <p class="text-sm text-gray-500">単価（税抜）</p>
           <p class="text-2xl font-bold text-gray-800">
@@ -69,6 +96,33 @@
             <%= f.number_field :price, placeholder: "例：598", class: "w-full p-2 bg-transparent outline-none text-gray-700 text-sm", data: {compare_target: "priceB", action: "input->compare#calculate" } %>
           </div>
         </div>
+        <div>
+          <%= f.label :tax_rate, "税率", class: "text-gray-500" %>
+          <div class="flex mt-1 bg-gray-100 dark:bg-gray-800 p-1 rounded-xl">
+
+            <%# 税抜 (値: 0) %>
+            <div class="flex-1">
+              <%= f.radio_button :tax_rate, 0, checked: true, class: "hidden peer", id: "tax-none-b", data: {action: "change->compare#calculate"} %>
+              <%= f.label :tax_rate, "税抜", value: 0, for: "tax-none-b", 
+                class: "block text-center py-2 text-sm font-medium text-gray-500 dark:text-gray-400 rounded-lg cursor-pointer transition-all peer-checked:bg-white peer-checked:text-[#6abf3b] peer-checked:shadow-sm" %>
+            </div>
+
+            <%# 8% (値: 8) %>
+            <div class="flex-1">
+              <%= f.radio_button :tax_rate, 8, class: "hidden peer", id: "tax-8-b", data: {action: "change->compare#calculate"} %>
+              <%= f.label :tax_rate, "8%", value: 8, for: "tax-8-b", 
+                class: "block text-center py-2 text-sm font-medium text-gray-500 dark:text-gray-400 rounded-lg cursor-pointer transition-all peer-checked:bg-white peer-checked:text-[#6abf3b] peer-checked:shadow-sm" %>
+            </div>
+
+            <%# 10% (値: 10) %>
+            <div class="flex-1">
+              <%= f.radio_button :tax_rate, 10, class: "hidden peer", id: "tax-10-b", data: {action: "change->compare#calculate"} %>
+              <%= f.label :tax_rate, "10%", value: 10, for: "tax-10-b", 
+                class: "block text-center py-2 text-sm font-medium text-gray-500 dark:text-gray-400 rounded-lg cursor-pointer transition-all peer-checked:bg-white peer-checked:text-[#6abf3b] peer-checked:shadow-sm" %>
+            </div>
+          </div>
+        </div>
+
         <div class="mt-4 p-4 bg-gray-50 rounded-xl text-center">
           <p class="text-sm text-gray-500">単価（税抜）</p>
           <p class="text-2xl font-bold text-gray-800">

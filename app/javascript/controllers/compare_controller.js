@@ -10,37 +10,43 @@ export default class extends Controller {
   }
 
   static targets = [
-    "contentquantityA", "packquantityA", "priceA", "resultA",
-    "contentquantityB", "packquantityB", "priceB", "resultB",
+    "contentquantityA", "packquantityA", "priceA", "taxrateA", "resultA",
+    "contentquantityB", "packquantityB", "priceB", "taxrateB", "resultB",
     "compareResultItem",
     "cardA", "cardB", "badgeA", "badgeB"
   ]
 
   // A・B両方の単価を計算後、比較処理を実行する
   calculate() {
+    const taxrateA = this.element.querySelector('input[name="purchase_a[tax_rate]"]:checked')?.value ?? 0
+    const taxrateB = this.element.querySelector('input[name="purchase_b[tax_rate]"]:checked')?.value ?? 0
+    
     this.resultA.textContent = this.calcUnitPrice(
       this.contentquantityATarget.value,
       this.packquantityATarget.value,
-      this.priceATarget.value
+      this.priceATarget.value,
+      taxrateA
     )
     this.resultB.textContent = this.calcUnitPrice(
       this.contentquantityBTarget.value,
       this.packquantityBTarget.value,
-      this.priceBTarget.value
+      this.priceBTarget.value,
+      taxrateB
     )
     this.compare()
 
   }
   // 単価 = 価格 ÷ 内容量 ÷ 個数 で算出
   // 未入力・0の項目がある場合は計算不能のため"---"を返す
-  calcUnitPrice(contentquantity, packquantity, price){
+  calcUnitPrice(contentquantity, packquantity, price, taxrate){
     const c = parseFloat(contentquantity)
     const q = parseFloat(packquantity)
     const p = parseFloat(price)
+    const t = parseFloat(taxrate)
 
-    if (!p || !c || !q) return "---"
+    if (!p || !c || !q || isNaN(t)) return "---"
 
-    return (p / c / q).toFixed(2)
+    return (p / (1 + t / 100) / c / q).toFixed(2)
   }
 
   // A・Bの単価を比較し差額を表示する
