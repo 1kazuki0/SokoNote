@@ -1,3 +1,6 @@
+<% content_for :title do %>
+  底値商品一覧
+<% end %>
 <div class="space-y-4">
     <% @items.each do |item| %>
       <% cheapest_purchase = item.purchases.min_by { |p| p.unit_price } %>

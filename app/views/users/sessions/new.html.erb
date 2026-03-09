@@ -1,4 +1,7 @@
 <!-- ログイン画面 -->
+<% content_for :arrow_back do %>
+  arrow_back
+<% end %>
 <div class="flex flex-col md:flex-row items-center justify-center gap-6 p-4"> 
   <div class="bg-white rounded-3xl shadow-xl w-full px-7 py-8">
     <h2 class="text-center text-2xl font-bold text-gray-800 mb-6"><%= t("devise.sessions.new.sign_in") %></h2>
