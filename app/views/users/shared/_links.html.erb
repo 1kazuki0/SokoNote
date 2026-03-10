@@ -7,7 +7,7 @@
 <% end %>
 
 <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
-  <%= link_to t("devise.shared.links.forgot_your_password"), new_password_path(resource_name), class: "block mt-6 text-center text-sm text-gray-500 underline" %>
+  <%= link_to t("devise.shared.links.forgot_your_password"),"#", class: "block mt-6 text-center text-sm text-gray-500 underline cursor-not-allowed" %> <!-- パス new_password_path(resource_name) -->
 <% end %>
 
 <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>

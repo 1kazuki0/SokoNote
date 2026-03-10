@@ -12,132 +12,132 @@
   <div class="grid grid-cols-2 gap-4 relative">
 
     <%# ─── 商品A（内容量・パック数・価格のフォーム） ─── %>
-    <div class="bg-white rounded-2xl px-4 pb-4 pt-2 border border-gray-100 shadow-sm "data-compare-target="cardA">
+    <div class="bg-white rounded-2xl px-4 pb-4 pt-2 border border-light-gray shadow-sm "data-compare-target="cardA">
       <div class="invisible text-center h-7" data-compare-target="badgeA">
-        <span class="bg-green text-white text-xs font-bold px-3 py-1 rounded-full">おトク！</span>
+        <span class="bg-primary text-white text-xs font-bold px-3 py-1 rounded-full">おトク！</span>
       </div>
       <h2 class="text-xl font-bold text-center mb-3">商品A</h2>
 
       <%= form_with model: @purchase_a, url: new_step1_items_path, method: :get, scope: :purchase_a, class: "space-y-4 text-xs" do |f| %>
         <div>
-          <%= f.label :content_quantity, "内容量" ,class: "text-gray-500" %>
-          <div class="mt-1 flex items-center border border-gray-200 rounded-lg bg-gray-100 focus-within:border-green focus-within:ring-1 focus-within:ring-green transition">
-            <%= f.number_field :content_quantity, placeholder: "例：500", class: "w-full p-2 bg-transparent outline-none text-gray-700 text-sm", data: {compare_target: "contentquantityA", action: "input->compare#calculate"} %>
+          <%= f.label :content_quantity, "内容量" ,class: "text-black" %>
+          <div class="mt-1 flex items-center border border-light-gray rounded-lg bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
+            <%= f.number_field :content_quantity, placeholder: "例：500", class: "w-full p-2 bg-transparent outline-none text-dark-gray text-sm", data: {compare_target: "contentquantityA", action: "input->compare#calculate"} %>
           </div>
         </div>
         <div>
-          <%= f.label :pack_quantity, "パック数", class: "text-gray-500" %>
-          <div class="mt-1 flex items-center border border-gray-200 rounded-lg bg-gray-100 focus-within:border-green focus-within:ring-1 focus-within:ring-green transition">
-            <%= f.number_field :pack_quantity, placeholder: "例：3", class: "w-full p-2 bg-transparent outline-none text-gray-700 text-sm", data: {compare_target: "packquantityA", action: "input->compare#calculate" } %>
+          <%= f.label :pack_quantity, "パック数", class: "text-black" %>
+          <div class="mt-1 flex items-center border border-light-gray rounded-lg bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
+            <%= f.number_field :pack_quantity, placeholder: "例：3", class: "w-full p-2 bg-transparent outline-none text-dark-gray text-sm", data: {compare_target: "packquantityA", action: "input->compare#calculate" } %>
           </div>
         </div>
         <div>
-          <%= f.label :price, "価格", class: "text-gray-500" %>
-          <div class="mt-1 flex items-center border border-gray-200 rounded-lg bg-gray-100 focus-within:border-green focus-within:ring-1 focus-within:ring-green transition">
-            <%= f.number_field :price, placeholder: "例：598", class: "w-full p-2 bg-transparent outline-none text-gray-700 text-sm", data: {compare_target: "priceA", action: "input->compare#calculate" } %>
+          <%= f.label :price, "価格", class: "text-black" %>
+          <div class="mt-1 flex items-center border border-light-gray rounded-lg bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
+            <%= f.number_field :price, placeholder: "例：598", class: "w-full p-2 bg-transparent outline-none text-dark-gray text-sm", data: {compare_target: "priceA", action: "input->compare#calculate" } %>
           </div>
         </div>
         <div>
-          <%= f.label :tax_rate, "税率", class: "text-gray-500" %>
-          <div class="flex mt-1 bg-gray-100 dark:bg-gray-800 p-1 rounded-xl">
+          <%= f.label :tax_rate, "税率", class: "text-black" %>
+          <div class="flex mt-1 bg-light-gray dark:bg-back p-1 rounded-xl">
 
             <%# 税抜 (値: 0) %>
             <div class="flex-1">
               <%= f.radio_button :tax_rate, 0, checked: true, class: "hidden peer", id: "tax-none-a", data: {action: "change->compare#calculate"} %>
               <%= f.label :tax_rate, "税抜", value: 0, for: "tax-none-a", 
-                class: "block text-center py-2 text-sm font-medium text-gray-500 dark:text-gray-400 rounded-lg cursor-pointer transition-all peer-checked:bg-white peer-checked:text-[#6abf3b] peer-checked:shadow-sm" %>
+                class: "block text-center py-2 text-sm font-medium text-dark-gray dark:text-dark-gray rounded-lg cursor-pointer transition-all peer-checked:bg-white peer-checked:text-primary peer-checked:shadow-sm" %>
             </div>
 
             <%# 8% (値: 8) %>
             <div class="flex-1">
               <%= f.radio_button :tax_rate, 8, class: "hidden peer", id: "tax-8-a", data: {action: "change->compare#calculate"}  %>
               <%= f.label :tax_rate, "8%", value: 8, for: "tax-8-a", 
-                class: "block text-center py-2 text-sm font-medium text-gray-500 dark:text-gray-400 rounded-lg cursor-pointer transition-all peer-checked:bg-white peer-checked:text-[#6abf3b] peer-checked:shadow-sm" %>
+                class: "block text-center py-2 text-sm font-medium text-dark-gray dark:text-middle-gray rounded-lg cursor-pointer transition-all peer-checked:bg-white peer-checked:text-primary peer-checked:shadow-sm" %>
             </div>
 
             <%# 10% (値: 10) %>
             <div class="flex-1">
               <%= f.radio_button :tax_rate, 10, class: "hidden peer", id: "tax-10-a", data: {action: "change->compare#calculate"}  %>
               <%= f.label :tax_rate, "10%", value: 10, for: "tax-10-a", 
-                class: "block text-center py-2 text-sm font-medium text-gray-500 dark:text-gray-400 rounded-lg cursor-pointer transition-all peer-checked:bg-white peer-checked:text-[#6abf3b] peer-checked:shadow-sm" %>
+                class: "block text-center py-2 text-sm font-medium text-dark-gray dark:text-middle-gray rounded-lg cursor-pointer transition-all peer-checked:bg-white peer-checked:text-primary peer-checked:shadow-sm" %>
             </div>
           </div>
         </div>
 
-        <div class="mt-4 p-4 bg-gray-50 rounded-xl text-center">
-          <p class="text-sm text-gray-500">単価（税抜）</p>
-          <p class="text-2xl font-bold text-gray-800">
+        <div class="mt-4 p-4 bg-light-gray/50 rounded-xl text-center">
+          <p class="text-sm text-middle-gray">単価（税抜）</p>
+          <p class="text-2xl font-bold text-back">
             <span data-compare-target="resultA">---</span>
             <span class="text-sm font-normal">円</span>
           </p>
         </div>
         <div class="mt-4 p-4 flex justify-center">
-          <%= f.submit "Aを登録する", class: "text-base w-full p-2 md:px-4 py-3 rounded-full border border-green text-green hover:bg-green hover:text-white"%>
+          <%= f.submit "Aを登録する", class: "text-base w-full p-2 md:px-4 py-3 rounded-full border border-primary text-primary hover:bg-primary hover:text-white"%>
         </div>
       <% end %>
     </div>
 
     <%# ─── 商品B（内容量・パック数・価格のフォーム） ─── %>
-    <div class="bg-white rounded-2xl px-4 pb-4 pt-2 border border-gray-100 shadow-sm " data-compare-target="cardB">
+    <div class="bg-white rounded-2xl px-4 pb-4 pt-2 border border-light-gray shadow-sm " data-compare-target="cardB">
       <div class="invisible text-center h-7" data-compare-target="badgeB">
-        <span class="bg-green text-white text-xs font-bold px-3 py-1 rounded-full">おトク！</span>
+        <span class="bg-primary text-white text-xs font-bold px-3 py-1 rounded-full">おトク！</span>
       </div>
       <h2 class="text-xl font-bold text-center mb-3">商品B</h2>
       <%= form_with model: @purchase_b, url: new_step1_items_path, method: :get, scope: :purchase_b, class: "space-y-4 text-xs" do |f| %>
         <div>
-          <%= f.label :content_quantity, "内容量" ,class: "text-gray-500" %>
-          <div class="mt-1 flex items-center border border-gray-200 rounded-lg bg-gray-100 focus-within:border-green focus-within:ring-1 focus-within:ring-green transition">
-            <%= f.number_field :content_quantity, placeholder: "例：500", class: "w-full p-2 bg-transparent outline-none text-gray-700 text-sm", data: {compare_target: "contentquantityB", action: "input->compare#calculate" } %>
+          <%= f.label :content_quantity, "内容量" ,class: "text-black" %>
+          <div class="mt-1 flex items-center border border-light-gray rounded-lg bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
+            <%= f.number_field :content_quantity, placeholder: "例：500", class: "w-full p-2 bg-transparent outline-none text-dark-gray text-sm", data: {compare_target: "contentquantityB", action: "input->compare#calculate" } %>
           </div>
         </div>
         <div>
-          <%= f.label :pack_quantity, "パック数", class: "text-gray-500" %>
-          <div class="mt-1 flex items-center border border-gray-200 rounded-lg bg-gray-100 focus-within:border-green focus-within:ring-1 focus-within:ring-green transition">
-            <%= f.number_field :pack_quantity, placeholder: "例：3", class: "w-full p-2 bg-transparent outline-none text-gray-700 text-sm", data: {compare_target: "packquantityB", action: "input->compare#calculate" } %>
+          <%= f.label :pack_quantity, "パック数", class: "text-black" %>
+          <div class="mt-1 flex items-center border border-light-gray rounded-lg bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
+            <%= f.number_field :pack_quantity, placeholder: "例：3", class: "w-full p-2 bg-transparent outline-none text-dark-gray text-sm", data: {compare_target: "packquantityB", action: "input->compare#calculate" } %>
           </div>
         </div>
         <div>
-          <%= f.label :price, "価格", class: "text-gray-500" %>
-          <div class="mt-1 flex items-center border border-gray-200 rounded-lg bg-gray-100 focus-within:border-green focus-within:ring-1 focus-within:ring-green transition">
-            <%= f.number_field :price, placeholder: "例：598", class: "w-full p-2 bg-transparent outline-none text-gray-700 text-sm", data: {compare_target: "priceB", action: "input->compare#calculate" } %>
+          <%= f.label :price, "価格", class: "text-black" %>
+          <div class="mt-1 flex items-center border border-light-gray rounded-lg bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
+            <%= f.number_field :price, placeholder: "例：598", class: "w-full p-2 bg-transparent outline-none text-dark-gray text-sm", data: {compare_target: "priceB", action: "input->compare#calculate" } %>
           </div>
         </div>
         <div>
-          <%= f.label :tax_rate, "税率", class: "text-gray-500" %>
-          <div class="flex mt-1 bg-gray-100 dark:bg-gray-800 p-1 rounded-xl">
+          <%= f.label :tax_rate, "税率", class: "text-black" %>
+          <div class="flex mt-1 bg-light-gray dark:bg-back p-1 rounded-xl">
 
             <%# 税抜 (値: 0) %>
             <div class="flex-1">
               <%= f.radio_button :tax_rate, 0, checked: true, class: "hidden peer", id: "tax-none-b", data: {action: "change->compare#calculate"} %>
               <%= f.label :tax_rate, "税抜", value: 0, for: "tax-none-b", 
-                class: "block text-center py-2 text-sm font-medium text-gray-500 dark:text-gray-400 rounded-lg cursor-pointer transition-all peer-checked:bg-white peer-checked:text-[#6abf3b] peer-checked:shadow-sm" %>
+                class: "block text-center py-2 text-sm font-medium text-dark-gray dark:text-middle-gray rounded-lg cursor-pointer transition-all peer-checked:bg-white peer-checked:text-primary peer-checked:shadow-sm" %>
             </div>
 
             <%# 8% (値: 8) %>
             <div class="flex-1">
               <%= f.radio_button :tax_rate, 8, class: "hidden peer", id: "tax-8-b", data: {action: "change->compare#calculate"} %>
               <%= f.label :tax_rate, "8%", value: 8, for: "tax-8-b", 
-                class: "block text-center py-2 text-sm font-medium text-gray-500 dark:text-gray-400 rounded-lg cursor-pointer transition-all peer-checked:bg-white peer-checked:text-[#6abf3b] peer-checked:shadow-sm" %>
+                class: "block text-center py-2 text-sm font-medium text-dark-gray dark:text-middle-gray rounded-lg cursor-pointer transition-all peer-checked:bg-white peer-checked:text-primary peer-checked:shadow-sm" %>
             </div>
 
             <%# 10% (値: 10) %>
             <div class="flex-1">
               <%= f.radio_button :tax_rate, 10, class: "hidden peer", id: "tax-10-b", data: {action: "change->compare#calculate"} %>
               <%= f.label :tax_rate, "10%", value: 10, for: "tax-10-b", 
-                class: "block text-center py-2 text-sm font-medium text-gray-500 dark:text-gray-400 rounded-lg cursor-pointer transition-all peer-checked:bg-white peer-checked:text-[#6abf3b] peer-checked:shadow-sm" %>
+                class: "block text-center py-2 text-sm font-medium text-dark-gray dark:text-middle-gray rounded-lg cursor-pointer transition-all peer-checked:bg-white peer-checked:text-primary peer-checked:shadow-sm" %>
             </div>
           </div>
         </div>
 
-        <div class="mt-4 p-4 bg-gray-50 rounded-xl text-center">
-          <p class="text-sm text-gray-500">単価（税抜）</p>
-          <p class="text-2xl font-bold text-gray-800">
+        <div class="mt-4 p-4 bg-light-gray/50 rounded-xl text-center">
+          <p class="text-sm text-middle-gray">単価（税抜）</p>
+          <p class="text-2xl font-bold text-back">
             <span data-compare-target="resultB">---</span>
             <span class="text-sm font-normal">円</span>
           </p>
         </div>
         <div class="mt-4 p-4 flex justify-center">
-          <%= f.submit "Bを登録する", class: "text-base w-full p-2 md:px-4 py-3 rounded-full border border-green text-green hover:bg-green hover:text-white"%>
+          <%= f.submit "Bを登録する", class: "text-base w-full p-2 md:px-4 py-3 rounded-full border border-primary text-primary hover:bg-primary hover:text-white"%>
         </div>
       <% end %>
     </div>

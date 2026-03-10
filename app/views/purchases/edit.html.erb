@@ -3,109 +3,109 @@
   商品情報の編集
 <% end %>
 <div class"flex flex-col md:flex-row items-center justify-center gap-6 p-4">
-  <div class="bg-white rounded-3xl shadow-xl w-full px-7 py-8">
-    <h1 class="text-center text-2xl font-bold text-gray-800 mb-6">商品情報の更新</h1>
+  <div class="bg-white rounded-3xl shadow-xl w-full px-7 py-8 border border-light-gray">
+    <h1 class="text-center text-2xl font-bold text-black mb-6">商品情報の更新</h1>
     <%= form_with model: @form, url: purchase_path(@purchase), method: :patch, local: false do |f| %>
       <%= render 'shared/error_messages', object: @form %>
       
       <div class="mb-5">
-        <%= f.label :item_name, class: "block text-gray-700 text-sm font-semibold mb-2"%>
-        <div class="flex items-center border border-gray-200 rounded-xl px-3 py-3 bg-white focus-within:border-[#6abf3b] focus-within:ring-1 focus-within:ring-[#6abf3b] transition">
-          <%= f.text_field :item_name, placeholder: "例：牛乳 / 箱ティッシュ", autofocus: true, autocomplete: "off", class: "flex-1 outline-none text-gray-700 text-sm bg-transparent placeholder-gray-400"%>
+        <%= f.label :item_name, class: "block text-black text-sm font-semibold mb-2"%>
+        <div class="flex items-center border border-light-gray rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
+          <%= f.text_field :item_name, placeholder: "例：牛乳 / 箱ティッシュ", autofocus: true, autocomplete: "off", class: "flex-1 outline-none text-black text-sm bg-transparent placeholder-dark-middle"%>
         </div>
       </div>
 
       <div class="mb-5">
-        <%= f.label :category_name, class: "block text-gray-700 text-sm font-semibold mb-2"%>
-        <div class="flex items-center border border-gray-200 rounded-xl px-3 py-3 bg-white focus-within:border-[#6abf3b] focus-within:ring-1 focus-within:ring-[#6abf3b] transition">
-          <%= f.text_field :category_name, placeholder: "例：飲料 / 日用品", autocomplete: "off", class: "flex-1 outline-none text-gray-700 text-sm bg-transparent placeholder-gray-400"%>
+        <%= f.label :category_name, class: "block text-black text-sm font-semibold mb-2"%>
+        <div class="flex items-center border border-light-gray rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
+          <%= f.text_field :category_name, placeholder: "例：飲料 / 日用品", autocomplete: "off", class: "flex-1 outline-none text-black text-sm bg-transparent placeholder-dark-middle"%>
         </div>
       </div>
       
       <div class="mb-5">
-        <%= f.label :brand, class: "block text-gray-700 text-sm font-semibold mb-2" %>
-        <div class="flex items-center border border-gray-200 rounded-xl px-3 py-3 bg-white focus-within:border-[#6abf3b] focus-within:ring-1 focus-within:ring-[#6abf3b] transition">
-          <%= f.text_field :brand, placeholder: "例：伊藤園 / アタック", autofocus: true, autocomplete: "off", class: "flex-1 outline-none text-gray-700 text-sm bg-transparent placeholder-gray-400" %>
+        <%= f.label :brand, class: "block text-black text-sm font-semibold mb-2" %>
+        <div class="flex items-center border border-light-gray rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
+          <%= f.text_field :brand, placeholder: "例：伊藤園 / アタック", autofocus: true, autocomplete: "off", class: "flex-1 outline-none text-black text-sm bg-transparent placeholder-dark-middle" %>
         </div>
       </div>
 
       <div class="mb-5">
-        <%= f.label :store, class: "block text-gray-700 text-sm font-semibold mb-2" %>
-        <div class="flex items-center border border-gray-200 rounded-xl px-3 py-3 bg-white focus-within:border-[#6abf3b] focus-within:ring-1 focus-within:ring-[#6abf3b] transition">
-          <%= f.text_field :store, placeholder: "例：〇〇スーパー〇〇店 / 〇〇薬局", autocomplete: "off", class: "flex-1 outline-none text-gray-700 text-sm bg-transparent placeholder-gray-400"%>
+        <%= f.label :store, class: "block text-black text-sm font-semibold mb-2" %>
+        <div class="flex items-center border border-light-gray rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
+          <%= f.text_field :store, placeholder: "例：〇〇スーパー〇〇店 / 〇〇薬局", autocomplete: "off", class: "flex-1 outline-none text-black text-sm bg-transparent placeholder-dark-middle"%>
         </div>
       </div>
   
       <div class="mb-5">
         <div class="grid grid-cols-2 gap-3">
           <div class="flex flex-col">
-            <%= f.label :content_quantity, class: "block text-gray-700 text-sm font-semibold mb-2" %>
-            <div class="flex items-center border border-gray-200 rounded-xl px-3 py-3 bg-white focus-within:border-[#6abf3b] focus-within:ring-1 focus-within:ring-[#6abf3b] transition">
-              <%= f.number_field :content_quantity, placeholder: "例：3 , 500", autocomplete: "off", class: "flex-1 outline-none text-gray-700 text-sm bg-transparent placeholder-gray-400"%>
+            <%= f.label :content_quantity, class: "block text-black text-sm font-semibold mb-2" %>
+            <div class="flex items-center border border-light-gray rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
+              <%= f.number_field :content_quantity, placeholder: "例：3 , 500", autocomplete: "off", class: "flex-1 outline-none text-black text-sm bg-transparent placeholder-dark-middle"%>
             </div>
           </div>
 
           <div class="flex flex-col">
-            <%= f.label :content_unit, class: "block text-gray-700 text-sm font-semibold mb-2" %>
-            <div class="flex items-center border border-gray-200 rounded-xl px-3 py-3 bg-white focus-within:border-[#6abf3b] focus-within:ring-1 focus-within:ring-[#6abf3b] transition">
-              <%= f.text_field :content_unit, placeholder: "例：ml、g、枚、本 など", autocomplete: "off", class: "flex-1 outline-none text-gray-700 text-sm bg-transparent placeholder-gray-400"%>
+            <%= f.label :content_unit, class: "block text-black text-sm font-semibold mb-2" %>
+            <div class="flex items-center border border-light-gray rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
+              <%= f.text_field :content_unit, placeholder: "例：ml、g、枚、本 など", autocomplete: "off", class: "flex-1 outline-none text-black text-sm bg-transparent placeholder-dark-middle"%>
             </div>
           </div>
           
           <div class="flex flex-col">
-            <%= f.label :pack_quantity, class: "block text-gray-700 text-sm font-semibold mb-2" %>
-            <div class="flex items-center border border-gray-200 rounded-xl px-3 py-3 bg-white focus-within:border-[#6abf3b] focus-within:ring-1 focus-within:ring-[#6abf3b] transition">
-              <%= f.number_field :pack_quantity, placeholder: "例：24 , 1", autocomplete: "off", class: "flex-1 outline-none text-gray-700 text-sm bg-transparent placeholder-gray-400"%>
+            <%= f.label :pack_quantity, class: "block text-black text-sm font-semibold mb-2" %>
+            <div class="flex items-center border border-light-gray rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
+              <%= f.number_field :pack_quantity, placeholder: "例：24 , 1", autocomplete: "off", class: "flex-1 outline-none text-black text-sm bg-transparent placeholder-dark-middle"%>
             </div>
           </div>
 
           <div class="flex flex-col">
-            <%= f.label :pack_unit, class: "block text-gray-700 text-sm font-semibold mb-2" %>
-            <div class="flex items-center border border-gray-200 rounded-xl px-3 py-3 bg-white focus-within:border-[#6abf3b] focus-within:ring-1 focus-within:ring-[#6abf3b] transition">
-              <%= f.text_field :pack_unit, placeholder: "パック、箱、袋 など", autocomplete: "off", class: "flex-1 outline-none text-gray-700 text-sm bg-transparent placeholder-gray-400"%>
+            <%= f.label :pack_unit, class: "block text-black text-sm font-semibold mb-2" %>
+            <div class="flex items-center border border-light-gray rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
+              <%= f.text_field :pack_unit, placeholder: "パック、箱、袋 など", autocomplete: "off", class: "flex-1 outline-none text-black text-sm bg-transparent placeholder-dark-middle"%>
             </div>
           </div>
         </div>
       </div>
 
       <div class="mb-5">
-        <%= f.label :price, class: "block text-gray-700 text-sm font-semibold mb-2" %>
-        <div class="flex items-center border border-gray-200 rounded-xl px-3 py-3 bg-white focus-within:border-[#6abf3b] focus-within:ring-1 focus-within:ring-[#6abf3b] transition">
-          <%= f.number_field :price, placeholder: "例：298 / 1200", autocomplete: "off", class: "flex-1 outline-none text-gray-700 text-sm bg-transparent placeholder-gray-400"%>
+        <%= f.label :price, class: "block text-black text-sm font-semibold mb-2" %>
+        <div class="flex items-center border border-light-gray rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
+          <%= f.number_field :price, placeholder: "例：298 / 1200", autocomplete: "off", class: "flex-1 outline-none text-black text-sm bg-transparent placeholder-dark-middle"%>
         </div>
       </div>
 
 
       <div class="space-y-2 mb-5">
-        <%= f.label :tax_rate, class: "block text-gray-700 text-sm font-semibold mb-2" %>
-        <div class="flex bg-gray-100 dark:bg-gray-800 p-1 rounded-xl">
+        <%= f.label :tax_rate, class: "block text-black text-sm font-semibold mb-2" %>
+        <div class="flex bg-light-gray dark:bg-black p-1 rounded-xl">
           
           <div class="flex-1">
             <%= f.radio_button :tax_rate, 0, checked: true, class: "hidden peer", id: "tax-none" %>
-            <%= f.label :tax_rate, "税抜", value: 0, for: "tax-none", class: "block text-center py-2 text-sm font-medium text-gray-500 dark:text-gray-400 rounded-lg cursor-pointer transition-all peer-checked:bg-white peer-checked:text-[#6abf3b] peer-checked:shadow-sm" %>
+            <%= f.label :tax_rate, "税抜", value: 0, for: "tax-none", class: "block text-center py-2 text-sm font-medium text-dark-gray dark:text-dark-middle rounded-lg cursor-pointer transition-all peer-checked:bg-white peer-checked:text-primary peer-checked:shadow-sm" %>
           </div>
           
           <div class="flex-1">
             <%= f.radio_button :tax_rate, 8, class: "hidden peer", id: "tax-8" %>
-            <%= f.label :tax_rate, "8%", value: 8, for: "tax-8", class: "block text-center py-2 text-sm font-medium text-gray-500 dark:text-gray-400 rounded-lg cursor-pointer transition-all peer-checked:bg-white peer-checked:text-[#6abf3b] peer-checked:shadow-sm" %>
+            <%= f.label :tax_rate, "8%", value: 8, for: "tax-8", class: "block text-center py-2 text-sm font-medium text-dark-gray dark:text-dark-middle rounded-lg cursor-pointer transition-all peer-checked:bg-white peer-checked:text-primary peer-checked:shadow-sm" %>
           </div>
 
           <div class="flex-1">
             <%= f.radio_button :tax_rate, 10, class: "hidden peer", id: "tax-10" %>
-            <%= f.label :tax_rate, "10%", value: 10, for: "tax-10", class: "block text-center py-2 text-sm font-medium text-gray-500 dark:text-gray-400 rounded-lg cursor-pointer transition-all peer-checked:bg-white peer-checked:text-[#6abf3b] peer-checked:shadow-sm" %>
+            <%= f.label :tax_rate, "10%", value: 10, for: "tax-10", class: "block text-center py-2 text-sm font-medium text-dark-gray dark:text-dark-middle rounded-lg cursor-pointer transition-all peer-checked:bg-white peer-checked:text-primary peer-checked:shadow-sm" %>
           </div>
         </div>
       </div>
 
       <div class="mb-5">
-        <%= f.label :purchased_on, class: "block text-gray-700 text-sm font-semibold mb-2" %>
-        <div class="flex items-center border border-gray-200 rounded-xl px-3 py-3 bg-white focus-within:border-[#6abf3b] focus-within:ring-1 focus-within:ring-[#6abf3b] transition">
-          <%= f.date_field :purchased_on, class: "flex-1 outline-none text-gray-700 text-sm bg-transparent placeholder-gray-400"%>
+        <%= f.label :purchased_on, class: "block text-black text-sm font-semibold mb-2" %>
+        <div class="flex items-center border border-light-gray rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
+          <%= f.date_field :purchased_on, class: "flex-1 outline-none text-black text-sm bg-transparent placeholder-dark-middle"%>
         </div>
       </div>
   
       <div class="fixed bottom-28 left-0 right-0 mx-auto max-w-xl px-6 flex justify-end">
-        <%= f.submit "この内容で更新する", class: "bg-[#6abf3b] text-white px-6 py-4 rounded-full shadow-lg flex items-center justify-center font-bold no-underline hover:opacity-90 transition-opacity cursor-pointer"%>
+        <%= f.submit "この内容で更新する", class: "bg-primary text-white px-6 py-4 rounded-full shadow-lg flex items-center justify-center font-bold no-underline hover:opacity-90 transition-opacity cursor-pointer"%>
       </div>    
     <% end %>
   </div>
