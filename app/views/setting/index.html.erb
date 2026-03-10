@@ -1,8 +1,58 @@
 <% content_for :title do %>
   設定
 <% end %>
-<h1>設定画面</h1>
-<div class= p-2>
-  <%= button_to "ログアウトする", destroy_user_session_path, method: :delete, class: "inline-block bg-green text-white px-6 py-2 rounded hover:bg-green-600 focus:outline-none focus:ring-green-400" %>
-</div>
+<div class="space-y-6">
 
+  <!-- アカウント -->
+  <section>
+    <p class="font-bold text-primary mb-2 px-1">アカウント</p>
+    <div class="bg-white rounded-2xl shadow-sm ring ring-light-gray">
+      <%= link_to "#", class: "flex items-center gap-4 p-4 rounded-2xl hover:bg-light-gray transition" do %>
+        <div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary">
+          <span class="material-symbols-outlined text-xl">account_circle</span>
+        </div>
+        <div class="flex-1">
+          <p class="font-bold text-text-base text-sm">プロフィール設定</p>
+          <p class="text-xs text-text-muted">名前、メールアドレス</p>
+        </div>
+        <span class="material-symbols-outlined text-middle-gray">chevron_right</span>
+      <% end %>
+    </div>
+  </section>
+
+  <!-- サポート & 情報 -->
+  <section>
+    <p class="font-bold text-primary mb-2 px-1">サポート &amp; 情報</p>
+    <div class="bg-white rounded-2xl shadow-sm ring ring-light-gray">
+      <!-- 利用規約 -->
+      <%= link_to "#", class: "flex items-center gap-4 p-4 rounded-t-2xl hover:bg-light-gray transition" do %>
+        <div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary">
+          <span class="material-symbols-outlined text-xl">description</span>
+        </div>
+        <p class="flex-1 font-bold text-text-base text-sm">利用規約</p>
+        <span class="material-symbols-outlined text-middle-gray">chevron_right</span>
+      <% end %>
+      <hr class="border-light-gray">
+      <!-- プライバシーポリシー -->
+      <%= link_to "#", class: "flex items-center gap-4 p-4 rounded-b-2xl hover:bg-light-gray transition" do %>
+        <div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary">
+          <span class="material-symbols-outlined text-xl">privacy_tip</span>
+        </div>
+        <p class="flex-1 font-bold text-text-base text-sm">プライバシーポリシー</p>
+        <span class="material-symbols-outlined text-middle-gray">chevron_right</span>
+      <% end %>
+
+    </div>
+  </section>
+
+  <!-- ログアウト -->
+  <section>
+    <div class="bg-white rounded-2xl shadow-sm ring ring-light-gray">
+      <%= button_to destroy_user_session_path, method: :delete,
+          class: "w-full flex items-center justify-center gap-2 p-4 text-error font-bold cursor-pointer text-sm hover:bg-error/10 rounded-2xl transition" do %>
+        <span class="material-symbols-outlined text-xl">logout</span>
+        ログアウト
+      <% end %>
+    </div>
+  </section>
+</div>
