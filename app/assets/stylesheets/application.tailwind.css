@@ -4,15 +4,19 @@
 /* 以下は本アプリ共通の設定を記述 */
 @theme {
   /* 以下は配色を記述 */
-  --color-green:      #83CC15;
-  --color-yellow:     #F9D01F;
-  --color-orange:     #F39800;
-  --color-red:        #E65540;
-  
-  --color-white:      #FDFDFD;
-  --color-black:      #333333;
-  --color-light-gray: #F0F0F0;
-  --color-dark-gray:  #B1B1B1;
+  --color-primary: #83CC15; /* 明るい緑色 */
+  --color-secondary: #6EA016; /* 暗い緑色 */
+  --color-accent: #F39800; /* オレンジ */
+  --color-neutral: #FCFDF7; /* 背景色 */
+  --color-error: #E65540; /* 赤 */
+
+  --color-white: #FDFDFD; /* 白 */
+  --color-black: #333333; /* 黒 */
+  --color-dark-gray: #818181; /* 濃灰 */
+  --color-middle-gray: #B1B1B1; /* 中間灰 */
+  --color-light-gray: #DFDFDF; /* 薄灰 */
+/* #F9D01F;黄色 */
+/*  #E65540;赤 */
 
   --color-flash-success-bg: #f7fee7;
   --color-flash-success-text: #166534;

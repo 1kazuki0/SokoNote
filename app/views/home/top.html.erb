@@ -4,20 +4,20 @@
     <div class="text-center max-w-screen-xl mx-auto @container">
       <div class="flex flex-col gap-8">
         <div class="flex flex-col gap-6 items-center">
-          <div class="mb-5 inline-flex items-center self-start px-3 py-1 rounded-full bg-secondary/20 text-secondary text-sm font-bold">
+          <div class="mb-5 inline-flex items-center text-left px-3 py-1 rounded-full bg-secondary/20 text-secondary text-sm font-bold">
             節約をもっとスマートに
           </div>
           <h1 class="mb-5 text-2xl sm:text-4xl @[480px]:text-5xl font-black leading-tight tracking-tight text-slate-900 dark:text-white">
             <span class="whitespace-nowrap">「もっと安く買えたかも」を防ぐ</span><br/>底値×単価記録アプリ
           </h1>
-          <p class="mb-5 text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+          <p class="mb-5 text-lg text-dark-gray dark:text-slate-400 leading-relaxed">
             いつものお買い物をスマートに。単価比較で賢く節約。
           </p>
           <div class="flex flex-wrap gap-4 pt-2">
             <%= link_to "ログイン", new_user_session_path,
-                class: "flex flex-1 @[480px]:flex-none min-w-[160px] cursor-pointer items-center justify-center rounded-xl h-14 px-8 bg-green text-white text-lg font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all" %>
+                class: "flex flex-1 @[480px]:flex-none min-w-[160px] cursor-pointer items-center justify-center rounded-xl h-14 px-8 bg-primary text-white text-lg font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all" %>
             <%= link_to "新規登録", new_user_registration_path,
-                class: "flex flex-1 @[480px]:flex-none min-w-[160px] cursor-pointer items-center justify-center rounded-xl h-14 px-8 bg-orange text-white text-lg font-bold shadow-lg shadow-secondary/20 hover:scale-[1.02] active:scale-[0.98] transition-all" %>
+                class: "flex flex-1 @[480px]:flex-none min-w-[160px] cursor-pointer items-center justify-center rounded-xl h-14 px-8 bg-accent text-white text-lg font-bold shadow-lg shadow-secondary/20 hover:scale-[1.02] active:scale-[0.98] transition-all" %>
           </div>
         </div>
       </div>
@@ -34,7 +34,7 @@
         <p class="text-lg @[480px]:text-xl leading-loose text-slate-700 dark:text-slate-300">
           スーパーや薬局で「別の店の方が安かった」「どちらが本当に安いの」迷った経験はありませんか？
         </p>
-        <div class="my-8 flex justify-center text-secondary">
+        <div class="my-8 flex justify-center text-primary">
           <span class="material-symbols-outlined text-6xl">arrow_downward</span>
         </div>
         <p class="text-lg @[480px]:text-xl leading-loose font-bold text-slate-900 dark:text-white">
@@ -59,7 +59,7 @@
         </div>
         <!-- Feature 2 -->
         <div class="flex flex-col items-center text-center ring ring-gray-200 p-8 rounded-3xl bg-white dark:bg-slate-800 shadow-sm hover:shadow-md transition-shadow border border-slate-100 dark:border-slate-700">
-          <div class="w-16 h-16 bg-secondary/10 text-secondary rounded-2xl flex items-center justify-center mb-6">
+          <div class="w-16 h-16 bg-primary/10 text-primary rounded-2xl flex items-center justify-center mb-6">
             <span class="material-symbols-outlined text-4xl">balance</span>
           </div>
           <h3 class="text-xl font-bold mb-4">スマート比較</h3>
@@ -87,9 +87,9 @@
       </p>
       <div class="flex flex-col @[480px]:flex-row justify-center gap-4">
         <%= link_to "ログインする", new_user_session_path,
-            class: "flex min-w-[180px] cursor-pointer items-center justify-center rounded-xl bg-green h-14 px-8 bg-primary text-white text-lg font-bold shadow-lg shadow-primary/20 hover:scale-[1.05] transition-transform" %>
+            class: "flex min-w-[180px] cursor-pointer items-center justify-center rounded-xl h-14 px-8 bg-primary text-white text-lg font-bold shadow-lg shadow-primary/20 hover:scale-[1.05] transition-transform" %>
         <%= link_to "新規登録はこちら", new_user_registration_path,
-            class: "flex min-w-[180px] cursor-pointer items-center justify-center rounded-xl bg-orange h-14 px-8 bg-secondary text-white text-lg font-bold shadow-lg shadow-secondary/20 hover:scale-[1.05] transition-transform" %>
+            class: "flex min-w-[180px] cursor-pointer items-center justify-center rounded-xl bg-accent h-14 px-8 text-white text-lg font-bold shadow-lg shadow-secondary/20 hover:scale-[1.05] transition-transform" %>
       </div>
     </div>
   </section>
