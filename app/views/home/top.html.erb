@@ -1,9 +1,96 @@
-<div>
-  <h1>SokoNote</h1>
+<main class="w-screen ml-[50%] -translate-x-1/2">  
+  <!-- Hero Section -->
+  <section class="overflow-hidden pt-8 pb-16 px-4">
+    <div class="text-center max-w-screen-xl mx-auto @container">
+      <div class="flex flex-col gap-8">
+        <div class="flex flex-col gap-6 items-center">
+          <div class="mb-5 inline-flex items-center self-start px-3 py-1 rounded-full bg-secondary/20 text-secondary text-sm font-bold">
+            節約をもっとスマートに
+          </div>
+          <h1 class="mb-5 text-2xl sm:text-4xl @[480px]:text-5xl font-black leading-tight tracking-tight text-slate-900 dark:text-white">
+            <span class="whitespace-nowrap">「もっと安く買えたかも」を防ぐ</span><br/>底値×単価記録アプリ
+          </h1>
+          <p class="mb-5 text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+            いつものお買い物をスマートに。単価比較で賢く節約。
+          </p>
+          <div class="flex flex-wrap gap-4 pt-2">
+            <%= link_to "ログイン", new_user_session_path,
+                class: "flex flex-1 @[480px]:flex-none min-w-[160px] cursor-pointer items-center justify-center rounded-xl h-14 px-8 bg-green text-white text-lg font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all" %>
+            <%= link_to "新規登録", new_user_registration_path,
+                class: "flex flex-1 @[480px]:flex-none min-w-[160px] cursor-pointer items-center justify-center rounded-xl h-14 px-8 bg-orange text-white text-lg font-bold shadow-lg shadow-secondary/20 hover:scale-[1.02] active:scale-[0.98] transition-all" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <div class = "pt-2">
-    <%= link_to "ログインする", new_user_session_path, class: "inline-block bg-green text-white px-6 py-2 rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400" %>
-  </div>
-  <div class= "pt-2">
-    <%= link_to "新規登録はこちら", new_user_registration_path, class: "inline-block bg-white text-green px-6 py-2 border border-green rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400" %>
-</div>
+  <!-- Problem / Solution -->
+  <section class="bg-secondary/5 py-20 px-4">
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="text-2xl @[480px]:text-3xl font-bold mb-8 text-slate-900 dark:text-white">
+        お買い物でこんな悩みはありませんか？
+      </h2>
+      <div class="bg-white dark:bg-slate-800 p-8 @[480px]:p-12 rounded-3xl shadow-sm border border-secondary/10">
+        <p class="text-lg @[480px]:text-xl leading-loose text-slate-700 dark:text-slate-300">
+          スーパーや薬局で「別の店の方が安かった」「どちらが本当に安いの」迷った経験はありませんか？
+        </p>
+        <div class="my-8 flex justify-center text-secondary">
+          <span class="material-symbols-outlined text-6xl">arrow_downward</span>
+        </div>
+        <p class="text-lg @[480px]:text-xl leading-loose font-bold text-slate-900 dark:text-white">
+          このアプリでは商品の価格と内容量から単価を自動で計算し、商品を比較できます。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="py-20 px-4">
+    <div class="max-w-screen-xl mx-auto">
+      <h2 class="text-center text-3xl font-black mb-16">主な機能</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Feature 1 -->
+        <div class="flex flex-col items-center text-center ring ring-gray-200 p-8 rounded-3xl bg-white dark:bg-slate-800 shadow-sm hover:shadow-md transition-shadow border border-slate-100 dark:border-slate-700">
+          <div class="w-16 h-16 bg-primary/10 text-primary rounded-2xl flex items-center justify-center mb-6">
+            <span class="material-symbols-outlined text-4xl">add_shopping_cart</span>
+          </div>
+          <h3 class="text-xl font-bold mb-4">簡単登録</h3>
+          <p class="text-slate-600 dark:text-slate-400">商品を素早く登録し、いつでも確認することができます。</p>
+        </div>
+        <!-- Feature 2 -->
+        <div class="flex flex-col items-center text-center ring ring-gray-200 p-8 rounded-3xl bg-white dark:bg-slate-800 shadow-sm hover:shadow-md transition-shadow border border-slate-100 dark:border-slate-700">
+          <div class="w-16 h-16 bg-secondary/10 text-secondary rounded-2xl flex items-center justify-center mb-6">
+            <span class="material-symbols-outlined text-4xl">balance</span>
+          </div>
+          <h3 class="text-xl font-bold mb-4">スマート比較</h3>
+          <p class="text-slate-600 dark:text-slate-400">同じ商品でどちらが安いか、単位を揃えて正確に比較できます。</p>
+        </div>
+        <!-- Feature 3 -->
+        <div class="flex flex-col items-center text-center ring ring-gray-200 p-8 rounded-3xl bg-white dark:bg-slate-800 shadow-sm hover:shadow-md transition-shadow border border-slate-100 dark:border-slate-700">
+          <div class="w-16 h-16 bg-primary/10 text-primary rounded-2xl flex items-center justify-center mb-6">
+            <span class="material-symbols-outlined text-4xl">insights</span>
+          </div>
+          <h3 class="text-xl font-bold mb-4">底値の把握</h3>
+          <p class="text-slate-600 dark:text-slate-400">今までの登録した商品で一番安い単価をすぐに知ることができます。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-24 px-4 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-secondary to-primary opacity-10"></div>
+    <div class="max-w-3xl mx-auto text-center relative z-10">
+      <h2 class="text-3xl @[480px]:text-4xl font-black mb-6">早速使ってみましょう</h2>
+      <p class="text-lg text-slate-600 dark:text-slate-400 mb-10">
+        賢いお買い物習慣を、今日から始めませんか？
+      </p>
+      <div class="flex flex-col @[480px]:flex-row justify-center gap-4">
+        <%= link_to "ログインする", new_user_session_path,
+            class: "flex min-w-[180px] cursor-pointer items-center justify-center rounded-xl bg-green h-14 px-8 bg-primary text-white text-lg font-bold shadow-lg shadow-primary/20 hover:scale-[1.05] transition-transform" %>
+        <%= link_to "新規登録はこちら", new_user_registration_path,
+            class: "flex min-w-[180px] cursor-pointer items-center justify-center rounded-xl bg-orange h-14 px-8 bg-secondary text-white text-lg font-bold shadow-lg shadow-secondary/20 hover:scale-[1.05] transition-transform" %>
+      </div>
+    </div>
+  </section>
+</main>
