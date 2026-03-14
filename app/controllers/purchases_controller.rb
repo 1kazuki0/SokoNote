@@ -2,14 +2,12 @@ class PurchasesController < ApplicationController
     before_action :authenticate_user!
 
   def edit
-    puts "パラメータ詳細#{params.inspect}"
-    puts "sessionの確認#{session.inspect}"
     @purchase = current_user.purchases.includes(:item, :store, item: :category).find(params[:id])
     @form = PurchaseForm.new(
       item_name:        @purchase.item.name,
       category_name:    @purchase.item.category.name,
       brand:            @purchase.brand,
-      store:            @purchase.store.name,
+      store:            @purchase.store&.name, # storeは任意のためぼっち演算子&でnilを返す
       content_quantity: @purchase.content_quantity,
       content_unit:     @purchase.content_unit,
       pack_quantity:    @purchase.pack_quantity,
@@ -28,7 +26,7 @@ class PurchasesController < ApplicationController
         ActiveRecord::Base.transaction do
           @purchase.item.category.update!(name: @form.category_name)
           @purchase.item.update!(name: @form.item_name)
-          @purchase.store.update!(name: @form.store)
+          @purchase.store&.update!(name: @form.store) # 任意のためぼっち演算子
           @purchase.update!(
             brand: @form.brand,
             content_quantity: @form.content_quantity,
