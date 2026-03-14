@@ -61,6 +61,11 @@ services:
     depends_on:
       db:
         condition: service_healthy
+  chrome:
+    image: seleniarm/standalone-chromium # Apple Silicon Mac用
+    ports:
+      - "4444:4444" # SeleniumがChromeに命令を送る口
+      - "7900:7900" # ブラウザの画面をブラウザで確認できる口
 # 名前付きボリュームの定義（箱を作るイメージ）
 volumes:
   bundle_data:

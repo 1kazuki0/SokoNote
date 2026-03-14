@@ -16,6 +16,7 @@ class ItemStep2Form
   validates :purchased_on, presence: true
 
   def store_record
+    return nil if store.blank?
     Store.find_or_initialize_by(user_id: user_id, name: store)
   end
 end

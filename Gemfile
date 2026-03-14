@@ -54,6 +54,12 @@ group :development, :test do
 
   # データをランダムで生成してくるgem
   gem "faker"
+
+  # Rspecテストのgem
+  gem "rspec-rails", "~> 7.0.0"
+
+  # Rspecで使用するデータ設計図
+  gem 'factory_bot_rails'
 end
 
 group :development do
@@ -63,8 +69,11 @@ end
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
+  # ブラウザ操作をコード言語してくれるgem
   gem "capybara"
+  # CapybaraとChromeをつなぐ橋の役割を持つgem
   gem "selenium-webdriver"
+  # webdrivers は不要！selenium 4.6以降は自動管理
 end
 
 gem "devise", "~> 4.9"
