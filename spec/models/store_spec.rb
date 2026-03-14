@@ -1,13 +1,10 @@
 require "rails_helper"
 
 RSpec.describe Store, type: :model do
-
-  let(:user) { User.create(name: "sokonote", email: "sokonote@email.com", password: "password")}
+  let(:user) { User.create(name: "sokonote", email: "sokonote@email.com", password: "password") }
 
   describe "バリデーション" do
-
     context "無効の場合" do
-
       it "同じユーザーで同じ店舗名は無効" do
         store1 = user.stores.create(name: "sokonote")
         expect(store1).to be_valid
@@ -22,7 +19,6 @@ RSpec.describe Store, type: :model do
     end
 
     context "有効の場合" do
-
       it "店舗名が50文字なら有効" do
         store = user.stores.new(name: "a" * 50)
         expect(store).to be_valid

@@ -11,7 +11,7 @@ RSpec.describe "Home", type: :system do
       expect(page).to have_link("ログイン")
       expect(page).to have_link("新規登録")
     end
-  
+
   describe "ログインボタン" do
     it "クリックするとログイン画面に遷移する" do
       visit root_path

@@ -1,14 +1,11 @@
 require "rails_helper"
 
 RSpec.describe Item, type: :model do
-  
-  let(:user) { User.create(name: "sokonote", email: "sokonote@email.com", password: "password")}
+  let(:user) { User.create(name: "sokonote", email: "sokonote@email.com", password: "password") }
   let(:category) { user.categories.create(name: "食品") }
 
   describe "バリデーション" do
-
     context "無効の場合" do
-
       it "商品名が空白なら無効" do
         item = category.items.new(name: nil, user: user)
         expect(item).to be_invalid
@@ -28,7 +25,6 @@ RSpec.describe Item, type: :model do
     end
 
     context "有効の場合" do
-
       it "商品名があれば有効" do
         item = category.items.new(name: "ハム", user: user)
         expect(item).to be_valid

@@ -7,7 +7,7 @@ class PurchasesController < ApplicationController
       item_name:        @purchase.item.name,
       category_name:    @purchase.item.category.name,
       brand:            @purchase.brand,
-      store:            @purchase.store&.name, #storeは任意のためぼっち演算子&でnilを返す
+      store:            @purchase.store&.name, # storeは任意のためぼっち演算子&でnilを返す
       content_quantity: @purchase.content_quantity,
       content_unit:     @purchase.content_unit,
       pack_quantity:    @purchase.pack_quantity,

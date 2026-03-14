@@ -1,8 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Category, type: :model do
-
-  let(:user) {User.create(name: "sokonote", email: "sokonote@email.com", password: "password")}
+  let(:user) { User.create(name: "sokonote", email: "sokonote@email.com", password: "password") }
 
   describe "バリデーション" do
     context "無効な場合" do
@@ -17,13 +16,13 @@ RSpec.describe Category, type: :model do
         category2 = user.categories.new(name: "sokonote")
         expect(category2).to be_invalid
       end
-      
+
       it "カテゴリー名が31文字なら無効" do
         category = user.categories.new(name: "a" * 31)
         expect(category).to be_invalid
       end
     end
-    
+
     context "有効な場合" do
       it "別ユーザーなら同じカテゴリー名でも有効" do
         user2 = User.create(name: "sokonote2", email: "sokonote2@email.com", password: "password")

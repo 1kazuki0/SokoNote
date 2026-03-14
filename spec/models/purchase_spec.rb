@@ -1,20 +1,16 @@
 require "rails_helper"
 
 RSpec.describe Purchase, type: :model do
-
-  let(:user) { User.create(name: "sokonote", email: "sokonote@email.com", password: "password")}
-  let(:category) { user.categories.create(name: "食品")}
-  let(:store) { user.stores.create(name: "スーパー大阪店")}
-  let(:item) { category.items.create(name: "ハム", user: user)}
+  let(:user) { User.create(name: "sokonote", email: "sokonote@email.com", password: "password") }
+  let(:category) { user.categories.create(name: "食品") }
+  let(:store) { user.stores.create(name: "スーパー大阪店") }
+  let(:item) { category.items.create(name: "ハム", user: user) }
 
   describe "バリデーション" do
-    
     context "無効の場合" do
-
       it "ブランド名が51文字なら無効" do
         purchase = item.purchases.new(brand: "a" * 51, content_quantity: 5, content_unit: "枚", pack_quantity: 3, pack_unit: "パック", price: 210, unit_price: 14, tax_rate: 0, purchased_on: "2025/4/1", user: user, store: store)
         expect(purchase).to be_invalid
-
       end
 
       it "内容量が空白なら無効" do
@@ -40,7 +36,6 @@ RSpec.describe Purchase, type: :model do
       it "パック数が空白なら無効" do
         purchase = item.purchases.new(brand: "日本ハム", content_quantity: 5, content_unit: "枚", pack_quantity: nil, pack_unit: "パック", price: 210, unit_price: 14, tax_rate: 0, purchased_on: "2025/4/1", user: user, store: store)
         expect(purchase).to be_invalid
-
       end
 
       it "パック数が小数なら無効" do
@@ -57,11 +52,10 @@ RSpec.describe Purchase, type: :model do
         purchase = item.purchases.new(brand: "日本ハム", content_quantity: 5, content_unit: "枚", pack_quantity: -1, pack_unit: "パック", price: 210, unit_price: 14, tax_rate: 0, purchased_on: "2025/4/1", user: user, store: store)
         expect(purchase).to be_invalid
       end
-      
+
       it "パック数の単位が11文字なら無効" do
         purchase = item.purchases.new(brand: "日本ハム", content_quantity: 5, content_unit: "枚", pack_quantity: 3, pack_unit: "a" * 11, price: 210, unit_price: 14, tax_rate: 0, purchased_on: "2025/4/1", user: user, store: store)
         expect(purchase).to be_invalid
-
       end
 
       it "価格が空白なら無効" do
@@ -103,7 +97,7 @@ RSpec.describe Purchase, type: :model do
         purchase = item.purchases.new(brand: "日本ハム", content_quantity: 5, content_unit: "枚", pack_quantity: 3, pack_unit: "パック", price: 210, unit_price: 14, tax_rate: 1, purchased_on: "2025/4/1", user: user, store: store)
         expect(purchase).to be_invalid
       end
-      
+
       it "購入日が空白なら無効" do
         purchase = item.purchases.new(brand: "日本ハム", content_quantity: 5, content_unit: "枚", pack_quantity: 3, pack_unit: "パック", price: 210, unit_price: 14, tax_rate: 0, purchased_on: nil, user: user, store: store)
         expect(purchase).to be_invalid
@@ -111,7 +105,6 @@ RSpec.describe Purchase, type: :model do
     end
 
     context "有効の場合" do
-      
       it "ブランド名が無くても有効" do
         purchase = item.purchases.new(brand: nil, content_quantity: 5, content_unit: "枚", pack_quantity: 3, pack_unit: "パック", price: 210, unit_price: 14, tax_rate: 0, purchased_on: "2025/4/1", user: user, store: store)
         expect(purchase).to be_valid
@@ -197,7 +190,7 @@ RSpec.describe Purchase, type: :model do
         expect(purchase).to be_valid
       end
 
-      it "税が10なら有効" do 
+      it "税が10なら有効" do
         purchase = item.purchases.new(brand: "日本ハム", content_quantity: 5, content_unit: "枚", pack_quantity: 3, pack_unit: "パック", price: 210, unit_price: 14, tax_rate: 10, purchased_on: "2025/4/1", user: user, store: store)
         expect(purchase).to be_valid
       end

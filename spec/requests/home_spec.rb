@@ -1,9 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Home", type: :request do # モデルの存在しないcontrollerのため"Home"で文字列指定
+  let(:user) { User.create(name: "sokonote", email: "sokonote@email.com", password: "password") }
 
-  let(:user) { User.create(name: "sokonote", email: "sokonote@email.com", password: "password")}
-  
   describe "GET /" do
     context "ログインしていない場合" do
       it "HTTPステータス200を返す" do
@@ -21,4 +20,3 @@ RSpec.describe "Home", type: :request do # モデルの存在しないcontroller
     end
   end
 end
-

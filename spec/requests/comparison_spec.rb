@@ -1,8 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Comparison", type: :request do # モデルの存在しないcontrollerのため"Comparison"で文字列指定
-
-  let(:user) { User.create(name: "sokonote", email: "sokonote@email.com", password: "password")}
+  let(:user) { User.create(name: "sokonote", email: "sokonote@email.com", password: "password") }
 
   describe "GET / comparison" do
     context "ログインしていない場合" do
@@ -21,4 +20,3 @@ RSpec.describe "Comparison", type: :request do # モデルの存在しないcont
     end
   end
 end
-

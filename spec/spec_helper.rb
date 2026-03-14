@@ -50,8 +50,8 @@ RSpec.configure do |config|
 
   # 個々のファイルを実行する時は詳細な出力を許可すると便利。以下
   # if config.files_to_run.one?
-    # 詳細な出力にはdocumentation formatterを使用。ただし、フォーマッタが既に設定されていない場合は除きます。
-    # config.default_formatter = "doc"
+  # 詳細な出力にはdocumentation formatterを使用。ただし、フォーマッタが既に設定されていない場合は除きます。
+  # config.default_formatter = "doc"
   # end
 
   # 以下は最も遅い10個のrspecを出力する
@@ -67,5 +67,4 @@ RSpec.configure do |config|
 
   # gem capybaraを使用する(visit, click_on, fill_inなどの操作をブラウザで操作してくれる）
   require "capybara/rspec"
-
 end
