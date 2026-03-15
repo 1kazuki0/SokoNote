@@ -7,6 +7,19 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <!-- Google Analytics（GA4）の導入 -->
+    <!-- Google tag (gtag.js) -->
+    <% if ENV['GA_TRACKING_ID'].present? %>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-JR413E9JP4"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', '<%= ENV['GA_TRACKING_ID'] %>');
+      </script>
+    <% end %>
+
     <%= yield :head %>
 
     <link rel="manifest" href="/manifest.json">
