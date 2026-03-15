@@ -28,6 +28,12 @@ ja:
     models:
       user:
         other: ユーザー
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              taken: "は現在使用できません"
   devise:
     confirmations:
       confirmed: メールアドレスが確認できました。
