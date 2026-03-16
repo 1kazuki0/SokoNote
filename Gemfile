@@ -56,7 +56,7 @@ group :development, :test do
   gem "faker"
 
   # Rspecテストのgem
-  gem "rspec-rails", "~> 7.0.0"
+  gem "rspec-rails", "~> 8.0.4"
 
   # Rspecで使用するデータ設計図
   gem "factory_bot_rails"
