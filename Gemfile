@@ -76,4 +76,4 @@ group :test do
   # webdrivers は不要！selenium 4.6以降は自動管理
 end
 
-gem "devise", "~> 4.9"
+gem "devise", "~> 5.0"
