@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.2.3"
+gem "rails", "~> 8.1.3"
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 # Use postgresql as the database for Active Record
@@ -37,7 +37,7 @@ gem "bootsnap", require: false
 # gem "image_processing", "~> 1.2"
 
 # i18n日本語化設定 rails7.xのため、7.0.0を採用
-gem "rails-i18n", "~> 7.0.0"
+gem "rails-i18n", "~> 8.1.0"
 
 # i18n日本語化設定 devise専用のgem
 gem "devise-i18n"
