@@ -7,7 +7,12 @@ Capybara.register_driver :remote_chrome do |app|
   options.add_argument("--no-sandbox")
   options.add_argument("--disable-dev-shm-usage")
 
-  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+  Capybara::Selenium::Driver.new(
+    app,
+    browser: :remote,
+    url: "http://chrome:4444",
+    options: options
+  )
 end
 
 RSpec.configure do |config|
