@@ -6,6 +6,7 @@ class ItemsController < ApplicationController
   skip_before_action :clear_new_step1_item_session, only: [ :new_step1, :save_new_step1, :new_step2, :create ]
 
   def index
+    Item.where("name = '#{params[:query]}'")  # SQLインジェクション
     @items = current_user.items.includes(:category, :purchases, purchases: :store)
   end
 
