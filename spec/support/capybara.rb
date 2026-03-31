@@ -18,7 +18,7 @@ end
 RSpec.configure do |config|
   config.before(:each, type: :system) do
     if ENV['CI']
-      driven_by :selenium, using: :headless_chrome, screen_size: [1400, 1400]
+      driven_by :selenium, using: :headless_chrome, screen_size: [ 1400, 1400 ]
     else
       driven_by :remote_chrome
       Capybara.server_host = "0.0.0.0"

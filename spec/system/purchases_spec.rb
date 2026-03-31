@@ -134,7 +134,7 @@ RSpec.describe "購入履歴編集画面", type: :system do
   # ─── 更新操作 ────────────────────────────────────────────────────────────────
   describe "更新操作" do
     before do
-      driven_by(:remote_chrome)
+      driven_by ENV['CI'] ? :selenium_chrome_headless : :remote_chrome
       sign_in user
       visit edit_purchase_path(purchase)
     end
