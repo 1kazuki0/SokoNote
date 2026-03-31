@@ -1,0 +1,36 @@
+# --- ワークフローの名前 ---
+name: Deploy to Render
+
+# productionの処理は同時に1つかつ新しいの優先
+concurrency: # 重複してpushされデプロイされるのを防ぐ仕組み
+  group: production # グループ名（production)（自由命名）
+  cancel-in-progress: true # 進行中の古いワークフロー実行をキャンセルして、新しい実行を優先する
+
+# --- CIの実行が全て成功した際に実行される ---
+on:                 # onで実行する対象のブランチを絞り込み
+  workflow_run:     # 以下のworkflowsが終わった後に実行される
+    workflows: [CI] # ci.ymlのCI
+    types:          # 実行タイプ
+      - completed   # CIがcompletedした場合に実行
+    branches:       # mainブランチのみ
+      - main
+
+# --- どんな処理を行うか --- 
+jobs:
+  deploy:                                                 # ジョブの名前（自由命名）
+    if: github.event.workflow_run.conclusion == 'success' # workflow_run（CI）が成功した時だけこのjobを実行する
+    runs-on: ubuntu-latest  # GitHunActionsが実行するOS環境 ubuntu-latestはGitHubが用意しているLinux環境 runs-onで実行環境の指定
+    environment: production # production（本番環境）向けの処理とGitHubに伝達。secretsキーはproductionには保存してないので不要でもいいが、本番というのを明示してわかりやすくするため
+
+    steps: # steps以下は実行するステップが記載
+      - name: deploy # ステップの名前（省略可能だが、何をしているステップなのかがわかる名前をつけとくとデバッグ容易）
+        env: # 変数を定義する（以下のdeploy_urlにキーを保存できているのはenvで定義しているから）
+          deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }} # GitHub Secrets に保存してある値を、deploy_url という環境変数に入れて使っている
+        run: # runで以下のコマンド実行
+          curl -fsSL -X POST "$deploy_url" # curlはURLに対してHTTPリクエストなどを送れるコマンドラインツール。
+          # RenderのDeploy Hook URLにリクエストを送り、デプロイを開始。
+          # -f HTTPエラーなら失敗扱いにする
+          # s  余計なログを出さない
+          # S  エラー時のみメッセージ出力
+          # L  万が一URLが変わってリダイレクトされても自動で追ってくれる
+          # -X POSTとしてリクエスト送信

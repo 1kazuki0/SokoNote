@@ -6,8 +6,8 @@ name: CI
 # --- ワークフローが実行する際のトリガー ---
 on:                             # onで実行する対象のブランチを絞り込み
   pull_request:                 # 全てのプルリクエスト実行時
-  push:                         # pushイベント（リポジトリにコードがプッシュされたとき）→pushイベントのうち、develop,mainブランチへのpush時に実行
-    branches: [ develop, main ] # develop,mainブランチに対しての挙動
+  push:                         # pushイベント（mainブランチが更新されたタイミング）
+    branches: [ main ] # develop → mainにGitHubでマージし、mainにdevelopの内容が統合されmainが更新されたタイミング
 
 # --- どんな処理を行うか --- 
 jobs:
