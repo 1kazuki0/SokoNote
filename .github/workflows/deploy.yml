@@ -18,7 +18,7 @@ on:                 # onで実行する対象のブランチを絞り込み
 # --- どんな処理を行うか --- 
 jobs:
   deploy:                                                 # ジョブの名前（自由命名）
-    if: github.event.workflow_run.conclusion == "success" # workflow_run（CI）が成功した時だけこのjobを実行する
+    if: github.event.workflow_run.conclusion == 'success' # workflow_run（CI）が成功した時だけこのjobを実行する
     runs-on: ubuntu-latest  # GitHunActionsが実行するOS環境 ubuntu-latestはGitHubが用意しているLinux環境 runs-onで実行環境の指定
     environment: production # production（本番環境）向けの処理とGitHubに伝達。secretsキーはproductionには保存してないので不要でもいいが、本番というのを明示してわかりやすくするため
 
