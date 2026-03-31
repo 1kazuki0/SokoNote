@@ -370,7 +370,7 @@ RSpec.describe "Item", type: :system do
 
       context "「←」のリンクを押すと" do
         before do
-          driven_by(:remote_chrome)
+          driven_by ENV['CI'] ? :selenium_chrome_headless : :remote_chrome
         end
         it "商品一覧画面に遷移する" do
           visit items_path
@@ -551,7 +551,7 @@ RSpec.describe "Item", type: :system do
 
       context "削除操作" do
         before do
-          driven_by(:remote_chrome)
+          driven_by ENV['CI'] ? :selenium_chrome_headless : :remote_chrome
           sign_in user
           visit item_path(item)
         end

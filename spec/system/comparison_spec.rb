@@ -152,7 +152,7 @@ RSpec.describe "比較画面", type: :system do
   # 単価 = 価格 ÷ (1 + 税率/100) ÷ 内容量 ÷ パック数
   describe "単価計算" do
     before do
-      driven_by(:remote_chrome)
+      driven_by ENV['CI'] ? :selenium_chrome_headless : :remote_chrome
       sign_in user
       visit comparison_path
     end

@@ -1,85 +1,150 @@
+# GitHubアクション テスト自動実行のワークフロー
+
+# --- ワークフローの名前 ---
 name: CI
 
-on:
-  pull_request:
-  push:
-    branches: [ main ]
+# --- ワークフローが実行する際のトリガー ---
+on:                             # onで実行する対象のブランチを絞り込み
+  pull_request:                 # 全てのプルリクエスト実行時
+  push:                         # pushイベント（リポジトリにコードがプッシュされたとき）→pushイベントのうち、develop,mainブランチへのpush時に実行
+    branches: [ develop, main ] # develop,mainブランチに対しての挙動
 
+# --- どんな処理を行うか --- 
 jobs:
-  scan_ruby:
-    runs-on: ubuntu-latest
+  # --- brakeman(Railsコードの危険な書き方をチェック)の実行 ---
+  scan_ruby:               # ジョブの名前（自由命名）
+    runs-on: ubuntu-latest # GitHun　Actionsがbrakemanを実行するOS環境 ubuntu-latestはGitHubが用意しているLinux環境 runs-onで実行環境の指定
+    timeout-minutes: 15    # 15分以上経ったらジョブ停止
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+    steps:                        # steps以下は実行するステップが記載
+      - name: Checkout code       # ステップの名前（省略可能だが、何をしているステップなのかがわかる名前をつけとくとデバッグ容易）
+        uses: actions/checkout@v4 # usesで既存アクションを呼び出せる GitHub上にある「actions/checkout」というリポジトリのv4バージョンを呼び出し
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: .ruby-version
-          bundler-cache: true
+      - name: Set up Ruby             # ステップの名前
+        uses: ruby/setup-ruby@v1      # usesで既存アクションを呼び出せる GitHub上の「ruby/setup-ruby」というリポジトリの「v1タグ（バージョン）」を呼び出し
+        with:                         # with はアクションに渡すパラメーター（引数）を指定する
+          ruby-version: .ruby-version # 自分のリポジトリの.ruby-versionを自動で読み込んでいる
+          bundler-cache: true         # trueにするとbundle install の実行と gem のキャッシュが自動的に行われる。
 
-      - name: Scan for common Rails security vulnerabilities using static analysis
-        run: bundle exec brakeman --no-pager
+      - name: Scan for common Rails security vulnerabilities using static analysis # ステップの名前
+        run: bundle exec brakeman --no-pager # runはシェルコマンドを実行できる Brakemanを使ってRailsのセキュリティ脆弱性を静的解析で検出する
+                                             # --no-pagerはページャー（lessコマンド等）を使わずに結果を直接出力するオプション
 
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+  # --- RuboCopの実行 ---
+  lint:                    # ジョブの名前（自由命名）
+    runs-on: ubuntu-latest # 実行環境 ubuntu-latestはLinux環境 runs-onで実行環境の指定
+    timeout-minutes: 15    # 15分以上経ったらジョブ停止
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: .ruby-version
-          bundler-cache: true
+    steps:                        # steps以下は実行するステップが記載
+      - name: Checkout code       # ステップの名前
+        uses: actions/checkout@v4 # usesで既存アクションを呼び出せる GitHub上にある「actions/checkout」というリポジトリのv4バージョンを呼び出し
 
-      - name: Lint code for consistent style
-        run: bin/rubocop -f github
+      - name: Set up Ruby             # ステップの名前
+        uses: ruby/setup-ruby@v1      # usesで既存アクションを呼び出せる GitHub上の「ruby/setup-ruby」というリポジトリの「v1タグ（バージョン）」を使う
+        with:                         # with はアクションに渡すパラメーター（引数）を指定する
+          ruby-version: .ruby-version # 自分のリポジトリの.ruby-versionを自動で読み込んでいる
+          bundler-cache: true         # trueにするとbundle install の実行と gem のキャッシュが自動的に行われる。
 
-  # test:
-  #   runs-on: ubuntu-latest
+      - name: Lint code for consistent style # ステップの名前
+        run: bundle exec rubocop --parallel  # runはシェルコマンドを実行できる RuboCopでコードのスタイルチェックを実行する
+                                             # --parallelにすることで複数ファイルを同時チェックする
 
-  #   services:
-  #     postgres:
-  #       image: postgres
-  #       env:
-  #         POSTGRES_USER: postgres
-  #         POSTGRES_PASSWORD: postgres
-  #       ports:
-  #         - 5432:5432
-  #       options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
+  # --- RSpecの実行 ---
+  test:                    # ジョブの名前（自由命名）
+    runs-on: ubuntu-latest # 実行環境 ubuntu-latestはLinux環境 runs-onで実行環境の指定
+    timeout-minutes: 15    # 15分以上経ったらジョブ停止
 
-  #     # redis:
-  #     #   image: redis
-  #     #   ports:
-  #     #     - 6379:6379
-  #     #   options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
+    services:                         # ジョブの実行中に Dockerコンテナをサイドカー（補助的なコンテナ）として起動する テスト用のデータベースをジョブの実行環境内に立ち上げることができる
+      postgres: 
+        image: postgres               # データベースの Dockerイメージ postgresQLを指定
+        env:                          # データベースのユーザー名とパスワードを設定(CI環境なので簡単でいい)
+          POSTGRES_USER: postgres     # ユーザー名
+          POSTGRES_PASSWORD: postgres # パスワード
+        ports:                        # コンテナのポート
+          - 5432:5432                 # コンテナの5432番ポートをホストの5432番ポートにマッピング
+        # Dockerコンテナのoptionsは起動オプションを細かく設定できる
+        # --healthはヘルスチェックコマンド（DBが使えるか確認している）
+        # pg_isreadyはPostgreSQLに接続できるか確認するコマンド
+        # 左から、PostgreSQLが使えるか確認・10秒ごとに確認・5秒以内に応答なければ失敗・5回失敗したら「起動失敗」
+        options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
 
-  #   steps:
-  #     - name: Install packages
-  #       run: sudo apt-get update && sudo apt-get install --no-install-recommends -y google-chrome-stable curl libjemalloc2 libvips postgresql-client
+      # 現状redis（超高速なデータ保存箱（メモリ版DB）)は使用してないのでコメントアウト
+      # redis:
+      #   image: redis
+      #   ports:
+      #     - 6379:6379
+      #   options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
 
-  #     - name: Checkout code
-  #       uses: actions/checkout@v4
+    steps: # steps以下は実行するステップが記載
+      - name: Install packages # ステップの名前
+        # sudo apt-get update：パッケージ一覧を最新化
+        # --no-install-recommends：推奨パッケージを除いた必要最低限のインストール
+        # google-chrome-stable：システムテスト（ブラウザ操作）用
+        # curl：HTTPリクエスト用ツール
+        # libjemalloc2：メモリ管理の最適化ライブラリ
+        # libvips：画像処理ライブラリ（ActiveStorageなど）
+        # postgresql-client：DBへの接続・操作用クライアント
+        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y google-chrome-stable curl libjemalloc2 libvips postgresql-client # runはシェルコマンドを実行できる
 
-  #     - name: Set up Ruby
-  #       uses: ruby/setup-ruby@v1
-  #       with:
-  #         ruby-version: .ruby-version
-  #         bundler-cache: true
+      - name: Checkout code       # ステップの名前
+        uses: actions/checkout@v4 # userで既存アクションを呼び出せる GitHub上にある「actions/checkout」というリポジトリのv4バージョンを使っている
 
-  #     - name: Run tests
-  #       env:
-  #         RAILS_ENV: test
-  #         DATABASE_URL: postgres://postgres:postgres@localhost:5432
-  #         # REDIS_URL: redis://localhost:6379/0
-  #       run: bin/rails test
+      - name: Set up Ruby             # ステップの名前
+        uses: ruby/setup-ruby@v1      # usesで既存アクションを呼び出せる GitHub上の「ruby/setup-ruby」というリポジトリの「v1タグ（バージョン）」を使う
+        with:                         # with はアクションに渡すパラメーター（引数）を指定する
+          ruby-version: .ruby-version # 自分のリポジトリの.ruby-versionを自動で読み込んでいる
+          bundler-cache: true         # trueにするとbundle install の実行と gem のキャッシュが自動的に行われる。
 
-  #     - name: Keep screenshots from failed system tests
-  #       uses: actions/upload-artifact@v4
-  #       if: failure()
-  #       with:
-  #         name: screenshots
-  #         path: ${{ github.workspace }}/tmp/screenshots
-  #         if-no-files-found: ignore
+      - name: Set up database
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/myapp_test
+        run: bundle exec rails db:create db:schema:load
+
+      - name: Precompile assets
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/myapp_test
+        run: bundle exec rails assets:precompile
+
+      - name: Run tests # ステップの名前
+        env: 
+          RAILS_ENV: test
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/myapp_test # PostgreSQLへの接続先を環境変数で指定
+          # REDIS_URL: redis://localhost:6379/0
+        run: bundle exec rspec spec/models spec/requests  spec/system # runはシェルコマンドを実行できる
+
+      - name: Keep screenshots from failed system tests # ステップの名前
+        uses: actions/upload-artifact@v4                # usesで既存アクションを呼び出せる
+        if: failure()                                   # それ以前のどこかのステップが失敗したときだけ 実行される
+        with:                                           # withで以下の何かを渡している
+          name: screenshots                             # アップロードされた時の名前
+          path: ${{ github.workspace }}/tmp/screenshots # ${{ github.workspace }}はGitHub Actionsの組み込み変数 # リポジトリがチェックアウトされたディレクトリの絶対パスを表す
+          if-no-files-found: ignore                     # ファイルが見つからなくてもエラーにせず無視する
+        # with:
+        #   name: test-logs
+        #   path: log/test.log
+        #   retention-days: 7
+# Rucocop失敗用コメントアウト
+
+
+# ----- まとめメモ ---------------------------------------------------------------------------------------
+# CIというワークフロー名で、全てのプルリクエストもしくはmainブランチにプッシュされた際に以下の3点が実行される
+# scan_ruby
+# lint
+# test
+
+# scan_ruby
+      # GitHubにあるactions/checkoutのversion4と、ruby/setup-rubyのversion1を使って、bin/brakeman --no-pagerコマンドを実行している
+      # これによりbrakeman（Railsコードの危険な書き方をチェック）実行
+
+# lint
+      # GitHubにあるactions/checkoutのversion4と、ruby/setup-rubyのversion1を使って、bin/rubocop -f githubコマンドを実行している
+      # これによるRubocop（自動lintチェック）実行
+
+# test
+      # GitHub ActionsのLinux上で、PostgreSQLのDockerコンテナを起動している
+      # GitHubが用意した仮想マシン（Ubuntu）にソフトを追加で入れてる
+      # GitHubにあるactions/checkoutのversion4と、ruby/setup-rubyのversion1を使用
+      # postgresQL内にはいってbin/rails db:test:prepare test test:systemコマンドを実行
+      # 失敗したらスクリーンショットを保存
