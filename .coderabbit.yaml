@@ -1,9 +1,10 @@
 # 重要なポイントだけ確実に記載。あとはコメントアウト
 # 言語設定は日本語
-# 話口調はデフォルト
+# 話口調は、日本語で初心者にもわかりやすく丁寧にレビュー
 # 開発中の最新機能は無効化
 # 無料枠で使えるように有効化
 # フィードバックは軽め
+# タイトルも日本語で生成
 # レビュー中のステータス記載
 # プルリクエストできなかった時は「失敗」と記載されるのを無効化。失敗してもGithubのプルリクエストに「×」がつかない。
 # マークダウン方式
@@ -19,7 +20,7 @@ language: ja-JP #jaとja-JPの違いは→基本一緒
 # Set the tone of reviews and chat. Example: 'You must use talk like Mr. T. I pity the fool who doesn't!'
 # default: ''
 # 話し口調の設定
-tone_instructions: '' 
+tone_instructions: 'プログラミング初心者（RUNTEQ生）に教えるような丁寧な日本語でレビューしてください。専門用語の解説も日本語で行ってください。' 
 
 # Enable early-access features.
 # default: false
@@ -65,7 +66,7 @@ reviews:
   # Auto Title Instructions | Custom instructions for auto-generating the PR/MR title.
   # default: ''
   # タイトルの自動生成時のルール
-  # auto_title_instructions: ''
+  auto_title_instructions: "必ず日本語で作成してください。"
 
   # Post review details on each review. Additionally, post a review status when a review is skipped in certain cases.
   # default: true
@@ -448,11 +449,12 @@ reviews:
 #     # default: auto
 #     scope: auto
 
-# code_generation:
-#   # Settings related to the generation of docstrings.
-#   docstrings:
-#     # Set the language for docstrings by using the corresponding ISO language code.
-#     language: en-US
-#     # Path Instructions | Provide additional guidelines for docstring generation based on file paths.
-#     # default: []
-#     path_instructions: []
+code_generation:
+  # Settings related to the generation of docstrings.
+  docstrings:
+    # Set the language for docstrings by using the corresponding ISO language code.
+    # AIがドキュメントを生成する機能の日本語化
+    language: ja-JP
+    # Path Instructions | Provide additional guidelines for docstring generation based on file paths.
+    # default: []
+    path_instructions: []
