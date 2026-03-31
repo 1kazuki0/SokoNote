@@ -10,6 +10,6 @@ class Item < ApplicationRecord
   has_many :purchases  # 複数の購入履歴を参照できる
 
   def test
-  x = 1  # インデントがおかしい
+  x=1  # 空白削除
   end
 end
