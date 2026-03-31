@@ -101,6 +101,12 @@ jobs:
           DATABASE_URL: postgres://postgres:postgres@localhost:5432/myapp_test
         run: bundle exec rails db:create db:schema:load
 
+      - name: Precompile assets
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/myapp_test
+        run: bundle exec rails assets:precompile
+
       - name: Run tests # ステップの名前
         env: 
           RAILS_ENV: test
