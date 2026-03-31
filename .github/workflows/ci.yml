@@ -95,6 +95,12 @@ jobs:
           ruby-version: .ruby-version # 自分のリポジトリの.ruby-versionを自動で読み込んでいる
           bundler-cache: true         # trueにするとbundle install の実行と gem のキャッシュが自動的に行われる。
 
+      - name: Set up database
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/myapp_test
+        run: bundle exec rails db:create db:schema:load
+
       - name: Run tests # ステップの名前
         env: 
           RAILS_ENV: test
