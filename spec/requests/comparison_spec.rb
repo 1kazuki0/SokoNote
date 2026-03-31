@@ -17,10 +17,6 @@ RSpec.describe "Comparison", type: :request do # モデルの存在しないcont
         get comparison_path
         expect(response).to have_http_status(200)
       end
-
-      it "わざと失敗するテスト" do
-        expect(1).to eq 2
-      end
     end
   end
 end
