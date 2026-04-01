@@ -376,7 +376,7 @@ RSpec.describe "Item", type: :system do
           visit items_path
           visit item_path(item)
           click_link "arrow_back"
-          expect(current_path).to eq items_path
+          expect(page).to have_current_path(items_path, wait: 5)
         end
       end
     end
