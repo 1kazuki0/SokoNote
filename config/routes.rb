@@ -29,6 +29,9 @@ Rails.application.routes.draw do
   # 設定画面
   get "setting", to: "setting#index"
 
+  # letter_opener_webのルーティング
+  mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
+
   # --- 以下は現状非設定 ---
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
