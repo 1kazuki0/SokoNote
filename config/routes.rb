@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  # gem devise導入時に生成
-  devise_for :users
+  # devise認証, コントローラー修正箇所だけルーティング追記
+  devise_for :users, controllers: { registrations: "users/registrations" }
 
   # 未ログイン時のトップ画面
   root "home#top"

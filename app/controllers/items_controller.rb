@@ -1,5 +1,4 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!
   # sessionに空の場合はstep2へのアクセスを許可しない（ブラウザバック対策）
   before_action :redirect_to_new_step1_session_empty, only: [ :new_step2 ]
   # 新規登録フロー中はsessionを削除しない（フロー離脱時のみ削除）

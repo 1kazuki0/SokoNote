@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 class Users::RegistrationsController < Devise::RegistrationsController
-  # before_action :configure_sign_up_params, only: [:create]
+  # アクション実行前のログイン確認をスキップする
+  skip_before_action :authenticate_user!, only: [:new, :create]
+
+  # 許可されたnameカラムをcreateアクションの前に受け取る
+  before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
@@ -59,4 +63,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
+
+  private
+
+  # devise認証のnameカラムを許可
+  def configure_sign_up_params
+    devise_parameter_sanitizer.permit(:sign_up, keys: [ :name ])
+  end
+
 end
