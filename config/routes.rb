@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   # devise認証, コントローラー修正箇所だけルーティング追記
-  devise_for :users, controllers: { registrations: "users/registrations" }
+  devise_for :users, controllers: {
+    registrations: "users/registrations",
+    passwords: "users/passwords"
+  }
 
   # 未ログイン時のトップ画面
   root "home#top"

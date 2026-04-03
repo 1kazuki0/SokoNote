@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
-  # アクション実行前にログインしているか確認 
+  # アクション実行前にログインしているか確認
   before_action :authenticate_user!
-  
+
   # アクション実行前にsessionを削除
   before_action :clear_new_step1_item_session
   def after_sign_in_path_for(resources)

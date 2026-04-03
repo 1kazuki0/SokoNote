@@ -14,7 +14,6 @@
 
 # --- 以下の記述以降でdeviseの設定を記述する開始の合図 ---
 Devise.setup do |config|
-  
   # --- 秘密鍵を独自にカスタマイズできる設定 ---
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
@@ -102,10 +101,11 @@ Devise.setup do |config|
   # The realm used in Http Basic Authentication. 'Application' by default.
   # config.http_authentication_realm = 'Application'
 
+  # 入力メールアドレスが正解・不正解に関わらず同じ動作になる設定。デフォルト値はtrue
   # It will change confirmation, password recovery and other workflows
   # to behave the same regardless if the e-mail provided was right or wrong.
   # Does not affect registerable.
-  # config.paranoid = true
+  config.paranoid = true
 
   # --- 特定の認証（ログイン）方法では「ログイン状態をセッションに保存しない（ログイン状態を記憶しない）」設定 ---
   # By default Devise will store the user in session. You can skip storage for
@@ -133,7 +133,7 @@ Devise.setup do |config|
   # The number of stretches used for generating the hashed password are stored
   # with the hashed password. This allows you to change the stretches without
   # invalidating existing passwords.
-  
+
   # パスワードのハッシュ化（暗号化）を何回繰り返すかの設定
   # Limiting the stretches to just one in testing will increase the performance of
   # your test suite dramatically. However, it is STRONGLY RECOMMENDED to not use
