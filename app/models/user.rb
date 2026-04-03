@@ -9,7 +9,7 @@ class User < ApplicationRecord
   has_many :categories  # ユーザーはカテゴリーレコードを複数持てる
   has_many :purchases   # ユーザーは購入履歴レコードを複数持てる
 
-  # Devise機能の必要なモジュールを適用
+  # --- Devise機能の必要なモジュールを適用 ---
   devise :database_authenticatable,
          :registerable,
          :recoverable,

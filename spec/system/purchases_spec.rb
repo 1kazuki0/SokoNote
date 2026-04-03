@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "購入履歴編集画面", type: :system do
+RSpec.describe "Purchases", type: :system do
   let(:user)     { User.create(name: "sokonote", email: "sokonote@email.com", password: "password") }
   let(:category) { user.categories.create(name: "食品") }
   let(:store)    { user.stores.create(name: "スーパー大阪店") }
@@ -28,7 +28,7 @@ RSpec.describe "購入履歴編集画面", type: :system do
   end
 
   # ─── 画面の表示 ──────────────────────────────────────────────────────────────
-  describe "画面の表示" do
+  describe "購入履歴画面の表示" do
     it "タイトルに「商品情報の編集」と表示される" do
       expect(page).to have_content("商品情報の編集")
     end

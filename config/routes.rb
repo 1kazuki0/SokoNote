@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
-  # gem devise導入時に生成
-  devise_for :users
+  # devise認証, コントローラー修正箇所だけルーティング追記
+  devise_for :users, controllers: {
+    registrations: "users/registrations",
+    passwords: "users/passwords"
+  }
 
   # 未ログイン時のトップ画面
   root "home#top"
@@ -28,6 +31,9 @@ Rails.application.routes.draw do
   get "comparison", to: "comparison#index"
   # 設定画面
   get "setting", to: "setting#index"
+
+  # letter_opener_webのルーティング
+  mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
 
   # --- 以下は現状非設定 ---
 

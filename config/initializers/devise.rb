@@ -1,14 +1,20 @@
+# --- 文字列を節約する「マジックコメント」 ---
 # frozen_string_literal: true
 
+# --- このファイルは全てデフォルト値。将来の変更で挙動が変わらないように固定している設定。 ---
 # Assuming you have not yet modified this file, each configuration option below
 # is set to its default value. Note that some are commented out while others
 # are not: uncommented lines are intended to protect your configuration from
 # breaking changes in upgrades (i.e., in the event that future versions of
 # Devise change the default values for those options).
-#
+
+# メール設定・認証（warden）を自由にカスタマイズ可能。多くのオプションはモデルでも編集可 ---
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
+
+# --- 以下の記述以降でdeviseの設定を記述する開始の合図 ---
 Devise.setup do |config|
+  # --- 秘密鍵を独自にカスタマイズできる設定 ---
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.
@@ -16,28 +22,34 @@ Devise.setup do |config|
   # by default. You can change it below and use your own secret key.
   # config.secret_key = '36a44e403e1efc4afe30ff6cbcb61cf32dcfb40113662b2e2403eb36f4a22383cb926551873a46075a47e261ae8a2e0b88650b371a816f0f5b146551d46a8fce'
 
+  # Deviseのコントローラーが、どのクラスを親（継承元）にするか設定可能。
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
   # config.parent_controller = 'DeviseController'
 
+  #  --- Deviseが送るメールの「送信元アドレス（from）」を設定する場所 ---
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = "please-change-me-at-config-initializers-devise@example.com"
+  config.mailer_sender = "sokonote_development@example.com"
 
+  # --- Deviseが使うメール送信を担当するクラスを設定 ---
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
 
+  # --- DeviseのMailerが「どのクラスを親として継承するか」を指定する設定 ---
   # Configure the parent class responsible to send e-mails.
   # config.parent_mailer = 'ActionMailer::Base'
 
+  # --- ORM（データベースを操作する言語SQLを書かずに操作）の設定 ---
   # ==> ORM configuration
   # Load and configure the ORM. Supports :active_record (default) and
   # :mongoid (bson_ext recommended) by default. Other ORMs may be
   # available as additional gems.
   require "devise/orm/active_record"
 
+  # --- 認証（ログイン時）の「ID」として使う項目を設定 ---
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating a user. The default is
   # just :email. You can configure it to use [:username, :subdomain], so for
@@ -55,11 +67,13 @@ Devise.setup do |config|
   # The same considerations mentioned for authentication_keys also apply to request_keys.
   # config.request_keys = []
 
+  # --- 大文字小文字を区別しないよう設定 ---
   # Configure which authentication keys should be case-insensitive.
   # These keys will be downcased upon creating or modifying a user and when used
   # to authenticate or find a user. Default is :email.
   config.case_insensitive_keys = [ :email ]
 
+  # --- 前後の空白を削除する設定 ---
   # Configure which authentication keys should have whitespace stripped.
   # These keys will have whitespace before and after removed upon creating or
   # modifying a user and when used to authenticate or find a user. Default is :email.
@@ -87,11 +101,13 @@ Devise.setup do |config|
   # The realm used in Http Basic Authentication. 'Application' by default.
   # config.http_authentication_realm = 'Application'
 
+  # 入力メールアドレスが正解・不正解に関わらず同じ動作になる設定。デフォルト値はtrue
   # It will change confirmation, password recovery and other workflows
   # to behave the same regardless if the e-mail provided was right or wrong.
   # Does not affect registerable.
-  # config.paranoid = true
+  config.paranoid = true
 
+  # --- 特定の認証（ログイン）方法では「ログイン状態をセッションに保存しない（ログイン状態を記憶しない）」設定 ---
   # By default Devise will store the user in session. You can skip storage for
   # particular strategies by setting this option.
   # Notice that if you are skipping storage for all authentication paths, you
@@ -117,7 +133,8 @@ Devise.setup do |config|
   # The number of stretches used for generating the hashed password are stored
   # with the hashed password. This allows you to change the stretches without
   # invalidating existing passwords.
-  #
+
+  # パスワードのハッシュ化（暗号化）を何回繰り返すかの設定
   # Limiting the stretches to just one in testing will increase the performance of
   # your test suite dramatically. However, it is STRONGLY RECOMMENDED to not use
   # a value less than 10 in other environments. Note that, for bcrypt (the default
@@ -153,6 +170,7 @@ Devise.setup do |config|
   # before confirming their account.
   # config.confirm_within = 3.days
 
+  # --- メールアドレス変更時に「確認（認証）を必須にする」設定 ---
   # If true, requires any email changes to be confirmed (exactly the same way as
   # initial account confirmation) to be applied. Requires additional unconfirmed_email
   # db field (see migrations). Until confirmed, new email is stored in
@@ -166,6 +184,7 @@ Devise.setup do |config|
   # The time the user will be remembered without asking for credentials again.
   # config.remember_for = 2.weeks
 
+  # --- ログアウトしたら「remember_me（ログイン保持機能）」を無効にする設定 ---
   # Invalidates all the remember me tokens when the user signs out.
   config.expire_all_remember_me_on_sign_out = true
 
@@ -176,10 +195,12 @@ Devise.setup do |config|
   # secure: true in order to force SSL only cookies.
   # config.rememberable_options = {}
 
+  # --- パスワードの長さの範囲を設定 ---
   # ==> Configuration for :validatable
   # Range for password length.
   config.password_length = 6..128
 
+  # --- メールアドレスの正規表現 ---
   # Email regex used to validate email formats. It simply asserts that
   # one (and only one) @ exists in the given string. This is mainly
   # to give user feedback and not to assert the e-mail validity.
@@ -221,6 +242,7 @@ Devise.setup do |config|
   # Defines which key will be used when recovering the password for an account
   # config.reset_password_keys = [:email]
 
+  # --- パスワードリセット時の有効時間の設定 ---
   # Time interval you can reset your password with a reset password key.
   # Don't put a too small interval or your users won't have the time to
   # change their passwords.
@@ -240,6 +262,7 @@ Devise.setup do |config|
   # Require the `devise-encryptable` gem when using anything other than bcrypt
   # config.encryptor = :sha512
 
+  # --- Deviseのビューを「ユーザーごと（スコープごと）」に分けるかどうかの設定 ---
   # ==> Scopes configuration
   # Turn scoped views on. Before rendering "sessions/new", it will first check for
   # "users/sessions/new". It's turned off by default because it's slower if you
@@ -265,6 +288,7 @@ Devise.setup do |config|
   # The "*/*" below is required to match Internet Explorer requests.
   # config.navigational_formats = ['*/*', :html, :turbo_stream]
 
+  # --- ログアウト時のHTTPメソッドをDELETEに指定する設定 ---
   # The default HTTP method used to sign out a resource. Default is :delete.
   config.sign_out_via = :delete
 
@@ -296,6 +320,7 @@ Devise.setup do |config|
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
 
+  # --- Hotwire/TurboのHTTPステータスの設定 ---
   # ==> Hotwire/Turbo configuration
   # When using Devise with Hotwire/Turbo, the http status for error responses
   # and some redirects must match the following. The default in Devise for existing
