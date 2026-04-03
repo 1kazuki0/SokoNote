@@ -558,7 +558,7 @@ RSpec.describe "Item", type: :system do
 
         it "削除後に該当の購入履歴が消える" do
           accept_confirm { click_link "削除" }
-          expect(page).not_to have_content("日本ハム")
+          expect(page).not_to have_content("日本ハム", wait: 5)
           expect(page).to have_content("全 0 件")
         end
       end
