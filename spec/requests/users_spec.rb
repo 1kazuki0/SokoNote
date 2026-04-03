@@ -29,17 +29,17 @@ RSpec.describe "User", type: :request do
           expect(response).to redirect_to new_user_password_path
         end
       end
-      
+
       context "登録されていないメールアドレスの場合" do
         it "セキュリティ上のためログイン画面へリダイレクトされる" do
-          post user_password_path, params: { user: { email: "free_address@email.com"} }
+          post user_password_path, params: { user: { email: "free_address@email.com" } }
           expect(response).to redirect_to new_user_session_path
         end
       end
 
       context "有効なデータの場合" do
         it "ログイン画面へリダイレクトされる" do
-          post user_password_path, params: { user: { email: "sokonote@email.com"} }
+          post user_password_path, params: { user: { email: "sokonote@email.com" } }
           expect(response).to redirect_to new_user_session_path
         end
       end
@@ -90,5 +90,3 @@ RSpec.describe "User", type: :request do
     end
   end
 end
-
-
