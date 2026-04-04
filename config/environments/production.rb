@@ -102,4 +102,13 @@ Rails.application.configure do
   # ]
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+
+  # メールの送信する際の配送方法を指定する設定（resend）
+  config.action_mailer.delivery_method = :resend
+
+  # メール本文の中のURLを生成するための設定
+  config.action_mailer.default_url_options = {
+    host: "sokonote.com",
+    protocol: "https"
+  }
 end
