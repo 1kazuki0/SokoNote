@@ -1,15 +1,23 @@
 # frozen_string_literal: true
 
 class Users::PasswordsController < Devise::PasswordsController
+  # アクション実行前のログイン確認をスキップする
+  skip_before_action :authenticate_user!, only: [ :new, :create ]
+
   # GET /resource/password/new
   # def new
   #   super
   # end
 
   # POST /resource/password
-  # def create
-  #   super
-  # end
+  # 空白の場合、エラーメッセージを出力。digメソッドでuserがなかったらnilを出す。
+  def create
+    if params.dig(:user, :email).blank? # emailはuserの中にネストして送信されている。
+      flash[:error] = "メールアドレスを入力してください"
+      redirect_to new_user_password_path and return
+    end
+    super
+  end
 
   # GET /resource/password/edit?reset_password_token=abcdef
   # def edit

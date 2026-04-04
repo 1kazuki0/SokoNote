@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Purchase, type: :request do
+RSpec.describe "Purchase", type: :request do
   let(:user) { User.create(name: "sokonote", email: "sokonote@email.com", password: "password") }
   let(:category) { user.categories.create(name: "食品") }
   let(:store) { user.stores.create(name: "スーパー大阪店") }

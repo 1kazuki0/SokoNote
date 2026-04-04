@@ -1,6 +1,4 @@
 class PurchasesController < ApplicationController
-    before_action :authenticate_user!
-
   def edit
     @purchase = current_user.purchases.includes(:item, :store, item: :category).find(params[:id])
     @form = PurchaseForm.new(
