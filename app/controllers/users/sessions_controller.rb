@@ -1,7 +1,15 @@
 # frozen_string_literal: true
 
 class Users::SessionsController < Devise::SessionsController
-  # before_action :configure_sign_in_params, only: [:create]
+  # アクション実行前のログイン確認をスキップする
+  skip_before_action :authenticate_user!, only: [ :new, :create, :guest_sign_in ]
+
+  # ゲストユーザーログイン時の処理
+  def guest_sign_in
+    user = User.guest
+    sign_in user
+    redirect_to items_path, notice: "ゲストユーザーとしてログインしました。"
+  end
 
   # GET /resource/sign_in
   # def new
