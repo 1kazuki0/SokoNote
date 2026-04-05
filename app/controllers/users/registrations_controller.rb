@@ -9,7 +9,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_account_update_params, only: [:update]
 
   # ゲストユーザーの更新・削除をアクション前に確認
-  before_action :ensure_normal_user, only: [ :update :destroy ]
+  before_action :ensure_normal_user, only: [ :update, :destroy ]
 
   # GET /resource/sign_up
   # def new

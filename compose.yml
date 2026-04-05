@@ -39,7 +39,7 @@ services:
       dockerfile: Dockerfile.dev
     # コンテナ起動時にbundle install（Gemfileのgemインストール）,bundle exec rails db:prepare（データベースの準備）,
     # rm -f tmp/pids/server.pid（前回起動時のプロセスID削除）,./bin/dev（開発サーバーの起動）を実行
-    command: bash -c "bundle install && bundle exec rails db:prepare && rm -f tmp/pids/server.pid && ./bin/dev"
+    command: bash -c "bundle install && bundle exec rails db:prepare && rm -f tmp/pids/server.pid && bundle exec whenever --update-crontab && service cron start && ./bin/dev"
     # 人が操作できる画面端末を用意する設定
     tty: true
     # コンテナ標準入力を開いたままにする
