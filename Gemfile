@@ -45,6 +45,9 @@ gem "devise-i18n"
 # メール送信サービスResendのgem
 gem "resend"
 
+# 定期実行処理を行うgem
+gem "whenever", require: false
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
