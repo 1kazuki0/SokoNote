@@ -15,6 +15,13 @@ class User < ApplicationRecord
          :recoverable,
          :rememberable,
          :validatable
+
+  # ゲストユーザーとしてログイン時、Userモデルを自動生成。パスワードはランダム
+  def self.guest
+    find_or_create_by!(name: "ゲストユーザー", email: "guest@example.com") do |user|
+      user.password = SecureRandom.alphanumeric(10)
+    end
+  end
 end
 
 ##### メモ #####
