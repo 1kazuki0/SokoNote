@@ -1,7 +1,10 @@
 class User < ApplicationRecord
   # --- 各カラム バリデーション設定 ---
   validates :name, presence: true # nil,空,空白禁止
-  validates :password, format: { without: /\s/, message: "は空白があると登録ができません" }
+  validates :email, uniqueness: true, unless: :line_user? # nil,空,空白禁止。emailは一意。しかしLINE登録者は対象外。presenceはオーバーライドに任せる。
+  validates :provider, inclusion: { in: [ "line" ] }, allow_nil: true # "line"以外の文字は弾く。nilはOK
+  validates :uid, presence: true, uniqueness: { scope: :provider }, if: :line_user? # LINE登録者の場合はnil,空,空白禁止で、provider内のuidが一意
+  validates :password, format: { without: /\s/, message: "は空白があると登録ができません" }, unless: :line_user? # nil,空,空白禁止。正規表現。しかしline登録者は対象外。presenceはオーバーライドに任せる。
 
   # --- Userモデルのアソシエーション ---
   has_many :items       # ユーザーは商品レコードを複数持てる
@@ -21,6 +24,24 @@ class User < ApplicationRecord
     find_or_create_by!(name: "ゲストユーザー", email: "guest@example.com") do |user|
       user.password = SecureRandom.alphanumeric(10)
     end
+  end
+
+  # LINEログイン経由の登録かどうか確認
+  # LINEログイン経由ならtrue。それ以外はfalse。
+  def line_user?
+    provider == "line"
+  end
+
+  # deviseのemail（内部）メソッドを上書き（オーバーライド）
+  # !は否定。LINEログイン経由じゃないですよね？ → その場合（true)、emailが必要
+  def email_required?
+    !line_user?
+  end
+
+  # deviseのpassword（内部）メソッドを上書き（オーバーライド）
+  # !は否定。LINEログイン経由じゃないですよね？ → その場合（true)、passwordが必要
+  def password_required?
+    !line_user?
   end
 end
 
