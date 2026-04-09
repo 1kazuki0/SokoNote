@@ -134,6 +134,7 @@ ja:
         sign_in_with_provider: "%{provider}でログイン"
         sign_up: アカウントをお持ちでない方はこちら
         log_in: ログイン画面に移動する #追加
+        omuniauth_sign_in: LINEでログイン
       minimum_password_length:
         other: "（%{count}字以上）"
     unlocks:

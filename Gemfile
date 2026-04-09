@@ -48,6 +48,11 @@ gem "resend"
 # 定期実行処理を行うgem
 gem "whenever", require: false
 
+# LINEログインをOAuth/OIDCを実装できるgem
+gem "omniauth-line"
+# RailsアプリをCSRF攻撃から守るためのgem
+gem "omniauth-rails_csrf_protection"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"

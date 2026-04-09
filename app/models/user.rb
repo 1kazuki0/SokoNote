@@ -17,7 +17,9 @@ class User < ApplicationRecord
          :registerable,
          :recoverable,
          :rememberable,
-         :validatable
+         :validatable,
+         :omniauthable,
+         omniauth_providers: %i[line]
 
   # ゲストユーザーとしてログイン時、Userモデルを自動生成。パスワードはランダム
   def self.guest
@@ -68,3 +70,7 @@ end
 #  emailとpasswordのバリデーションを設定する機能
 #  email → presence: true（空白禁止）, uniqueness: true(一意), format（正規表現をメールアドレス形式）
 #  password → presence: true（空白禁止）, length（長さconfig.password_lengthで設定）, confirmation（確認用パスワードと一致）
+
+# 6.omniauthable
+#   deviseにOmniauth連携を有効化する機能
+#   次の行で、使う外部サービスを指定している。
