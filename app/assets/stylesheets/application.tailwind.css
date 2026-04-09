@@ -30,3 +30,16 @@
 .field_with_errors {
   display: contents;
 }
+
+/* 全要素にフォーカスを当てる */
+@layer base {
+  :focus-visible {
+    @apply outline-none ring-black ring-2 ring-offset-2;
+  }
+}
+
+@layer components { 
+  .btn, .link {
+    @apply cursor-pointer shadow-md shadow-black/40 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-1 active:shadow-sm transition-all;
+  }
+}
