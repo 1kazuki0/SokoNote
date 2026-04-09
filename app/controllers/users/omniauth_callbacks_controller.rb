@@ -12,6 +12,12 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       user = User.find_or_create_by(provider: auth.provider, uid: auth.uid) do |u|
         u.name = auth.info.name # ハッシュのnameをUserオブジェクトのnameに保存（新規作成時のみ）
       end
+      # UserオブジェクトがDBに保存できなかった場合、新規登録画面にリダイレクトし処理を終了させる。
+      unless user.persisted?
+        redirect_to new_user_registration_path, alert: "LINEログインに失敗しました"
+        return
+      end
+
       # userでログインして商品一覧ページにリダイレクト
       sign_in(:user, user)
       redirect_to items_path, notice: "LINEでログインしました"
