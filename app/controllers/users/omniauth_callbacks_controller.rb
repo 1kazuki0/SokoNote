@@ -10,7 +10,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     auth = request.env["omniauth.auth"] # authにデータ（ハッシュ）を格納
       # providerカラム・uidカラムをUserから探して取得orなければ新たに作成。作成の場合、Userオブジェクトをuに格納
       user = User.find_or_create_by(provider: auth.provider, uid: auth.uid) do |u|
-        u.name = auth.info.name # ハッシュのnameをUserオブジェクトのnameに保存（新規作成時のみ）
+        u.name = auth.info.name.presence || "LINEユーザー" # ハッシュのnameをUserオブジェクトのnameに保存（新規作成時のみ）。名前がなければデフォルト値設定
       end
       # UserオブジェクトがDBに保存できなかった場合、新規登録画面にリダイレクトし処理を終了させる。
       unless user.persisted?

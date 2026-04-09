@@ -83,5 +83,5 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :letter_opener_web
 
   # ngrok（開発環境のブラウザを外部公開する機能）のホストをlocalhost以外に許可。
-  config.hosts.<< /.*\.ngrok-free\.dev/
+  config.hosts << /.*\.ngrok-free\.dev/
 end
