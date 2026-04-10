@@ -15,6 +15,9 @@ Rails.application.routes.draw do
   # 未ログイン時のトップ画面
   root "home#top"
 
+  # カテゴリ一覧・登録・編集・削除
+  resources :categories
+
   # 商品一覧・登録（ウィザード形式 / 商品もカテゴリも新しく作る場合）
   # step1：基本情報入力, step2：詳細入力, session：基本情報入力値の一時保持
   resources :items do

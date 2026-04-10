@@ -1,7 +1,7 @@
 /* tailwindcss本体 */
 @import "tailwindcss";
 
-/* 以下は本アプリ共通の設定を記述 */
+/* 以下は本アプリ共通の設定を記述（色・フォントなど） */
 @theme {
   /* 以下は配色を記述 */
   --color-primary: #83CC15; /* 明るい緑色 */
@@ -38,8 +38,37 @@
   }
 }
 
+/* 自分の名前をつけた変数にスタイルを当てる */
 @layer components { 
-  .btn, .link {
+  /* ボタン・ボタン風リンクなどの押下できるcardに適用 */
+  .card {
     @apply cursor-pointer shadow-md shadow-black/40 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-1 active:shadow-sm transition-all;
   }
+  
+  /* 編集・削除を表示させるスワイプ用のcardの外側に適用*/
+  .swipe-card {
+    @apply relative overflow-hidden rounded-2xl shadow-md;
+  }
+  
+  /* 普段見えている白いカード層（スワイプで左にスライド） */
+  .swipe-inner {
+    @apply flex items-center justify-end bg-white px-5 min-h-16 transition-all;
+  }
+
+  /* 右側に隠れていて、スワイプ時に出てくる編集・削除ボタンエリア */
+  .swipe-actions {
+    @apply absolute top-0 right-0 bottom-0 flex w-[88px] transition-all z-20 rounded-r-2xl;
+  }
+
+/* PCのみ：マウスホバーでswiper-innerを左に、swipe-actionsを右から出す */
+  @media (hover: hover) {
+    .swipe-card:hover .swipe-inner {
+      transform: translateX(-88px);
+    }
+    .swipe-card:hover .swipe-actions {
+      transform: translateX(0px) !important;
+    }
+  }
 }
+
+
