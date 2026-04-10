@@ -4,8 +4,14 @@
 
 import { application } from "./application"
 
+import ButtonController from "./button_controller"
+application.register("button", ButtonController)
+
 import CompareController from "./compare_controller"
 application.register("compare", CompareController)
 
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
+
+import SwipeController from "./swipe_controller"
+application.register("swipe", SwipeController)

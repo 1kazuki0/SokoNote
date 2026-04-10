@@ -74,10 +74,11 @@
     <% end %>
 
     <%# 商品登録ボタン（FAB） %>
-    <div class="fixed bottom-28 left-0 right-0 mx-auto max-w-xl px-6 flex justify-end">
-      <%= link_to new_step1_items_path, class: "bg-primary text-white px-6 py-4 rounded-full shadow-lg flex items-center justify-center font-bold no-underline hover:opacity-90 transition-opacity" do %>
+    <div class="fixed bottom-28 left-0 right-0 mx-auto max-w-xl px-6 flex justify-end z-25">
+      <%= link_to new_step1_items_path, class: "card bg-primary text-white px-6 py-4 rounded-full shadow-lg flex items-center justify-center font-bold no-underline hover:opacity-90 transition-opacity" do %>
         <span class="text-lg">商品登録</span>
         <span class="material-symbols-outlined">add</span>
       <% end %>
+    </div>
   </div>
 <% end %>
