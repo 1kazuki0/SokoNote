@@ -31,13 +31,6 @@
   display: contents;
 }
 
-/* 全要素にフォーカスを当てる */
-@layer base {
-  :focus-visible {
-    @apply outline-none ring-black ring-2 ring-offset-2;
-  }
-}
-
 /* 自分の名前をつけた変数にスタイルを当てる */
 @layer components { 
   /* ボタン・ボタン風リンクなどの押下できるcardに適用 */
@@ -45,7 +38,7 @@
     @apply cursor-pointer shadow-md shadow-black/40 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-1 active:shadow-sm transition-all;
   }
   
-  /* 編集・削除を表示させるスワイプ用のcardの外側に適用*/
+  /* 編集・削除を表示させるスワイプ用のcardの外側に適用 */
   .swipe-card {
     @apply relative overflow-hidden rounded-2xl shadow-md;
   }
