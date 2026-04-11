@@ -38,7 +38,7 @@
 </div>
 <%# 商品登録ボタン（FAB） %>
 <div class="fixed bottom-28 left-0 right-0 mx-auto max-w-xl px-6 flex justify-end z-25">
-  <%= link_to "#", class: "card bg-primary text-white px-6 py-4 rounded-full flex items-center font-bold", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } do %>
+  <%= link_to new_category_path, class: "card bg-primary text-white px-6 py-4 rounded-full flex items-center font-bold", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } do %>
     <span class="text-lg">カテゴリ追加</span>
     <span class="material-symbols-outlined">add</span>
   <% end %>
