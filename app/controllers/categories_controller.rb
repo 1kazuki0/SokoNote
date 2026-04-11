@@ -17,13 +17,18 @@ class CategoriesController < ApplicationController
     end
   end
 
-  def show
-  end
-
   def edit
+    @category = current_user.categories.find(params[:id])
   end
 
   def update
+    @category = current_user.categories.find(params[:id])
+    if @category.update(category_params)
+      redirect_to categories_path, success: "カテゴリを更新しました"
+    else
+      flash.now[:error] = "カテゴリの編集に失敗しました"
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def destroy
