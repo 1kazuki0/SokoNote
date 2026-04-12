@@ -2,7 +2,7 @@ class StoresController < ApplicationController
   def index
     @stores = current_user.stores.order(:name)
   end
-  
+
   def new
   end
 
