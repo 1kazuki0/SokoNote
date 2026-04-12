@@ -26,7 +26,7 @@ class CategoriesController < ApplicationController
     if @category.update(category_params)
       redirect_to categories_path, success: "カテゴリを更新しました"
     else
-      flash.now[:error] = "カテゴリの編集に失敗しました"
+      flash.now[:error] = "カテゴリの更新に失敗しました"
       render :edit, status: :unprocessable_entity
     end
   end
