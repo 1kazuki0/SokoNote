@@ -18,9 +18,17 @@ class StoresController < ApplicationController
   end
 
   def edit
+    @store = current_user.stores.find(params[:id])
   end
 
   def update
+    @store = current_user.stores.find(params[:id])
+    if @store.update(store_params)
+      redirect_to stores_path, success: "店舗を更新しました"
+    else
+      flash.now[:error] = "店舗の更新に失敗しました。"
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def destroy
