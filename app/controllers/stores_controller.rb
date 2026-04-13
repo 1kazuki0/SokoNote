@@ -32,6 +32,9 @@ class StoresController < ApplicationController
   end
 
   def destroy
+    @store = current_user.stores.find(params[:id])
+    @store.destroy
+    redirect_to stores_path, success: "店舗を削除しました"
   end
 
   private
