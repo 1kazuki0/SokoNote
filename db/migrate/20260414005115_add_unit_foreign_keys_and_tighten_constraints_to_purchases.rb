@@ -4,7 +4,7 @@ class AddUnitForeignKeysAndTightenConstraintsToPurchases < ActiveRecord::Migrati
     change_column_null :purchases, :content_unit_id, false
 
     # ② 外部キー制約を追加
-    add_foreign_key :purchases, :content_units                    
+    add_foreign_key :purchases, :content_units
     add_foreign_key :purchases, :pack_units, on_delete: :nullify # 親のpack_unitレコードが消されても、purchases.pack_unit_idはnilになる
 
     # ③ 旧カラムを削除

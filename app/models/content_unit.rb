@@ -1,7 +1,7 @@
 class ContentUnit < ApplicationRecord
   # --- nameカラム バリデーションの設定 ---
   validates :name, presence: true, length: { maximum: 10 }, uniqueness: { scope: :user_id }
-  
+
   # --- バリデーション前に実行 ---
   before_validation :normalize_name
 

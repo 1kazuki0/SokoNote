@@ -8,7 +8,7 @@ class Item < ApplicationRecord
   before_validation :normalize_name
 
   # --- Itemモデルのアソシエーション ---
-  belongs_to :user     
+  belongs_to :user
   belongs_to :category, optional: true     # category_idがnull許可に変更
   has_many :purchases, dependent: :destroy # item削除時にpurchasesも削除
 
@@ -16,7 +16,7 @@ class Item < ApplicationRecord
 
   # --- 前後の空白削除と空ならnilにする処理 ---
   def normalize_name
-    self.name = name&.strip        # 空白削除     
+    self.name = name&.strip        # 空白削除
     self.name = nil if name.blank? # 空ならnil
   end
 end

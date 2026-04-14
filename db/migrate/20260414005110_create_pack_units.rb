@@ -5,6 +5,6 @@ class CreatePackUnits < ActiveRecord::Migration[7.2]
       t.string :name, null: false                          # null禁止
       t.timestamps
     end
-    add_index :pack_units, [:user_id, :name], unique: true # インデックス追加/同一ユーザー内のnameカラムの重複禁止
+    add_index :pack_units, [ :user_id, :name ], unique: true # インデックス追加/同一ユーザー内のnameカラムの重複禁止
   end
 end
