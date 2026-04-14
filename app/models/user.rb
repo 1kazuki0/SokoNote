@@ -7,10 +7,12 @@ class User < ApplicationRecord
   validates :password, format: { without: /\s/, message: "は空白があると登録ができません" }, unless: :line_user? # nil,空,空白禁止。正規表現。しかしline登録者は対象外。presenceはオーバーライドに任せる。
 
   # --- Userモデルのアソシエーション ---
-  has_many :items       # ユーザーは商品レコードを複数持てる
-  has_many :stores      # ユーザーは店舗レコードを複数持てる
-  has_many :categories  # ユーザーはカテゴリーレコードを複数持てる
-  has_many :purchases   # ユーザーは購入履歴レコードを複数持てる
+  has_many :categories, dependent: :destroy
+  has_many :items, dependent: :destroy
+  has_many :stores, dependent: :destroy
+  has_many :purchases, dependent: :destroy
+  has_many :content_units, dependent: :destroy
+  has_many :pack_units, dependent: :destroy
 
   # --- Devise機能の必要なモジュールを適用 ---
   devise :database_authenticatable,

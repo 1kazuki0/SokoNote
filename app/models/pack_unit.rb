@@ -1,13 +1,13 @@
-class Category < ApplicationRecord
+class PackUnit < ApplicationRecord
   # --- nameカラム バリデーションの設定 ---
-  validates :name, presence: true, length: { maximum: 30 }, uniqueness: { scope: :user_id }
+  validates :name, presence: true, length: { maximum: 10 }, uniqueness: { scope: :user_id }
 
   # --- バリデーション前に実行 ---
   before_validation :normalize_name
 
-  # --- Categoryモデルのアソシエーション ---
+  # --- PackUnitモデルのアソシエーション ---
   belongs_to :user
-  has_many :items, dependent: :nullify
+  has_many :purchases, dependent: :nullify # pack_unit削除時にpurchases.pack_unit_idをnil
 
   private
 
