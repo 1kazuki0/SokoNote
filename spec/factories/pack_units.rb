@@ -1,5 +1,5 @@
-FactoryBot.define do
-  factory :pack_unit do
+# FactoryBot.define do
+#   factory :pack_unit do
     
-  end
-end
+#   end
+# end
