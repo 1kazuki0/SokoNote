@@ -6,6 +6,8 @@ ja:
       category: カテゴリー
       item: 商品
       purchase: 購入履歴
+      content_unit: 単位（単位名）
+      pack_unit: 単位（包装）
     attributes:
       user:
         name: ニックネーム
@@ -21,12 +23,14 @@ ja:
       purchase:
         brand: ブランド名
         content_quantity: 内容量
-        content_unit: 単位（内容量）
         pack_quantity: パック数
-        pack_unit: 単位（パック数）
         price: 価格
         tax_rate: 消費税
         purchased_on: 購入日
+      content_unit:
+        name: 単位名（内容量）
+      pack_unit:
+        name: 単位名（包装）
   footer:
     index: 一覧
     comparison: 比較
