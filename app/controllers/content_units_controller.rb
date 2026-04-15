@@ -17,6 +17,20 @@ class ContentUnitsController < ApplicationController
     end
   end
 
+  def edit
+    @content_unit = current_user.content_units.find(params[:id])
+  end
+
+  def update
+    @content_unit = current_user.content_units.find(params[:id])
+    if @content_unit.update(content_unit_params)
+      redirect_to content_units_path, success: "内容量単位を更新しました"
+    else
+      flash.now[:error] = "内容量単位の更新に失敗しました"
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def content_unit_params
