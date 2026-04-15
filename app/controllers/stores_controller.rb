@@ -34,7 +34,7 @@ class StoresController < ApplicationController
   def destroy
     @store = current_user.stores.find(params[:id])
     @store.destroy
-    redirect_to stores_path, success: "店舗を削除しました"
+    redirect_to stores_path, success: "店舗を削除しました", status: :see_other
   end
 
   private

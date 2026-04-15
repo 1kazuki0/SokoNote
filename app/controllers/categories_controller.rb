@@ -34,7 +34,7 @@ class CategoriesController < ApplicationController
   def destroy
     @category = current_user.categories.find(params[:id])
     @category.destroy
-    redirect_to categories_path, success: "カテゴリを削除しました"
+    redirect_to categories_path, success: "カテゴリを削除しました", status: :see_other
   end
 
   private

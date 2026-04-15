@@ -31,6 +31,15 @@ class ContentUnitsController < ApplicationController
     end
   end
 
+  def destroy
+    @content_unit = current_user.content_units.find(params[:id])
+    if @content_unit.destroy
+      redirect_to content_units_path, success: "内容量単位を削除しました", status: :see_other
+    else
+      redirect_to content_units_path, alert: "購入履歴があるため削除することができません", status: :see_other
+    end
+  end
+
   private
 
   def content_unit_params
