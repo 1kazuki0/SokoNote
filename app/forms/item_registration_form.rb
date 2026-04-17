@@ -51,7 +51,10 @@ class ItemRegistrationForm
     end
     true
   rescue ActiveRecord::RecordInvalid => e
+    errors.add(:base, e.record.errors.full_messages.to_sentence)
     false
+  rescue ActiveRecord::RecordNotUnique
+    errors.add(:base, "同じ名前のデータが既に存在します")
   end
 
   private
