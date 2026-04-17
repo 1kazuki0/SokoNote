@@ -45,4 +45,8 @@ export default class extends Controller {
   outsideClick(e) {
     if (!this.element.contains(e.target)) this.close()
   }
+  
+  stopPropagation(e) {
+    e.stopPropagation()
+  }
 }

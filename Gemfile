@@ -82,6 +82,9 @@ group :development do
 
   # 送信済みメールを閲覧するためのgem
   gem "letter_opener_web", "~> 3.0"
+
+  # デバッグ機能
+  gem "pry-rails"
 end
 
 group :test do

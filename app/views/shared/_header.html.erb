@@ -1,14 +1,13 @@
-<header class="fixed top-0 left-0 w-full bg-neutral border-b border-primary z-50">
-  <nav class="flex items-center h-16 px-8">
-    <div class="flex items-center justify-start w-10 material-symbols-outlined mt-3 text-primary">
+<header class="fixed top-0 left-0 w-full border-b border-primary z-50 <%= yield(:header_class).presence || "bg-neutral text-primary" %>">
+  <nav class="flex items-center h-16 px-8 max-w-5xl mx-auto">
+    <div class="flex items-center justify-start material-symbols-outlined mt-3">
       <%= link_to yield(:arrow_back).presence || "", :back %> 
     </div>
-    <div class="flex-1 text-center text-primary font-bold text-2xl mt-3">
+    <div class="flex-1 text-center font-bold text-2xl mt-3">
       <%= yield(:title).presence || link_to("SokoNote", root_path) %>
     </div>
-    <div class="flex items-center justify-end w-10 text-primary mt-3 cursor-not-allowed group">
-      <span class="material-symbols-outlined group-hover:invisible">density_medium</span>
-      <span class="absolute bg-light-gray rounded px-1 text-xs right-2 md:text-xl invisible group-hover:visible">coming soon</span>
+    <div class="flex items-center justify-end material-symbols-outlined mt-3">
+      <%= yield(:density_medium).presence || "" %>
     </div>
   </nav>
 </header>

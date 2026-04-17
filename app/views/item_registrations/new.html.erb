@@ -1,4 +1,4 @@
-<!-- 商品情報の詳細編集画面 -->
+<!-- 商品登録画面 -->
 <!-- ヘッダー配色の変更 -->
 <% content_for :header_class do %>
   bg-primary text-white
@@ -9,40 +9,22 @@
 <% end %>
 <!-- タイトル表示 -->
 <% content_for :title do %>
-  商品情報の詳細編集
+  商品登録
 <% end %>
 
-<!-- 入力項目（全て） -->
-<%= form_with model: @form, url: item_purchase_path, method: :patch, scope: :purchase_updates do |f| %>
+<!-- 入力項目（商品名・内容量・単位・価格・消費税率） -->
+<%= form_with model: @form, url: item_registration_path, method: :post, scope: :item_registrations do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
-  <div class= "space-y-6">
+  <div class="space-y-6">
 
     <!-- 商品情報カード -->
     <h1 class="font-bold border-b text-primary border-primary pb-2">商品情報</h1>
     <div class="bg-white rounded-2xl border border-light-gray p-4 space-y-4">
 
-      <!-- カテゴリ名 -->
-      <%= f.label :category_name, class: "block text-black font-bold mb-2"%>
-      <div class="form flex">
-        <%= f.text_field :category_name, placeholder: "例：飲料 / 日用品", autocomplete: "off", class: "flex-auto outline-none text-black bg-transparent placeholder-gray" %>
-      </div>
-
       <!-- 商品名 -->
       <%= f.label :item_name, class: "block text-black font-bold mb-2"%>
       <div class="form flex">
         <%= f.text_field :item_name, placeholder: "例：牛乳 / 箱ティッシュ", autocomplete: "off", class: "flex-auto outline-none text-black bg-transparent placeholder-gray" %>
-      </div>
-
-      <!-- 店舗名 -->
-      <%= f.label :store_name, class: "block text-black font-bold mb-2"%>
-      <div class="form flex">
-        <%= f.text_field :store_name, placeholder: "例：〇〇スーパー〇〇店", autocomplete: "off", class: "flex-auto outline-none text-black bg-transparent placeholder-gray" %>
-      </div>
-
-      <!-- ブランド名 -->
-      <%= f.label :brand, class: "block text-black font-bold mb-2"%>
-      <div class="form flex">
-        <%= f.text_field :brand, placeholder: "例：伊藤園 / 花王", autocomplete: "off", class: "flex-auto outline-none text-black bg-transparent placeholder-gray" %>
       </div>
 
       <!-- 2列 -->
@@ -52,7 +34,7 @@
         <div>
           <%= f.label :content_quantity, class: "block text-black font-bold mb-2"%>
           <div class="form">
-            <%= f.number_field :content_quantity, placeholder: "例：3 / 500", autocomplete: "off", inputmode: "numeric", class: "w-full flex-auto outline-none text-black bg-transparent placeholder-gray" %>
+            <%= f.number_field :content_quantity, placeholder: "例：3 , 500", autocomplete: "off", inputmode: "numeric", class: "w-full flex-auto outline-none text-black bg-transparent placeholder-gray" %>
           </div>
         </div>
 
@@ -60,31 +42,9 @@
         <div>
           <%= f.label :content_unit_name, class: "block text-black font-bold mb-2"%>
           <div class="form">
-            <%= f.text_field :content_unit_name, placeholder: "例：ml / g", autocomplete: "off", class: "w-full flex-auto outline-none text-black bg-transparent placeholder-gray" %>
+            <%= f.text_field :content_unit_name, placeholder: "例：ml、g", autocomplete: "off", class: "w-full flex-auto outline-none text-black bg-transparent placeholder-gray" %>
           </div>
         </div>
-
-        <!-- 包装数 -->
-        <div>
-          <%= f.label :pack_quantity, class: "block text-black font-bold mb-2"%>
-          <div class="form">
-            <%= f.number_field :pack_quantity, placeholder: "例：1 / 6", autocomplete: "off", inputmode: "numeric", class: "w-full flex-auto outline-none text-black bg-transparent placeholder-gray" %>
-          </div>
-        </div>
-
-        <!-- 単位（内容量） -->
-        <div>
-          <%= f.label :pack_unit_name, class: "block text-black font-bold mb-2"%>
-          <div class="form">
-            <%= f.text_field :pack_unit_name, placeholder: "例：セット / 箱", autocomplete: "off", class: "w-full flex-auto outline-none text-black bg-transparent placeholder-gray" %>
-          </div>
-        </div>
-      </div>
-
-      <!-- 登録日 -->
-      <%= f.label :purchased_on, class: "block text-black font-bold mb-2"%>
-      <div class="form flex">
-        <%= f.date_field :purchased_on, class: "flex-auto outline-none text-black bg-transparent" %>
       </div>
     </div>
 
