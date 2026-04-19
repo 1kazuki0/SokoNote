@@ -1,203 +1,362 @@
-require "rails_helper"
+require 'rails_helper'
 
 RSpec.describe Purchase, type: :model do
-  let(:user) { User.create(name: "sokonote", email: "sokonote@email.com", password: "password") }
-  let(:category) { user.categories.create(name: "食品") }
-  let(:store) { user.stores.create(name: "スーパー大阪店") }
-  let(:item) { category.items.create(name: "ハム", user: user) }
+  # --- factory_botを参照 ---
+  let(:user) { create(:user) }
+  let(:item) { create(:item, user: user) }
+  let(:store) { create(:store, user: user) }
+  let(:content_unit) { create(:content_unit, user: user) }
+  let(:pack_unit) { create(:pack_unit, user: user) }
+  let(:purchase) do
+    build(:purchase, user: user, item: item, store: store,
+                     content_unit: content_unit, pack_unit: pack_unit)
+  end
 
   describe "バリデーション" do
-    context "無効の場合" do
-      it "ブランド名が51文字なら無効" do
-        purchase = item.purchases.new(brand: "a" * 51, content_quantity: 5, content_unit: "枚", pack_quantity: 3, pack_unit: "パック", price: 210, unit_price: 14, tax_rate: 0, purchased_on: "2025/4/1", user: user, store: store)
-        expect(purchase).to be_invalid
+    it "全ての項目が正しく入力されていれば有効" do
+      expect(purchase).to be_valid
+    end
+
+    # ============================================================
+    # brand
+    # ============================================================
+    describe "brand" do
+      it "空でも有効(allow_blank: true)" do
+        purchase.brand = ""
+        expect(purchase).to be_valid
       end
 
-      it "内容量が空白なら無効" do
-        purchase = item.purchases.new(brand: "日本ハム", content_quantity: nil, content_unit: "枚", pack_quantity: 3, pack_unit: "パック", price: 210, unit_price: 14, tax_rate: 0, purchased_on: "2025/4/1", user: user, store: store)
-        expect(purchase).to be_invalid
+      it "nilでも有効(allow_blank: true)" do
+        purchase.brand = nil
+        expect(purchase).to be_valid
       end
 
-      it "内容量が0なら無効" do
-        purchase = item.purchases.new(brand: "日本ハム", content_quantity: 0, content_unit: "枚", pack_quantity: 3, pack_unit: "パック", price: 210, unit_price: 14, tax_rate: 0, purchased_on: "2025/4/1", user: user, store: store)
-        expect(purchase).to be_invalid
+      it "30文字ちょうどなら有効(境界値)" do
+        purchase.brand = "a" * 30
+        expect(purchase).to be_valid
       end
 
-      it "内容量が-1なら無効" do
-        purchase = item.purchases.new(brand: "日本ハム", content_quantity: -1, content_unit: "枚", pack_quantity: 3, pack_unit: "パック", price: 210, unit_price: 14, tax_rate: 0, purchased_on: "2025/4/1", user: user, store: store)
+      it "31文字だと無効(境界値)" do
+        purchase.brand = "a" * 31
         expect(purchase).to be_invalid
-      end
-
-      it "内容量の単位が11文字なら無効" do
-        purchase = item.purchases.new(brand: "日本ハム", content_quantity: 5, content_unit: "a" * 11, pack_quantity: 3, pack_unit: "パック", price: 210, unit_price: 14, tax_rate: 0, purchased_on: "2025/4/1", user: user, store: store)
-        expect(purchase).to be_invalid
-      end
-
-      it "パック数が空白なら無効" do
-        purchase = item.purchases.new(brand: "日本ハム", content_quantity: 5, content_unit: "枚", pack_quantity: nil, pack_unit: "パック", price: 210, unit_price: 14, tax_rate: 0, purchased_on: "2025/4/1", user: user, store: store)
-        expect(purchase).to be_invalid
-      end
-
-      it "パック数が小数なら無効" do
-        purchase = item.purchases.new(brand: "日本ハム", content_quantity: 5, content_unit: "枚", pack_quantity: 0.1, pack_unit: "パック", price: 210, unit_price: 14, tax_rate: 0, purchased_on: "2025/4/1", user: user, store: store)
-        expect(purchase).to be_invalid
-      end
-
-      it "パック数が0なら無効" do
-        purchase = item.purchases.new(brand: "日本ハム", content_quantity: 5, content_unit: "枚", pack_quantity: 0, pack_unit: "パック", price: 210, unit_price: 14, tax_rate: 0, purchased_on: "2025/4/1", user: user, store: store)
-        expect(purchase).to be_invalid
-      end
-
-      it "パック数が-1なら無効" do
-        purchase = item.purchases.new(brand: "日本ハム", content_quantity: 5, content_unit: "枚", pack_quantity: -1, pack_unit: "パック", price: 210, unit_price: 14, tax_rate: 0, purchased_on: "2025/4/1", user: user, store: store)
-        expect(purchase).to be_invalid
-      end
-
-      it "パック数の単位が11文字なら無効" do
-        purchase = item.purchases.new(brand: "日本ハム", content_quantity: 5, content_unit: "枚", pack_quantity: 3, pack_unit: "a" * 11, price: 210, unit_price: 14, tax_rate: 0, purchased_on: "2025/4/1", user: user, store: store)
-        expect(purchase).to be_invalid
-      end
-
-      it "価格が空白なら無効" do
-        purchase = item.purchases.new(brand: "日本ハム", content_quantity: 5, content_unit: "枚", pack_quantity: 3, pack_unit: "パック", price: nil, unit_price: 14, tax_rate: 0, purchased_on: "2025/4/1", user: user, store: store)
-        expect(purchase).to be_invalid
-      end
-
-      it "価格が小数点なら無効" do
-        purchase = item.purchases.new(brand: "日本ハム", content_quantity: 5, content_unit: "枚", pack_quantity: 3, pack_unit: "パック", price: 0.1, unit_price: 14, tax_rate: 0, purchased_on: "2025/4/1", user: user, store: store)
-        expect(purchase).to be_invalid
-      end
-
-      it "価格が0なら無効" do
-        purchase = item.purchases.new(brand: "日本ハム", content_quantity: 5, content_unit: "枚", pack_quantity: 3, pack_unit: "パック", price: 0, unit_price: 14, tax_rate: 0, purchased_on: "2025/4/1", user: user, store: store)
-        expect(purchase).to be_invalid
-      end
-
-      it "価格が-1なら無効" do
-        purchase = item.purchases.new(brand: "日本ハム", content_quantity: 5, content_unit: "枚", pack_quantity: 3, pack_unit: "パック", price: -1, unit_price: 14, tax_rate: 0, purchased_on: "2025/4/1", user: user, store: store)
-        expect(purchase).to be_invalid
-      end
-
-      it "単価が0なら無効" do
-        purchase = item.purchases.new(brand: "日本ハム", content_quantity: 5, content_unit: "枚", pack_quantity: 3, pack_unit: "パック", price: 210, unit_price: 0, tax_rate: 0, purchased_on: "2025/4/1", user: user, store: store)
-        expect(purchase).to be_invalid
-      end
-
-      it "単価が-1なら無効" do
-        purchase = item.purchases.new(brand: "日本ハム", content_quantity: 5, content_unit: "枚", pack_quantity: 3, pack_unit: "パック", price: 210, unit_price: -1, tax_rate: 0, purchased_on: "2025/4/1", user: user, store: store)
-        expect(purchase).to be_invalid
-      end
-
-      it "税が空白なら無効" do
-        purchase = item.purchases.new(brand: "日本ハム", content_quantity: 5, content_unit: "枚", pack_quantity: 3, pack_unit: "パック", price: 210, unit_price: 14, tax_rate: nil, purchased_on: "2025/4/1", user: user, store: store)
-        expect(purchase).to be_invalid
-      end
-
-      it "税が1なら無効" do
-        purchase = item.purchases.new(brand: "日本ハム", content_quantity: 5, content_unit: "枚", pack_quantity: 3, pack_unit: "パック", price: 210, unit_price: 14, tax_rate: 1, purchased_on: "2025/4/1", user: user, store: store)
-        expect(purchase).to be_invalid
-      end
-
-      it "購入日が空白なら無効" do
-        purchase = item.purchases.new(brand: "日本ハム", content_quantity: 5, content_unit: "枚", pack_quantity: 3, pack_unit: "パック", price: 210, unit_price: 14, tax_rate: 0, purchased_on: nil, user: user, store: store)
-        expect(purchase).to be_invalid
+        expect(purchase.errors[:brand]).to include("は30文字以内で入力してください")
       end
     end
 
-    context "有効の場合" do
-      it "ブランド名が無くても有効" do
-        purchase = item.purchases.new(brand: nil, content_quantity: 5, content_unit: "枚", pack_quantity: 3, pack_unit: "パック", price: 210, unit_price: 14, tax_rate: 0, purchased_on: "2025/4/1", user: user, store: store)
+    # ============================================================
+    # content_quantity
+    # ============================================================
+    describe "content_quantity" do
+      it "nilだと無効" do
+        purchase.content_quantity = nil
+        expect(purchase).to be_invalid
+        expect(purchase.errors[:content_quantity]).to include("を入力してください")
+      end
+
+      it "0だと無効(greater_than: 0)" do
+        purchase.content_quantity = 0
+        expect(purchase).to be_invalid
+        expect(purchase.errors[:content_quantity]).to include("は0より大きい値にしてください")
+      end
+
+      it "負数だと無効" do
+        purchase.content_quantity = -1
+        expect(purchase).to be_invalid
+        expect(purchase.errors[:content_quantity]).to include("は0より大きい値にしてください")
+      end
+
+      it "文字列だと無効" do
+        purchase.content_quantity = "abc"
+        expect(purchase).to be_invalid
+        expect(purchase.errors[:content_quantity]).to include("は数値で入力してください")
+      end
+
+      it "小数でも有効" do
+        purchase.content_quantity = 0.5
         expect(purchase).to be_valid
       end
 
-      it "ブランド名が50文字なら有効" do
-        purchase = item.purchases.new(brand: "a" * 50, content_quantity: 5, content_unit: "枚", pack_quantity: 3, pack_unit: "パック", price: 210, unit_price: 14, tax_rate: 0, purchased_on: "2025/4/1", user: user, store: store)
+      it "大きな値でも有効" do
+        purchase.content_quantity = 99999.99
+        expect(purchase).to be_valid
+      end
+    end
+
+    # ============================================================
+    # pack_quantity
+    # ============================================================
+    describe "pack_quantity" do
+      it "nilだと無効" do
+        purchase.pack_quantity = nil
+        expect(purchase).to be_invalid
+        expect(purchase.errors[:pack_quantity]).to include("を入力してください")
+      end
+
+      it "0だと無効(greater_than_or_equal_to: 1)" do
+        purchase.pack_quantity = 0
+        expect(purchase).to be_invalid
+        expect(purchase.errors[:pack_quantity]).to include("は1以上の値にしてください")
+      end
+
+      it "1なら有効(境界値)" do
+        purchase.pack_quantity = 1
         expect(purchase).to be_valid
       end
 
-      it "ブランド名が49文字なら有効" do
-        purchase = item.purchases.new(brand: "a" * 49, content_quantity: 5, content_unit: "枚", pack_quantity: 3, pack_unit: "パック", price: 210, unit_price: 14, tax_rate: 0, purchased_on: "2025/4/1", user: user, store: store)
+      it "小数だと無効(only_integer)" do
+        purchase.pack_quantity = 1.5
+        expect(purchase).to be_invalid
+        expect(purchase.errors[:pack_quantity]).to include("は整数で入力してください")
+      end
+
+      it "負数だと無効" do
+        purchase.pack_quantity = -1
+        expect(purchase).to be_invalid
+        expect(purchase.errors[:pack_quantity]).to include("は1以上の値にしてください")
+      end
+    end
+
+    # ============================================================
+    # price
+    # ============================================================
+    describe "price" do
+      it "nilだと無効" do
+        purchase.price = nil
+        expect(purchase).to be_invalid
+        expect(purchase.errors[:price]).to include("を入力してください")
+      end
+
+      it "0だと無効(greater_than: 0)" do
+        purchase.price = 0
+        expect(purchase).to be_invalid
+        expect(purchase.errors[:price]).to include("は0より大きい値にしてください")
+      end
+
+      it "負数だと無効" do
+        purchase.price = -100
+        expect(purchase).to be_invalid
+        expect(purchase.errors[:price]).to include("は0より大きい値にしてください")
+      end
+
+      it "小数だと無効(only_integer)" do
+        purchase.price = 100.5
+        expect(purchase).to be_invalid
+        expect(purchase.errors[:price]).to include("は整数で入力してください")
+      end
+
+      it "正の整数なら有効" do
+        purchase.price = 100
+        expect(purchase).to be_valid
+      end
+    end
+
+    # ============================================================
+    # unit_price
+    # ============================================================
+    describe "unit_price" do
+      it "nilだと無効" do
+        purchase.unit_price = nil
+        expect(purchase).to be_invalid
+        expect(purchase.errors[:unit_price]).to include("を入力してください")
+      end
+
+      it "0だと無効(greater_than: 0)" do
+        purchase.unit_price = 0
+        expect(purchase).to be_invalid
+        expect(purchase.errors[:unit_price]).to include("は0より大きい値にしてください")
+      end
+
+      it "負数だと無効" do
+        purchase.unit_price = -10
+        expect(purchase).to be_invalid
+        expect(purchase.errors[:unit_price]).to include("は0より大きい値にしてください")
+      end
+
+      it "小数でも有効" do
+        purchase.unit_price = 50.5
+        expect(purchase).to be_valid
+      end
+    end
+
+    # ============================================================
+    # tax_rate
+    # ============================================================
+    describe "tax_rate" do
+      it "nilだと無効" do
+        purchase.tax_rate = nil
+        expect(purchase).to be_invalid
+        expect(purchase.errors[:tax_rate]).to include("を入力してください")
+      end
+
+      it "一覧外の値(5)だと無効" do
+        purchase.tax_rate = 5
+        expect(purchase).to be_invalid
+        expect(purchase.errors[:tax_rate]).to include("は一覧にありません")
+      end
+
+      it "0なら有効" do
+        purchase.tax_rate = 0
         expect(purchase).to be_valid
       end
 
-      it "内容量が1なら有効" do
-        purchase = item.purchases.new(brand: "日本ハム", content_quantity: 1, content_unit: "枚", pack_quantity: 3, pack_unit: "パック", price: 210, unit_price: 14, tax_rate: 0, purchased_on: "2025/4/1", user: user, store: store)
+      it "8なら有効" do
+        purchase.tax_rate = 8
         expect(purchase).to be_valid
       end
 
-      it "内容量の単位がなくても有効" do
-        purchase = item.purchases.new(brand: "日本ハム", content_quantity: 5, content_unit: nil, pack_quantity: 3, pack_unit: "パック", price: 210, unit_price: 14, tax_rate: 0, purchased_on: "2025/4/1", user: user, store: store)
+      it "10なら有効" do
+        purchase.tax_rate = 10
+        expect(purchase).to be_valid
+      end
+    end
+
+    # ============================================================
+    # purchased_on
+    # ============================================================
+    describe "purchased_on" do
+      it "nilだと無効" do
+        purchase.purchased_on = nil
+        expect(purchase).to be_invalid
+        expect(purchase.errors[:purchased_on]).to include("を入力してください")
+      end
+
+      it "日付文字列なら有効" do
+        purchase.purchased_on = "2026/01/01"
         expect(purchase).to be_valid
       end
 
-      it "内容量の単位が10文字なら有効" do
-        purchase = item.purchases.new(brand: "日本ハム", content_quantity: 5, content_unit: "a" * 10, pack_quantity: 3, pack_unit: "パック", price: 210, unit_price: 14, tax_rate: 0, purchased_on: "2025/4/1", user: user, store: store)
+      it "Dateオブジェクトなら有効" do
+        purchase.purchased_on = Date.new(2026, 1, 1)
         expect(purchase).to be_valid
       end
+    end
 
-      it "内容量の単位が9文字なら有効" do
-        purchase = item.purchases.new(brand: "日本ハム", content_quantity: 5, content_unit: "a" * 9, pack_quantity: 3, pack_unit: "パック", price: 210, unit_price: 14, tax_rate: 0, purchased_on: "2025/4/1", user: user, store: store)
+    # ============================================================
+    # 必須アソシエーション(user, item, content_unit)
+    # ============================================================
+    describe "user" do
+      it "nilだと無効" do
+        purchase.user = nil
+        expect(purchase).to be_invalid
+        expect(purchase.errors[:user]).to include("を入力してください")
+      end
+    end
+
+    describe "item" do
+      it "nilだと無効" do
+        purchase.item = nil
+        expect(purchase).to be_invalid
+        expect(purchase.errors[:item]).to include("を入力してください")
+      end
+    end
+
+    describe "content_unit" do
+      it "nilだと無効" do
+        purchase.content_unit = nil
+        expect(purchase).to be_invalid
+        expect(purchase.errors[:content_unit]).to include("を入力してください")
+      end
+    end
+
+    # ============================================================
+    # optionalアソシエーション(store, pack_unit)
+    # ============================================================
+    describe "store (optional: true)" do
+      it "nilでも有効" do
+        purchase.store = nil
         expect(purchase).to be_valid
       end
+    end
 
-      it "パック数が整数なら有効" do
-        purchase = item.purchases.new(brand: "日本ハム", content_quantity: 5, content_unit: "枚", pack_quantity: 1, pack_unit: "パック", price: 210, unit_price: 14, tax_rate: 0, purchased_on: "2025/4/1", user: user, store: store)
+    describe "pack_unit (optional: true)" do
+      it "nilでも有効" do
+        purchase.pack_unit = nil
         expect(purchase).to be_valid
       end
+    end
+  end
 
-      it "パック数が1なら有効" do
-        purchase = item.purchases.new(brand: "日本ハム", content_quantity: 5, content_unit: "枚", pack_quantity: 1, pack_unit: "パック", price: 210, unit_price: 14, tax_rate: 0, purchased_on: "2025/4/1", user: user, store: store)
-        expect(purchase).to be_valid
+  # ============================================================
+  # before_validation :normalize_brand の動作確認
+  # ============================================================
+  describe "before_validation :normalize_brand" do
+    it "brandの前後の半角空白が削除される" do
+      purchase.brand = "  ブランド  "
+      purchase.valid?
+      expect(purchase.brand).to eq "ブランド"
+    end
+
+    it "brandの前後の全角空白が削除される" do
+      purchase.brand = "　ブランド　"
+      purchase.valid?
+      expect(purchase.brand).to eq "ブランド"
+    end
+
+    it "brandが半角空白だけなら nil になる" do
+      purchase.brand = "   "
+      purchase.valid?
+      expect(purchase.brand).to be_nil
+    end
+
+    it "brandが全角空白だけなら nil になる" do
+      purchase.brand = "　　　"
+      purchase.valid?
+      expect(purchase.brand).to be_nil
+    end
+
+    it "brandがnilならnilのまま" do
+      purchase.brand = nil
+      purchase.valid?
+      expect(purchase.brand).to be_nil
+    end
+  end
+
+  # ============================================================
+  # アソシエーション
+  # ============================================================
+  describe "アソシエーション" do
+    describe "belongs_to :user" do
+      it "userに紐づく" do
+        saved = create(:purchase, user: user, item: item, content_unit: content_unit)
+        expect(saved.user).to eq user
+      end
+    end
+
+    describe "belongs_to :item" do
+      it "itemに紐づく" do
+        saved = create(:purchase, user: user, item: item, content_unit: content_unit)
+        expect(saved.item).to eq item
+      end
+    end
+
+    describe "belongs_to :store (optional: true)" do
+      it "storeに紐づく" do
+        saved = create(:purchase, user: user, item: item, store: store, content_unit: content_unit)
+        expect(saved.store).to eq store
       end
 
-      it "パック数の単位がなくても有効" do
-        purchase = item.purchases.new(brand: "日本ハム", content_quantity: 5, content_unit: "枚", pack_quantity: 3, pack_unit: nil, price: 210, unit_price: 14, tax_rate: 0, purchased_on: "2025/4/1", user: user, store: store)
-        expect(purchase).to be_valid
+      it "storeがnilでも保存できる" do
+        saved = build(:purchase, user: user, item: item, store: nil, content_unit: content_unit)
+        expect(saved).to be_valid
+      end
+    end
+
+    describe "belongs_to :content_unit" do
+      it "content_unitに紐づく" do
+        saved = create(:purchase, user: user, item: item, content_unit: content_unit)
+        expect(saved.content_unit).to eq content_unit
+      end
+    end
+
+    describe "belongs_to :pack_unit (optional: true)" do
+      it "pack_unitに紐づく" do
+        saved = create(:purchase, user: user, item: item, content_unit: content_unit, pack_unit: pack_unit)
+        expect(saved.pack_unit).to eq pack_unit
       end
 
-      it "パック数の単位が10文字なら有効" do
-        purchase = item.purchases.new(brand: "日本ハム", content_quantity: 5, content_unit: "枚", pack_quantity: 3, pack_unit: "a" * 10, price: 210, unit_price: 14, tax_rate: 0, purchased_on: "2025/4/1", user: user, store: store)
-        expect(purchase).to be_valid
-      end
-
-      it "パック数の単位が9文字なら有効" do
-        purchase = item.purchases.new(brand: "日本ハム", content_quantity: 5, content_unit: "枚", pack_quantity: 3, pack_unit: "a" * 9, price: 210, unit_price: 14, tax_rate: 0, purchased_on: "2025/4/1", user: user, store: store)
-        expect(purchase).to be_valid
-      end
-
-      it "価格が整数なら有効" do
-        purchase = item.purchases.new(brand: "日本ハム", content_quantity: 5, content_unit: "枚", pack_quantity: 3, pack_unit: "パック", price: 100, unit_price: 14, tax_rate: 0, purchased_on: "2025/4/1", user: user, store: store)
-        expect(purchase).to be_valid
-      end
-
-      it "価格が1なら有効" do
-        purchase = item.purchases.new(brand: "日本ハム", content_quantity: 5, content_unit: "枚", pack_quantity: 3, pack_unit: "パック", price: 1, unit_price: 14, tax_rate: 0, purchased_on: "2025/4/1", user: user, store: store)
-        expect(purchase).to be_valid
-      end
-
-      it "単価が1なら有効" do
-        purchase = item.purchases.new(brand: "日本ハム", content_quantity: 5, content_unit: "枚", pack_quantity: 3, pack_unit: "パック", price: 210, unit_price: 1, tax_rate: 0, purchased_on: "2025/4/1", user: user, store: store)
-        expect(purchase).to be_valid
-      end
-
-      it "税が0なら有効" do
-        purchase = item.purchases.new(brand: "日本ハム", content_quantity: 5, content_unit: "枚", pack_quantity: 3, pack_unit: "パック", price: 210, unit_price: 14, tax_rate: 0, purchased_on: "2025/4/1", user: user, store: store)
-        expect(purchase).to be_valid
-      end
-
-      it "税が8なら有効" do
-        purchase = item.purchases.new(brand: "日本ハム", content_quantity: 5, content_unit: "枚", pack_quantity: 3, pack_unit: "パック", price: 210, unit_price: 14, tax_rate: 8, purchased_on: "2025/4/1", user: user, store: store)
-        expect(purchase).to be_valid
-      end
-
-      it "税が10なら有効" do
-        purchase = item.purchases.new(brand: "日本ハム", content_quantity: 5, content_unit: "枚", pack_quantity: 3, pack_unit: "パック", price: 210, unit_price: 14, tax_rate: 10, purchased_on: "2025/4/1", user: user, store: store)
-        expect(purchase).to be_valid
-      end
-
-      it "全ての値が入っていたら有効" do
-        purchase = item.purchases.new(brand: "日本ハム", content_quantity: 5, content_unit: "枚", pack_quantity: 3, pack_unit: "パック", price: 210, unit_price: 14, tax_rate: 0, purchased_on: "2025/4/1", user: user, store: store)
-        expect(purchase).to be_valid
+      it "pack_unitがnilでも保存できる" do
+        saved = build(:purchase, user: user, item: item, content_unit: content_unit, pack_unit: nil)
+        expect(saved).to be_valid
       end
     end
   end

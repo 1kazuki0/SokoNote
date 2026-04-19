@@ -1,59 +1,114 @@
-require "rails_helper"
+require 'rails_helper'
 
 RSpec.describe Category, type: :model do
-  let(:user) { User.create(name: "sokonote", email: "sokonote@email.com", password: "password") }
+  # factory_botを参照
+  let(:user) { create(:user) }
+  let(:category) { build(:category, user: user) }
 
   describe "バリデーション" do
-    context "無効な場合" do
-      it "カテゴリー名が空であれば無効" do
-        category = user.categories.new(name: nil)
+    it "全ての項目が正しく入力されていれば有効" do
+      expect(category).to be_valid
+    end
+
+    # --- name ---
+    describe "name" do
+      it "空だと無効" do
+        category.name = ""
         expect(category).to be_invalid
+        expect(category.errors[:name]).to include("を入力してください")
       end
 
-      it "同じユーザーで同じカテゴリー名は無効" do
-        category1 = user.categories.create(name: "sokonote")
-        expect(category1).to be_valid
-        category2 = user.categories.new(name: "sokonote")
-        expect(category2).to be_invalid
+      it "nilだと無効" do
+        category.name = nil
+        expect(category).to be_invalid
+        expect(category.errors[:name]).to include("を入力してください")
       end
 
-      it "カテゴリー名が31文字なら無効" do
-        category = user.categories.new(name: "a" * 31)
+      it "30文字ちょうどなら有効(境界値)" do
+        category.name = "a" * 30
+        expect(category).to be_valid
+      end
+
+      it "31文字だと無効(境界値)" do
+        category.name = "a" * 31
         expect(category).to be_invalid
+        expect(category.errors[:name]).to include("は30文字以内で入力してください")
+      end
+
+      it "同一ユーザー内で重複すると無効" do
+        create(:category, name: "食品", user: user)
+        duplicate_category = build(:category, name: "食品", user: user)
+        expect(duplicate_category).to be_invalid
+        expect(duplicate_category.errors[:name]).to include("はすでに存在します")
+      end
+
+      it "別のユーザーなら同じnameでも有効" do
+        other_user = create(:user)
+        create(:category, name: "食品", user: other_user)
+        category.name = "食品"
+        expect(category).to be_valid
       end
     end
 
-    context "有効な場合" do
-      it "別ユーザーなら同じカテゴリー名でも有効" do
-        user2 = User.create(name: "sokonote2", email: "sokonote2@email.com", password: "password")
-        category1 = user.categories.create(name: "sokonote")
-        expect(category1).to be_valid
-        category2 = user2.categories.new(name: "sokonote")
-        expect(category2).to be_valid
+    # --- user ---
+    describe "user" do
+      it "nilだと無効(belongs_toによる)" do
+        category.user = nil
+        expect(category).to be_invalid
+        expect(category.errors[:user]).to include("を入力してください")
+      end
+    end
+  end
+
+  # ============================================================
+  # before_validation :normalize_name の動作確認
+  # ============================================================
+  describe "before_validation :normalize_name" do
+    it "nameの前後の空白が削除される" do
+      category.name = "  食品  "
+      category.valid?
+      expect(category.name).to eq "食品"
+    end
+
+    it "nameが空白だけなら nil になる(結果presenceエラー)" do
+      category.name = "   "
+      expect(category).to be_invalid
+      expect(category.name).to be_nil
+      expect(category.errors[:name]).to include("を入力してください")
+    end
+
+    it "name内の前後の特殊空白文字も削除される" do
+      category.name = "\t食品\n"
+      category.valid?
+      expect(category.name).to eq "食品"
+    end
+  end
+
+  # ============================================================
+  # アソシエーション
+  # ============================================================
+  describe "アソシエーション" do
+    describe "belongs_to :user" do
+      it "userに紐づく" do
+        saved_category = create(:category, user: user)
+        expect(saved_category.user).to eq user
+      end
+    end
+
+    describe "has_many :items (dependent: :nullify)" do
+      it "categoryを削除すると関連itemsのcategory_idがnilになる" do
+        saved_category = create(:category, user: user)
+        item = create(:item, user: user, category: saved_category)
+
+        expect { saved_category.destroy }.to change { item.reload.category_id }.from(saved_category.id).to(nil)
       end
 
-      it "カテゴリー名があれば有効" do
-        category = user.categories.new(name: "sokonote")
-        expect(category).to be_valid
-      end
+      it "categoryを削除してもitem自体は削除されない" do
+        saved_category = create(:category, user: user)
+        create(:item, user: user, category: saved_category)
 
-      it "カテゴリー名が29文字なら有効" do
-        category = user.categories.new(name: "a" * 29)
-        expect(category).to be_valid
-      end
-
-      it "カテゴリーが30文字なら有効" do
-        category = user.categories.new(name: "a" * 30)
-        expect(category).to be_valid
+        expect { saved_category.destroy }.not_to change(Item, :count)
       end
     end
   end
 end
-
-
-##### メモ #####
-
-# 1.name: nilについて
-#   モデルに記載しているバリデーションpresence: trueは内部でblank?メソッドを使用している
-#   blank?メソッドは、nil,""," "をfalseをまとめてtrueにするので
-#   テストは3つ（nil,""," ")で分けず、代表して1つ（nilのみ）にまとめている。

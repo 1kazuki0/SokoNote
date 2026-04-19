@@ -1,6 +1,5 @@
 # 商品簡易登録用クラス item_registrationファイル
 class ItemRegistrationForm
-  
   # モデルのような機能(:Model)とカラムのような機能(:Attributes)を追加
   # モデルと同じように扱える、属性（カラム）を定義できる
   # before_validationを使用するために記述
@@ -14,7 +13,7 @@ class ItemRegistrationForm
   attribute :content_unit_name, :string
   attribute :price, :integer
   attribute :tax_rate, :integer, default: 0
-  
+
   # --- 1-2.フォーム外で必要な項目（属性）を定義する ---
   attribute :pack_quantity, :integer, default: 1
   attribute :unit_price, :decimal
@@ -28,8 +27,10 @@ class ItemRegistrationForm
   validates :tax_rate, presence: true, inclusion: { in: [ 0, 8, 10 ] }
   before_validation :normalize_names
 
-  # ---3. current_userを使用するための記述 ---
+  # ---3.user: コントローラから current_user を代入するため attr_accessor(読み書き両方) ---
+  # item, purchase: 読み取り専用で参照するため attr_reader
   attr_accessor :user
+  attr_reader :item, :purchase
 
   # ---4. 保存処理 ---
   def save
@@ -37,8 +38,8 @@ class ItemRegistrationForm
     calculated_unit_price = unit_price_value
     ActiveRecord::Base.transaction do
       content_unit = user.content_units.find_or_create_by!(name: content_unit_name)
-      item = user.items.find_or_create_by!(name: item_name)
-      item.purchases.create!(
+      @item = user.items.find_or_create_by!(name: item_name)
+      @purchase = @item.purchases.create!(
         user: user,
         content_unit_id: content_unit.id,
         content_quantity: content_quantity,
@@ -67,7 +68,7 @@ class ItemRegistrationForm
 
   # ---　前後空白を削除し、空ならnilにする処理 ---
   def normalize_blank(value)
-    value = value&.strip
+    value = value&.gsub(/\A[[:space:]]+|[[:space:]]+\z/, "")   # 全角半角空白削除
     value.presence
   end
 
