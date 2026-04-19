@@ -15,7 +15,7 @@ class Store < ApplicationRecord
 
   # --- 前後の空白削除と空ならnilにする処理 ---
   def normalize_name
-    self.name = name&.strip        # 空白削除
-    self.name = nil if name.blank? # 空ならnil
+    self.name = name&.gsub(/\A[[:space:]]+|[[:space:]]+\z/, "")   # 全角半角空白削除
+    self.name = nil if name.blank?                                # 空ならnil
   end
 end

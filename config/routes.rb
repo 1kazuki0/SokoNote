@@ -15,8 +15,10 @@ Rails.application.routes.draw do
   # 未ログイン時のトップ画面
   root "home#top"
 
-  # 商品簡易登録用
-  resource :item_registration, only: [ :new, :create ]
+  # 商品簡易登録用（登録用new・createと完了ダイアログcomplete）
+  resource :item_registration, only: [ :new, :create ] do
+    get :complete
+  end
 
   # カテゴリ一覧・登録・編集・削除
   resources :categories, except: [ :show ]
@@ -29,7 +31,7 @@ Rails.application.routes.draw do
 
   # 商品一覧・登録（ウィザード形式 / 商品もカテゴリも新しく作る場合）
   resources :items do
-    resources :purchases, only: [:index, :edit, :update, :destroy]
+    resources :purchases, only: [ :index, :edit, :update, :destroy ]
   end
 
   # 単価比較画面

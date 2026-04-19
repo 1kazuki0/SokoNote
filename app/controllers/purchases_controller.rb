@@ -10,7 +10,7 @@ class PurchasesController < ApplicationController
     @form = PurchaseUpdateForm.new(
       category_name:      @purchase.item.category&.name,
       item_name:          @purchase.item.name,
-      brand:              @purchase.brand,  
+      brand:              @purchase.brand,
       content_quantity:   @purchase.content_quantity,
       content_unit_name:  @purchase.content_unit.name,
       pack_quantity:      @purchase.pack_quantity,

@@ -23,7 +23,7 @@ class Purchase < ApplicationRecord
 
   # --- 前後の空白削除と空ならnilにする処理 ---
   def normalize_brand
-    self.brand = brand&.strip        # 空白削除
+    self.brand = brand&.gsub(/\A[[:space:]]+|[[:space:]]+\z/, "")   # 全角半角空白削除
     self.brand = nil if brand.blank? # 空ならnil
   end
 end

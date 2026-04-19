@@ -1,6 +1,5 @@
 # 商品詳細入力用クラス purchase_updateファイル
 class PurchaseUpdateForm
-
   # モデルのような機能(:Model)とカラムのような機能(:Attributes)を追加
   # モデルと同じように扱える、属性（カラム）を定義できる
   # before_validationを使用するために記述
@@ -89,7 +88,7 @@ class PurchaseUpdateForm
 
   # ---　前後空白を削除し、空ならnilにする処理 ---
   def normalize_blank(value)
-    value = value&.strip
+    value = value&.gsub(/\A[[:space:]]+|[[:space:]]+\z/, "")   # 全角半角空白削除
     value.presence
   end
 

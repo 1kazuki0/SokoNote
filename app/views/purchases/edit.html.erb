@@ -18,7 +18,7 @@
   <div class= "space-y-6">
 
     <!-- 商品情報カード -->
-    <h1 class="font-bold border-b text-primary border-primary pb-2">商品情報</h1>
+    <h1 class="text-xl font-bold border-b text-primary border-primary pb-2">商品情報</h1>
     <div class="bg-white rounded-2xl border border-light-gray p-4 space-y-4">
 
       <!-- カテゴリ名 -->
@@ -52,7 +52,7 @@
         <div>
           <%= f.label :content_quantity, class: "block text-black font-bold mb-2"%>
           <div class="form">
-            <%= f.number_field :content_quantity, placeholder: "例：3 / 500", autocomplete: "off", inputmode: "numeric", class: "w-full flex-auto outline-none text-black bg-transparent placeholder-gray" %>
+            <%= f.number_field :content_quantity, placeholder: "例：3 / 500", autocomplete: "off", inputmode: "decimal", step: 0.01, class: "w-full flex-auto outline-none text-black bg-transparent placeholder-gray" %>
           </div>
         </div>
 
@@ -89,7 +89,7 @@
     </div>
 
     <!-- 価格情報カード -->
-    <h1 class="font-bold border-b text-primary border-primary pb-2">価格情報</h1>
+    <h1 class="text-xl font-bold border-b text-primary border-primary pb-2">価格情報</h1>
     <div class="bg-white rounded-2xl border border-light-gray p-4 mb-10 space-y-4">
 
       <!-- ユーザーが入力する価格 -->
