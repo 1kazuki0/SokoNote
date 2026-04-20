@@ -23,13 +23,6 @@ class User < ApplicationRecord
          :omniauthable,
          omniauth_providers: %i[line]
 
-  # ゲストユーザーとしてログイン時、Userモデルを自動生成。パスワードはランダム
-  def self.guest
-    find_or_create_by!(name: "ゲストユーザー", email: "guest@example.com") do |user|
-      user.password = SecureRandom.alphanumeric(10)
-    end
-  end
-
   # LINEログイン経由の登録かどうか確認
   # LINEログイン経由ならtrue。それ以外はfalse。
   def line_user?

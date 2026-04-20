@@ -77,7 +77,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # 編集・削除を実装しようとした場合、設定画面にリダイレクトされる処理
   def ensure_normal_user
     if resource.email == "guest@example.com"
-      redirect_to setting_path, alert: "ゲストユーザの更新・削除できません。"
+      redirect_to setting_path, alert: "ゲストユーザー更新・削除はできません。"
     end
   end
 end
