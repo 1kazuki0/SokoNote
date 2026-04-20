@@ -23,6 +23,9 @@ class User < ApplicationRecord
          :omniauthable,
          omniauth_providers: %i[line]
 
+  # デモユーザーを変更処理させないコールバック
+  before_update :prevent_demo_user_changes
+
   # LINEログイン経由の登録かどうか確認
   # LINEログイン経由ならtrue。それ以外はfalse。
   def line_user?
@@ -39,6 +42,25 @@ class User < ApplicationRecord
   # !は否定。LINEログイン経由じゃないですよね？ → その場合（true)、passwordが必要
   def password_required?
     !line_user?
+  end
+
+  # デモユーザーかどうか判断するメソッド
+  def demo?
+    email == ENV.fetch("DEMO_USER_EMAIL", nil)
+  end
+
+  private
+
+  # デモユーザーのメールアドレス・パスワード・ニックネームの変更を禁止するメソッド
+  def prevent_demo_user_changes
+    return unless demo?
+    protected_attributes = %w[ email encrypted_password name ]
+    changed_protected = changes.keys & protected_attributes
+
+    if changed_protected.any?
+      errors.add(:base, "デモユーザーの#{changed_protected.join(", ")}は変更できません")
+      throw(:abort)
+    end
   end
 end
 

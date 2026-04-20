@@ -10,11 +10,18 @@ class Users::PasswordsController < Devise::PasswordsController
   # end
 
   # POST /resource/password
-  # 空白の場合、エラーメッセージを出力。digメソッドでuserがなかったらnilを出す。
   def create
-    if params.dig(:user, :email).blank? # emailはuserの中にネストして送信されている。
+    email = params.dig(:user, :email)
+    # メールアドレスが空白だった時の処理
+    if email.blank?
       flash[:error] = "メールアドレスを入力してください"
       redirect_to new_user_password_path and return
+    end
+
+    # メールアドレスがデモユーザーだった時の処理
+    if email == ENV.fetch("DEMO_USER_EMAIL", nil)
+      redirect_to new_user_password_path, error: "デモユーザーのパスワードはリセットできません"
+      return
     end
     super
   end

@@ -1,43 +1,43 @@
-namespace :guest do
-  desc "ゲストユーザーのデータをリセット（24時）"
+namespace :demo do
+  desc "デモユーザーのデータをリセット（24時）"
   task reset: :environment do
-    guest = User.find_by(email: "guest@example.com")
-    unless guest
-      puts "ゲストユーザーが見つかりません"
+    demo = User.find_by(email: "demo@example.com")
+    unless demo
+      puts "デモユーザーが見つかりません"
       next
     end
 
     ActiveRecord::Base.transaction do
       # 既存データを削除
-      guest.purchases.destroy_all
-      guest.items.destroy_all
-      guest.categories.destroy_all
-      guest.stores.destroy_all
-      guest.content_units.destroy_all
-      guest.pack_units.destroy_all
+      demo.purchases.destroy_all
+      demo.items.destroy_all
+      demo.categories.destroy_all
+      demo.stores.destroy_all
+      demo.content_units.destroy_all
+      demo.pack_units.destroy_all
 
       # カテゴリ
       categories = {}
       %w[飲料 日用品 お肉 野菜 調味料 お菓子].each do |name|
-        categories[name] = guest.categories.create!(name: name)
+        categories[name] = demo.categories.create!(name: name)
       end
 
       # 店舗
       stores = {}
       %w[イオン 業務スーパー マツモトキヨシ セブンイレブン].each do |name|
-        stores[name] = guest.stores.create!(name: name)
+        stores[name] = demo.stores.create!(name: name)
       end
 
       # 内容量単位
       content_units = {}
       %w[ml g 枚 個 ロール].each do |name|
-        content_units[name] = guest.content_units.create!(name: name)
+        content_units[name] = demo.content_units.create!(name: name)
       end
 
       # 包装単位
       pack_units = {}
       %w[本 箱 袋 パック].each do |name|
-        pack_units[name] = guest.pack_units.create!(name: name)
+        pack_units[name] = demo.pack_units.create!(name: name)
       end
 
       # 商品
@@ -56,7 +56,7 @@ namespace :guest do
 
       items = {}
       items_data.each do |data|
-        items[data[:name]] = guest.items.create!(
+        items[data[:name]] = demo.items.create!(
           name: data[:name],
           category: categories[data[:category]]
         )
@@ -110,7 +110,7 @@ namespace :guest do
         price_excluding_tax = data[:price].to_f / (1 + data[:tax_rate] * 0.01)
         unit_price = price_excluding_tax / data[:content_quantity] / data[:pack_quantity]
 
-        guest.purchases.create!(
+        demo.purchases.create!(
           item: items[data[:item]],
           store: stores[data[:store]],
           content_unit: content_units[data[:content_unit]],
@@ -126,6 +126,6 @@ namespace :guest do
       end
     end
 
-    puts "ゲストユーザーのデータをリセットしました。"
+    puts "デモユーザーのデータをリセットしました。"
   end
 end
