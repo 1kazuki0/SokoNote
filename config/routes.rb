@@ -7,11 +7,6 @@ Rails.application.routes.draw do
     omniauth_callbacks: "users/omniauth_callbacks"
   }
 
-  # ゲストユーザー用
-  devise_scope :user do
-    post "users/guest_sign_in", to: "users/sessions#guest_sign_in"
-  end
-
   # 未ログイン時のトップ画面
   root "home#top"
 

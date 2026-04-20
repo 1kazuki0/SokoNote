@@ -5,9 +5,9 @@ rails_env = ENV["RAILS_ENV"] || :development
 # 環境を設定
 set :environment, rails_env
 set :output, "log/cron.log"
-# 1日ごとにゲストユーザーのデータリセットを実行
+# 1日ごとにデモユーザーのデータリセットを実行
 every 1.day, at: "0:00 am" do
-  rake "guest:task_delete"
+  rake "demo:reset"
 end
 
 # Use this file to easily define all of your cron jobs.
