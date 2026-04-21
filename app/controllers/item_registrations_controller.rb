@@ -1,6 +1,8 @@
 class ItemRegistrationsController < ApplicationController
   def new
     @form = ItemRegistrationForm.new
+    @items = current_user.items.order(:name)
+    @content_units = current_user.content_units.order(:name)
   end
 
   def create
@@ -9,6 +11,8 @@ class ItemRegistrationsController < ApplicationController
     if @form.save
       redirect_to complete_item_registration_path(item_id: @form.item.id, purchase_id: @form.purchase.id)
     else
+      @items = current_user.items.order(:name)
+      @content_units = current_user.content_units.order(:name)
       flash.now[:error] = "商品の登録に失敗しました"
       render :new, status: :unprocessable_entity
     end

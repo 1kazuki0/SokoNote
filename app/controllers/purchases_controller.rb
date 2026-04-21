@@ -7,6 +7,12 @@ class PurchasesController < ApplicationController
 
   def edit
     @purchase = current_user.purchases.includes(:item, :store, :content_unit, :pack_unit, item: :category).find(params[:id])
+    @categories = current_user.categories.order(:name)
+    @items = current_user.items.order(:name)
+    @brands = current_user.purchases.where.not(brand: [nil, ""]).distinct.pluck(:brand).sort
+    @content_units = current_user.content_units.order(:name)
+    @pack_units = current_user.pack_units.order(:name)
+    @stores = current_user.stores.order(:name)
     @form = PurchaseUpdateForm.new(
       category_name:      @purchase.item.category&.name,
       item_name:          @purchase.item.name,
@@ -28,10 +34,14 @@ class PurchasesController < ApplicationController
     @form.user = current_user
     @form.purchase = @purchase
     if @form.update
-      puts "成功"
       redirect_to item_purchases_path(@purchase.item), success: "商品情報の詳細編集に成功しました"
     else
-      puts "失敗"
+      @categories = current_user.categories.order(:name)
+      @items = current_user.items.order(:name)
+      @brands = current_user.purchases.where.not(brand: [nil, ""]).distinct.pluck(:brand).sort
+      @content_units = current_user.content_units.order(:name)
+      @pack_units = current_user.pack_units.order(:name)
+      @stores = current_user.stores.order(:name)
       flash.now[:error] = "商品情報の編集に失敗しました"
       render :edit, status: :unprocessable_entity
     end
@@ -40,7 +50,7 @@ class PurchasesController < ApplicationController
   def destroy
     purchase = current_user.purchases.find(params[:id])
     purchase.destroy
-    redirect_to purchases_path, success: "購入履歴を削除しました"
+    redirect_to item_purchases_path(purchase.item), success: "購入履歴を削除しました"
   end
 
   private
