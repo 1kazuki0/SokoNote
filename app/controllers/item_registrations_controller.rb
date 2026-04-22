@@ -18,11 +18,21 @@ class ItemRegistrationsController < ApplicationController
     end
   end
 
+  # 商品登録完了確認用の遷移アクション
   def complete
     @item = current_user.items.find_by(id: params[:item_id])
     @purchase = @item.purchases.find_by(id: params[:purchase_id])
   end
 
+  # 前回内容量・単位の自動補完用アクション
+  def last_purchase
+    item = current_user.items.find_by(name: params[:name])
+    last_purchase = item&.purchases&.order(purchased_on: :desc)&.first
+    render json: { 
+      content_quantity: last_purchase&.content_quantity,
+      content_unit_name: last_purchase&.content_unit&.name
+    }
+  end
 
   private
 
