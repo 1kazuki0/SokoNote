@@ -8,6 +8,8 @@ export default class extends Controller {
   static targets = ["itemName", "contentQuantity", "contentUnit", "message"
   ]
 
+  static values = { url: String }
+
   async restoreValues() {
     const name = this.itemNameTarget.value
     if (!name) return
