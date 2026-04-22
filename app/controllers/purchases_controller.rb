@@ -9,7 +9,7 @@ class PurchasesController < ApplicationController
     @purchase = current_user.purchases.includes(:item, :store, :content_unit, :pack_unit, item: :category).find(params[:id])
     @categories = current_user.categories.order(:name)
     @items = current_user.items.order(:name)
-    @brands = current_user.purchases.where.not(brand: [nil, ""]).distinct.pluck(:brand).sort
+    @brands = current_user.purchases.where.not(brand: [ nil, "" ]).distinct.pluck(:brand).sort
     @content_units = current_user.content_units.order(:name)
     @pack_units = current_user.pack_units.order(:name)
     @stores = current_user.stores.order(:name)
@@ -38,7 +38,7 @@ class PurchasesController < ApplicationController
     else
       @categories = current_user.categories.order(:name)
       @items = current_user.items.order(:name)
-      @brands = current_user.purchases.where.not(brand: [nil, ""]).distinct.pluck(:brand).sort
+      @brands = current_user.purchases.where.not(brand: [ nil, "" ]).distinct.pluck(:brand).sort
       @content_units = current_user.content_units.order(:name)
       @pack_units = current_user.pack_units.order(:name)
       @stores = current_user.stores.order(:name)

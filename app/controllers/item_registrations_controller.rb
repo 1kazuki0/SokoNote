@@ -28,7 +28,7 @@ class ItemRegistrationsController < ApplicationController
   def last_purchase
     item = current_user.items.find_by(name: params[:name])
     last_purchase = item&.purchases&.order(purchased_on: :desc)&.first
-    render json: { 
+    render json: {
       content_quantity: last_purchase&.content_quantity,
       content_unit_name: last_purchase&.content_unit&.name
     }
