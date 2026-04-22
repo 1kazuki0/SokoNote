@@ -24,25 +24,45 @@
       <!-- カテゴリ名 -->
       <%= f.label :category_name, class: "block text-black font-bold mb-2"%>
       <div class="form flex">
-        <%= f.text_field :category_name, placeholder: "例：飲料 / 日用品", autocomplete: "off", class: "flex-auto outline-none text-black bg-transparent placeholder-gray" %>
+        <%= f.text_field :category_name, placeholder: "例：飲料 / 日用品", autocomplete: "off", list: "categories_list", class: "flex-auto outline-none text-black bg-transparent placeholder-gray" %>
+        <datalist id="categories_list">
+          <% @categories.each do |category| %>
+            <option value="<%= category.name %>">
+          <% end %>
+        </datalist>
       </div>
 
       <!-- 商品名 -->
       <%= f.label :item_name, class: "block text-black font-bold mb-2"%>
       <div class="form flex">
-        <%= f.text_field :item_name, placeholder: "例：牛乳 / 箱ティッシュ", autocomplete: "off", class: "flex-auto outline-none text-black bg-transparent placeholder-gray" %>
+        <%= f.text_field :item_name, placeholder: "例：牛乳 / 箱ティッシュ", autocomplete: "off", list: "items_list", class: "flex-auto outline-none text-black bg-transparent placeholder-gray" %>
+        <datalist id="items_list">
+          <% @items.each do |item| %>
+            <option value="<%= item.name %>">
+          <% end %>
+        </datalist>
       </div>
 
       <!-- 店舗名 -->
       <%= f.label :store_name, class: "block text-black font-bold mb-2"%>
       <div class="form flex">
-        <%= f.text_field :store_name, placeholder: "例：〇〇スーパー〇〇店", autocomplete: "off", class: "flex-auto outline-none text-black bg-transparent placeholder-gray" %>
+        <%= f.text_field :store_name, placeholder: "例：〇〇スーパー〇〇店", autocomplete: "off", list: "stores_list", class: "flex-auto outline-none text-black bg-transparent placeholder-gray" %>
+        <datalist id="stores_list">
+          <% @stores.each do |store| %>
+            <option value="<%= store.name %>">
+          <% end %>
+        </datalist>
       </div>
 
       <!-- ブランド名 -->
       <%= f.label :brand, class: "block text-black font-bold mb-2"%>
       <div class="form flex">
-        <%= f.text_field :brand, placeholder: "例：伊藤園 / 花王", autocomplete: "off", class: "flex-auto outline-none text-black bg-transparent placeholder-gray" %>
+        <%= f.text_field :brand, placeholder: "例：伊藤園 / 花王", autocomplete: "off", list: "brands_list", class: "flex-auto outline-none text-black bg-transparent placeholder-gray" %>
+        <datalist id="brands_list">
+          <% @brands.each do |brand| %>
+            <option value="<%= brand %>">
+          <% end %>
+        </datalist>
       </div>
 
       <!-- 2列 -->
@@ -60,7 +80,12 @@
         <div>
           <%= f.label :content_unit_name, class: "block text-black font-bold mb-2"%>
           <div class="form">
-            <%= f.text_field :content_unit_name, placeholder: "例：ml / g", autocomplete: "off", class: "w-full flex-auto outline-none text-black bg-transparent placeholder-gray" %>
+            <%= f.text_field :content_unit_name, placeholder: "例：ml / g", autocomplete: "off", list: "content_units_list", class: "w-full flex-auto outline-none text-black bg-transparent placeholder-gray" %>
+            <datalist id="content_units_list">
+              <% @content_units.each do |unit| %>
+                <option value="<%= unit.name %>">
+              <% end %>
+            </datalist>
           </div>
         </div>
 
@@ -72,11 +97,16 @@
           </div>
         </div>
 
-        <!-- 単位（内容量） -->
+        <!-- 単位（包装数） -->
         <div>
           <%= f.label :pack_unit_name, class: "block text-black font-bold mb-2"%>
           <div class="form">
-            <%= f.text_field :pack_unit_name, placeholder: "例：セット / 箱", autocomplete: "off", class: "w-full flex-auto outline-none text-black bg-transparent placeholder-gray" %>
+            <%= f.text_field :pack_unit_name, placeholder: "例：セット / 箱", autocomplete: "off", list: "pack_units_list", class: "w-full flex-auto outline-none text-black bg-transparent placeholder-gray" %>
+            <datalist id="pack_units_list">
+              <% @pack_units.each do |unit| %>
+                <option value="<%= unit.name %>">
+              <% end %>
+            </datalist>
           </div>
         </div>
       </div>

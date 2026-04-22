@@ -15,3 +15,7 @@ application.register("hello", HelloController)
 
 import SwipeController from "./swipe_controller"
 application.register("swipe", SwipeController)
+
+import RestoreValuesController from "./restore_values_controller"
+application.register("restore-values", RestoreValuesController)
+

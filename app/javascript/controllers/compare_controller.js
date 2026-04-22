@@ -4,7 +4,7 @@ import { Controller } from "@hotwired/stimulus"
 // static targets = […]でJSで操作したいHTMLの要素を定義
 export default class extends Controller {
 
-// 画面読み込み時、JS実行（購入履歴からのデータ取得時をフォームに自動出力した際にJSが走らないため） 
+  // 画面読み込み時、JS実行（購入履歴からのデータ取得時をフォームに自動出力した際にJSが走らないため） 
   connect() {
     this.calculate()
   }
