@@ -12,6 +12,17 @@ class Item < ApplicationRecord
   belongs_to :category, optional: true     # category_idがnull許可に変更
   has_many :purchases, dependent: :destroy # item削除時にpurchasesも削除
 
+  # --- ransack設定 Itemモデルのnameカラムのみ検索許可 ---
+  def self.ransackable_attributes(auth_object = nil)
+    %w[name]
+  end
+
+  # --- ransack設定 Itemモデルの関連テーブルの使用許可 ---
+  def self.ransackable_associations(auth_object = nil)
+    %w[category purchases]
+  end
+
+
   private
 
   # --- 前後の空白削除と空ならnilにする処理 ---
