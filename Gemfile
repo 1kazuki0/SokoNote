@@ -53,6 +53,9 @@ gem "omniauth-line"
 # RailsアプリをCSRF攻撃から守るためのgem
 gem "omniauth-rails_csrf_protection"
 
+# 検索機能を実装できるgem
+gem "ransack"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
@@ -74,6 +77,10 @@ group :development, :test do
 
   # .envの環境変数を読み込むgem
   gem "dotenv-rails"
+
+  # エラー時のデバッグを確認するgem
+  gem "better_errors"
+  gem "binding_of_caller"
 end
 
 group :development do
