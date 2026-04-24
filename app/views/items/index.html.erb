@@ -17,7 +17,7 @@
   </div>
   <!-- カテゴリの選択絞り込み -->
   <div class="mb-4 flex gap-2 overflow-auto pb-1" style="scrollbar-width: thin;">
-    <%= link_to "全て", items_path, class: "px-4 py-1.5 rounded-full text-sm font-bold whitespace-nowrap #{params.dig(:q, :category_id_eq).blank? && params.dig(:q, :category_id_null) != 'on' ? 'bg-primary text-white' : 'bg-white text-middle-gray border border-light-gray'}" %>
+    <%= link_to "全て", items_path, class: "flex-shrink-0 px-4 py-1.5 rounded-full text-sm font-bold whitespace-nowrap #{params.dig(:q, :category_id_eq).blank? && params.dig(:q, :category_id_null) != 'on' ? 'bg-primary text-white' : 'bg-white text-middle-gray border border-light-gray'}" %>
 
     <!-- カテゴリごとのチップ -->
     <% @categories.each do |category| %>

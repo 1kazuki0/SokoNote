@@ -14,7 +14,7 @@ class Item < ApplicationRecord
 
   # --- ransack設定 Itemモデルのnameカラムのみ検索許可 ---
   def self.ransackable_attributes(auth_object = nil)
-    %w[name]
+    %w[name category_id]
   end
 
   # --- ransack設定 Itemモデルの関連テーブルの使用許可 ---
