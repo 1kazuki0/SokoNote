@@ -15,7 +15,23 @@
       </div>
     <% end %>
   </div>
+  <!-- カテゴリの選択絞り込み -->
+  <div class="mb-4 flex gap-2 overflow-auto pb-1" style="scrollbar-width: thin;">
+    <%= link_to "全て", items_path, class: "flex-shrink-0 px-4 py-1.5 rounded-full text-sm font-bold whitespace-nowrap #{params.dig(:q, :category_id_eq).blank? && params.dig(:q, :category_id_null) != 'on' ? 'bg-primary text-white' : 'bg-white text-middle-gray border border-light-gray'}" %>
 
+    <!-- カテゴリごとのチップ -->
+    <% @categories.each do |category| %>
+      <%= link_to category.name,
+          items_path(q: { category_id_eq: category.id }),
+          class: "flex-shrink-0 px-4 py-1.5 rounded-full text-sm font-bold whitespace-nowrap #{params.dig(:q, :category_id_eq).to_s == category.id.to_s ? 'bg-primary text-white' : 'bg-white text-middle-gray border border-light-gray'}" %>
+    <% end %>
+
+    <!-- 「未登録」チップ -->
+    <%= link_to "未登録",
+        items_path(q: { category_id_null: "on" }),
+        class: "flex-shrink-0 px-4 py-1.5 rounded-full text-sm font-bold whitespace-nowrap #{params.dig(:q, :category_id_null) == 'on' ? 'bg-primary text-white' : 'bg-white text-middle-gray border border-light-gray'}" %>
+  </div>
+    
   <!-- 検索した結果、商品がない場合 -->
   <% if @items.empty? %>
     <div class="flex flex-col items-center text-center py-12">
@@ -106,7 +122,7 @@
       <% end %>
       <!-- 商品登録遷移ボタン -->
       <div class="fixed bottom-28 left-0 right-0 mx-auto max-w-3xl px-6 flex justify-end z-25">
-        <%= link_to new_item_registration_path, class: "card bg-primary text-white px-6 py-4 rounded-full flex items-center justify-center font-bold", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } do %>
+        <%= link_to new_item_registration_path, class: "card bg-accent text-white px-6 py-4 rounded-full flex items-center justify-center font-bold", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } do %>
           <span class="text-lg">商品登録</span>
           <span class="material-symbols-outlined">add</span>
         <% end %>
