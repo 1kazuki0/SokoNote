@@ -19,7 +19,7 @@ class Item < ApplicationRecord
 
   # --- ransack設定 Itemモデルの関連テーブルの使用許可 ---
   def self.ransackable_associations(auth_object = nil)
-    %w[category purchases]
+    %w[category]
   end
 
 

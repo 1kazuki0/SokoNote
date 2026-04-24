@@ -9,6 +9,11 @@ class Category < ApplicationRecord
   belongs_to :user
   has_many :items, dependent: :nullify
 
+  # --- ransack設定 Categoryモデルのnameカラムのみ検索許可 ---
+  def self.ransackable_attributes(auth_object = nil)
+    %w[id]
+  end
+
   private
 
   # --- 前後の空白削除と空ならnilにする処理 ---
