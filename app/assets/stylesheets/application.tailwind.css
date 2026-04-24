@@ -34,6 +34,15 @@
     @apply cursor-pointer shadow-md shadow-black/40 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-1 active:shadow-sm transition-all;
   }
   
+  /* フォーム */
+  .form {
+    @apply border border-middle-gray px-3 py-3 rounded-xl bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition
+  }
+
+  /* リンク */
+  .link {
+    @apply underline hover:opacity-70 transition
+  }
   /* 編集・削除を表示させるスワイプ用のcardの外側に適用 */
   .swipe-card {
     @apply relative overflow-hidden rounded-2xl shadow-md;
@@ -49,10 +58,6 @@
     @apply absolute top-0 right-0 bottom-0 flex w-[128px] transition-all z-20 rounded-r-2xl;
   }
 
-  /* フォーム */
-  .form {
-    @apply border border-middle-gray px-3 py-3 rounded-xl bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition
-  }
 
 /* PCのみ：マウスホバーでswiper-innerを左に、swipe-actionsを右から出す */
   @media (hover: hover) {
