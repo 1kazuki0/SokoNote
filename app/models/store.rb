@@ -13,6 +13,11 @@ class Store < ApplicationRecord
 
   private
 
+  # --- ransack設定 Itemモデルのnameカラムのみ検索許可 ---
+  def self.ransackable_attributes(auth_object = nil)
+    %w[name]
+  end
+
   # --- 前後の空白削除と空ならnilにする処理 ---
   def normalize_name
     self.name = name&.gsub(/\A[[:space:]]+|[[:space:]]+\z/, "")   # 全角半角空白削除

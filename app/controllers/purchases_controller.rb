@@ -1,7 +1,9 @@
 class PurchasesController < ApplicationController
   def index
     @item = current_user.items.find(params[:item_id])
-    @purchases = @item.purchases.includes(:store, :content_unit, :pack_unit).order(purchased_on: :desc)
+    @q = @item.purchases.ransack(params[:q])
+    @purchases = @q.result(distinct: true).includes(:store, :content_unit, :pack_unit )
+    @stores = @item.purchases.map(&:store).compact.uniq
     @lowest_purchase = @item.purchases.order(:unit_price).first
   end
 
