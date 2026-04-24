@@ -27,7 +27,15 @@
         この商品はまだ登録されていない可能性があります
       </p>
 
-      <%= link_to "条件をリセット", items_path, class: "text-lg link text-primary font-bold" %>
+      <!-- 商品登録遷移ボタン -->
+      <div class="w-full p-6">
+        <%= link_to new_item_registration_path, class: "card bg-primary text-white px-6 py-4 rounded-full flex items-center justify-center font-bold", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } do %>
+          <span class="text-lg">商品を登録する</span>
+          <span class="material-symbols-outlined">add</span>
+        <% end %>
+      </div>
+
+      <%= link_to "検索条件をリセット", items_path, class: "text-lg link text-primary font-bold" %>
     </div>
 
   <!-- 検索した結果、商品がある場合 -->
