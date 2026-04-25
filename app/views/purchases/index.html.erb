@@ -20,7 +20,7 @@
 
 <!-- 最安値単価表示 -->
 <% if @lowest_purchase %>
-  <div class="bg-white border-2 border-accent rounded-2xl overflow-hidden mb-2">
+  <div class="bg-white border-2 border-accent rounded-2xl overflow-hidden mb-4">
     <div class="h-1 w-full bg-accent"></div>
     <div class="p-4">
       
@@ -74,6 +74,19 @@
     </div>
   </div>
 <% end %>
+<div class="mb-4">
+  <%= search_form_for @q, url: item_purchases_path(@item) do |f| %>
+    <div class="form flex">
+      <span class="material-symbols-outlined text-middle-gray">search</span>
+      <%= f.search_field :store_name_cont, placeholder: "店舗名で購入履歴を絞り込むことができます", list: "stores_list", class: "flex-auto outline-none pl-2 text-black bg-transparent placeholder-gray" %>
+      <datalist id="stores_list">
+        <% @stores.each do |store| %>
+          <option value="<%= store.name %>">
+        <% end %>
+      </datalist>
+    </div>
+  <% end %>
+</div>
 
 <!-- 購入履歴一覧 -->
 <p class="text-xs font-medium text-middle-gray tracking-widest uppercase mt-5 mb-2">購入履歴（新しい順）</p>

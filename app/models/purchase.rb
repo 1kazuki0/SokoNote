@@ -19,6 +19,17 @@ class Purchase < ApplicationRecord
   belongs_to :content_unit
   belongs_to :pack_unit, optional: true # pack_unit_idがnull許可に変更
 
+  # --- ransack設定 Purchaseモデルでは直接の属性検索は許可しない ---
+  def self.ransackable_attributes(auth_object = nil)
+    %w[]
+  end
+  
+  # --- ransack設定 store関連経由での検索を許可（購入履歴の店舗名絞り込み用） ---
+  def self.ransackable_associations(auth_object = nil)
+    %w[store]
+  end
+
+
   private
 
   # --- 前後の空白削除と空ならnilにする処理 ---
