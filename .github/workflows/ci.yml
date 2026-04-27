@@ -116,7 +116,7 @@ jobs:
         run: bundle exec rspec spec/models spec/requests  spec/system # runはシェルコマンドを実行できる
 
       - name: Keep screenshots from failed system tests # ステップの名前
-        uses: actions/upload-artifact@v4                # usesで既存アクションを呼び出せる
+        uses: actions/upload-artifact@v7                # usesで既存アクションを呼び出せる
         if: failure()                                   # それ以前のどこかのステップが失敗したときだけ 実行される
         with:                                           # withで以下の何かを渡している
           name: screenshots                             # アップロードされた時の名前
