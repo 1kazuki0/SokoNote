@@ -21,9 +21,9 @@ class Purchase < ApplicationRecord
 
   # --- ransack設定 Purchaseモデルでは直接の属性検索は許可しない ---
   def self.ransackable_attributes(auth_object = nil)
-    %w[]
+    %w[unit_price purchased_on]
   end
-  
+
   # --- ransack設定 store関連経由での検索を許可（購入履歴の店舗名絞り込み用） ---
   def self.ransackable_associations(auth_object = nil)
     %w[store]

@@ -74,11 +74,18 @@
     </div>
   </div>
 <% end %>
+<div class="flex justify-between items-center mb-5">
+  <h2 class="text-xl font-bold text-middle-gray">購入履歴</h2>
+  <div class="flex gap-4 text-xl text-middle-gray">
+    <span class="underline underline-offset-4"><%= sort_link(@q, :unit_price, "単価") %></span>
+    <span class="underline underline-offset-4"><%= sort_link(@q, :purchased_on, "購入日")%></span>
+  </div>
+</div>
 <div class="mb-4">
   <%= search_form_for @q, url: item_purchases_path(@item) do |f| %>
     <div class="form flex">
       <span class="material-symbols-outlined text-middle-gray">search</span>
-      <%= f.search_field :store_name_cont, placeholder: "店舗名で購入履歴を絞り込むことができます", list: "stores_list", class: "flex-auto outline-none pl-2 text-black bg-transparent placeholder-gray" %>
+      <%= f.search_field :store_name_cont, placeholder: "店舗名で絞り込み", list: "stores_list", class: "flex-auto outline-none pl-2 text-black bg-transparent placeholder-gray" %>
       <datalist id="stores_list">
         <% @stores.each do |store| %>
           <option value="<%= store.name %>">
@@ -88,14 +95,12 @@
   <% end %>
 </div>
 
-<!-- 購入履歴一覧 -->
-<p class="text-xs font-medium text-middle-gray tracking-widest uppercase mt-5 mb-2">購入履歴（新しい順）</p>
 <div class="space-y-2">
   <% @purchases.each do |purchase| %>
     <% is_lowest = purchase.id == @lowest_purchase&.id %>
     <div class="swipe-card" data-controller="swipe" data-action="touchstart->swipe#touchstart touchend->swipe#touchend touchstart@document->swipe#outsideClick">
 
-    <!-- 左側の緑ボーダー線の固定 -->
+      <!-- 左側の緑ボーダー線の固定 -->
       <div class="absolute left-0 top-0 bottom-0 w-1.5 z-30 <%= is_lowest ? 'bg-accent' : 'bg-primary' %> rounded-l-2xl"></div>
 
       <!-- テキスト部分の固定 -->
