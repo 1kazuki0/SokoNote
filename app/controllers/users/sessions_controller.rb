@@ -2,15 +2,7 @@
 
 class Users::SessionsController < Devise::SessionsController
   # アクション実行前のログイン確認をスキップする
-  skip_before_action :authenticate_user!, only: [ :new, :create, :guest_sign_in ]
-
-  # ゲストユーザーログイン時の処理
-  def guest_sign_in
-    user = User.guest
-    sign_in user
-    redirect_to items_path, notice: "ゲストユーザーとしてログインしました。"
-  end
-
+  skip_before_action :authenticate_user!, only: [ :new, :create ]
   # GET /resource/sign_in
   # def new
   #   super

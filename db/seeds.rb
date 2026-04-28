@@ -148,3 +148,14 @@
 #       else
 #         puts "=== 全件保存成功 ==="
 #     end
+
+# === デモユーザーの作成 ===
+demo_email = ENV.fetch("DEMO_USER_EMAIL")
+demo_password = ENV.fetch("DEMO_USER_PASSWORD")
+demo_user_name = ENV.fetch("DEMO_USER_NAME")
+
+demo_user = User.find_or_initialize_by(email: demo_email)
+demo_user.assign_attributes(name: demo_user_name, password: demo_password, password_confirmation: demo_password)
+demo_user.save!
+
+puts "デモユーザーを作成しました: #{demo_user.email}"

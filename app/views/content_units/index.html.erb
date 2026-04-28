@@ -1,0 +1,47 @@
+<%# ヘッダーを動的表示 %>
+<% content_for :arrow_back do %>
+  arrow_back
+<% end %>
+<% content_for :title do %>
+  内容量単位マスタ
+<% end %>
+
+<div class="space-y-4">
+  <% @content_units.each do |content_unit| %>
+    <div class="swipe-card" data-controller="swipe" data-action="touchstart->swipe#touchstart touchend->swipe#touchend touchstart@document->swipe#outsideClick">
+
+      <%# カテゴリ名：常に左端に固定表示 %>
+      <div class="absolute top-0 left-0 bottom-0 flex items-center px-5 z-10">
+        <span class="text-sm font-bold text-gray-800"><%= content_unit.name %></span>
+      </div>
+
+      <%# カードリンク（スライドする層）：右側に配置 %>
+      <div class="swipe-inner" data-swipe-target="inner">
+        <span class="material-symbols-outlined text-gray-300 text-sm">keyboard_double_arrow_right</span>
+      </div>
+
+      <%# アクションボタン %>
+      <div class="swipe-actions" data-swipe-target="actions" style="transform: translateX(100%);">
+
+        <%= link_to "編集", edit_content_unit_path(content_unit),
+              data: { action: "touchend->swipe#stopPropagation" },
+              class: "flex items-center justify-center w-16
+                      bg-blue-400 text-white text-xs font-medium self-stretch" %>
+
+        <%= link_to "削除", content_unit_path(content_unit),
+              data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？", action: "touchend->swipe#stopPropagation" },
+              class: "flex items-center justify-center w-16
+                      bg-red-400 text-white text-xs font-medium
+                      border-none cursor-pointer h-full" %>
+      </div>
+    </div>
+  <% end %>
+</div>
+<%# 商品登録ボタン（FAB） %>
+<div class="fixed bottom-28 left-0 right-0 mx-auto max-w-xl px-6 flex justify-end z-25">
+  <%= link_to new_content_unit_path, class: "card bg-primary text-white px-6 py-4 rounded-full flex items-center font-bold", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } do %>
+    <span class="text-lg">内容量単位追加</span>
+    <span class="material-symbols-outlined">add</span>
+  <% end %>
+</div>
+

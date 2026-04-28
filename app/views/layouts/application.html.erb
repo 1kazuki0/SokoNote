@@ -28,13 +28,11 @@
     <link rel="apple-touch-icon" href="/icon.png">
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
-    <!-- Googleフォントの取得 "Noto Sans JPとRoboto" &familyでサーバーのやり取りを1度きりに-->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" />
     <!-- Googleアイコンの取得 （全アイコンを取得してしまっているため要検討）-->
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
   </head>
 
-  <body class="bg-neutral max-w-xl mx-auto">
+  <body class="bg-neutral max-w-4xl mx-auto">
     <%= render 'shared/header' %>
     <main class= "px-4 pt-20 pb-50">
       <% flash.each do |message_type, message| %>

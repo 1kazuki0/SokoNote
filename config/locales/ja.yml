@@ -6,6 +6,8 @@ ja:
       category: カテゴリー
       item: 商品
       purchase: 購入履歴
+      content_unit: 単位（単位名）
+      pack_unit: 単位（包装）
     attributes:
       user:
         name: ニックネーム
@@ -21,12 +23,14 @@ ja:
       purchase:
         brand: ブランド名
         content_quantity: 内容量
-        content_unit: 単位（内容量）
         pack_quantity: パック数
-        pack_unit: 単位（パック数）
         price: 価格
         tax_rate: 消費税
         purchased_on: 購入日
+      content_unit:
+        name: 単位名（内容量）
+      pack_unit:
+        name: 単位名（包装）
   footer:
     index: 一覧
     comparison: 比較
@@ -34,28 +38,21 @@ ja:
     setting: 設定
   activemodel:
     attributes:
-      item_step1_form:
+      item_registration_form:
         item_name: 商品名
-        category_name: カテゴリ
         content_quantity: 内容量
-        pack_quantity: パック数
+        content_unit_name: 単位
         price: 価格
         tax_rate: 消費税率
-      item_step2_form:
-        store: 店舗名
-        brand: メーカー名
-        content_unit: 単位（内容量）
-        pack_unit: 単位（パック数）
-        purchased_on: 登録日
-      purchase_form:
+      purchase_update_form:
+        category_name: カテゴリー
         item_name: 商品名
-        category_name: カテゴリ
-        store: 店舗名
-        brand: メーカー名
+        brand: ブランド名
         content_quantity: 内容量
-        content_unit: 単位（内容量）
-        pack_quantity: パック数
-        pack_unit: 単位（パック数）
+        content_unit_name: 単位（内容量）
+        pack_quantity: 包装数（セット品）
+        pack_unit_name: 単位（包装数）
+        store_name: 店舗名
+        purchased_on: 登録日
         price: 価格
         tax_rate: 消費税率
-        purchased_on: 登録日

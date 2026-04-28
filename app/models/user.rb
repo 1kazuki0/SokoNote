@@ -1,25 +1,65 @@
 class User < ApplicationRecord
   # --- 各カラム バリデーション設定 ---
   validates :name, presence: true # nil,空,空白禁止
-  validates :password, format: { without: /\s/, message: "は空白があると登録ができません" }
+  validates :email, uniqueness: true, unless: :line_user? # nil,空,空白禁止。emailは一意。しかしLINE登録者は対象外。presenceはオーバーライドに任せる。
+  validates :provider, inclusion: { in: [ "line" ] }, allow_nil: true # "line"以外の文字は弾く。nilはOK
+  validates :uid, presence: true, uniqueness: { scope: :provider }, if: :line_user? # LINE登録者の場合はnil,空,空白禁止で、provider内のuidが一意
+  validates :password, format: { without: /\s/, message: "は空白があると登録ができません" }, unless: :line_user? # nil,空,空白禁止。正規表現。しかしline登録者は対象外。presenceはオーバーライドに任せる。
 
   # --- Userモデルのアソシエーション ---
-  has_many :items       # ユーザーは商品レコードを複数持てる
-  has_many :stores      # ユーザーは店舗レコードを複数持てる
-  has_many :categories  # ユーザーはカテゴリーレコードを複数持てる
-  has_many :purchases   # ユーザーは購入履歴レコードを複数持てる
+  has_many :categories, dependent: :destroy
+  has_many :items, dependent: :destroy
+  has_many :stores, dependent: :destroy
+  has_many :purchases, dependent: :destroy
+  has_many :content_units, dependent: :destroy
+  has_many :pack_units, dependent: :destroy
 
   # --- Devise機能の必要なモジュールを適用 ---
   devise :database_authenticatable,
          :registerable,
          :recoverable,
          :rememberable,
-         :validatable
+         :validatable,
+         :omniauthable,
+         omniauth_providers: %i[line]
 
-  # ゲストユーザーとしてログイン時、Userモデルを自動生成。パスワードはランダム
-  def self.guest
-    find_or_create_by!(name: "ゲストユーザー", email: "guest@example.com") do |user|
-      user.password = SecureRandom.alphanumeric(10)
+  # デモユーザーを変更処理させないコールバック
+  before_update :prevent_demo_user_changes
+
+  # LINEログイン経由の登録かどうか確認
+  # LINEログイン経由ならtrue。それ以外はfalse。
+  def line_user?
+    provider == "line"
+  end
+
+  # deviseのemail（内部）メソッドを上書き（オーバーライド）
+  # !は否定。LINEログイン経由じゃないですよね？ → その場合（true)、emailが必要
+  def email_required?
+    !line_user?
+  end
+
+  # deviseのpassword（内部）メソッドを上書き（オーバーライド）
+  # !は否定。LINEログイン経由じゃないですよね？ → その場合（true)、passwordが必要
+  def password_required?
+    !line_user?
+  end
+
+  # デモユーザーかどうか判断するメソッド
+  def demo?
+    email == ENV.fetch("DEMO_USER_EMAIL", nil)
+  end
+
+  private
+
+  # デモユーザーのメールアドレス・パスワード・ニックネームの変更を禁止するメソッド
+  def prevent_demo_user_changes
+    return unless demo?
+    protected_attributes = %w[ email encrypted_password name ]
+    changed_protected = changes.keys & protected_attributes
+
+    if changed_protected.any?
+      errors.add(:base, "デモユーザーの#{changed_protected.join(", ")}は変更できません")
+      throw(:abort)
     end
   end
 end
@@ -47,3 +87,7 @@ end
 #  emailとpasswordのバリデーションを設定する機能
 #  email → presence: true（空白禁止）, uniqueness: true(一意), format（正規表現をメールアドレス形式）
 #  password → presence: true（空白禁止）, length（長さconfig.password_lengthで設定）, confirmation（確認用パスワードと一致）
+
+# 6.omniauthable
+#   deviseにOmniauth連携を有効化する機能
+#   次の行で、使う外部サービスを指定している。

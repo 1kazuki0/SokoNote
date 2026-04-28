@@ -1,0 +1,110 @@
+<!-- 商品登録画面 -->
+<!-- ヘッダー配色の変更 -->
+<% content_for :header_class do %>
+  bg-primary text-white
+<% end %>
+<!-- 戻るボタン -->
+<% content_for :arrow_back do %>
+  arrow_back
+<% end %>
+<!-- タイトル表示 -->
+<% content_for :title do %>
+  商品登録
+<% end %>
+
+<!-- stimulusのコントローラー定義 -->
+<div data-controller="restore-values" data-restore-values-url-value="<%= last_purchase_item_registration_path %>">
+
+  <!-- 入力項目（商品名・内容量・単位・価格・消費税率） -->
+  <%= form_with model: @form, url: item_registration_path, method: :post, scope: :item_registrations do |f| %>
+    <%= render 'shared/error_messages', object: f.object %>
+    <div class="space-y-6">
+
+      <!-- 商品情報カード -->
+      <h1 class="text-xl font-bold border-b  text-primary border-primary pb-2">商品情報</h1>
+      <div class="bg-white rounded-2xl border border-light-gray p-4 space-y-4">
+
+        <!-- 商品名 -->
+        <%= f.label :item_name, class: "block text-black font-bold mb-2"%>
+        <div class="form flex">
+          <%= f.text_field :item_name, placeholder: "例：牛乳 / 箱ティッシュ", autocomplete: "off", list: "items_list", class: "flex-auto outline-none text-black bg-transparent placeholder-gray", data: { restore_values_target: "itemName", action: "change->restore-values#restoreValues" } %>
+          <datalist id="items_list">
+            <% @items.each do |item| %>
+              <option value="<%= item.name %>">
+            <% end %>
+          </datalist>
+        </div>
+
+        <!-- 前回の値が反映された際の通知メッセージ -->
+        <div data-restore-values-target="message" 
+            class="hidden mt-2 py-2 px-3 bg-accent/20 border-l-4 border-accent rounded font-bold text-accent flex items-center gap-2">
+          <span>✓</span>
+          <span>前回の登録内容を反映しました</span>
+        </div>
+
+        <!-- 2列 -->
+        <div class="grid grid-cols-2 gap-2">
+
+          <!-- 内容量 -->
+          <div>
+            <%= f.label :content_quantity, class: "block text-black font-bold mb-2"%>
+            <div class="form">
+              <%= f.number_field :content_quantity, placeholder: "例：3 , 500", autocomplete: "off", inputmode: "decimal", step: 0.01, class: "w-full flex-auto outline-none text-black bg-transparent placeholder-gray", data: { restore_values_target: "contentQuantity" } %>
+            </div>
+          </div>
+
+          <!-- 単位（内容量） -->
+          <div>
+            <%= f.label :content_unit_name, class: "block text-black font-bold mb-2"%>
+            <div class="form">
+              <%= f.text_field :content_unit_name, placeholder: "例：ml、g", autocomplete: "off", list: "content_units_list", class: "w-full flex-auto outline-none text-black bg-transparent placeholder-gray", data: { restore_values_target: "contentUnit" } %>
+              <datalist id="content_units_list">
+                <% @content_units.each do |unit| %>
+                  <option value="<%= unit.name %>">
+                <% end %>
+              </datalist>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 価格情報カード -->
+      <h1 class="text-xl font-bold border-b text-primary border-primary pb-2">価格情報</h1>
+      <div class="bg-white rounded-2xl border border-light-gray p-4 mb-10 space-y-4">
+
+        <!-- ユーザーが入力する価格 -->
+        <%= f.label :price, class: "block text-black font-bold mb-2"%>
+        <div class="form flex">
+          <%= f.number_field :price, placeholder: "例：298 / 1200", autocomplete: "off", inputmode: "numeric", class: "flex-auto outline-none text-black bg-transparent placeholder-gray" %>
+        </div>
+
+        <!-- 消費税率 -->
+        <%= f.label :tax_rate, class: "block text-black font-bold mb-2"%>
+        <div class="flex bg-light-gray dark:bg-black p-1 rounded-xl">
+          <!-- 税抜 (値: 0) -->
+          <div class="flex-1">
+            <%= f.radio_button :tax_rate, 0, class: "hidden peer", id: "tax-none" %>
+            <%= f.label :tax_rate, "税抜", value: 0, for: "tax-none", class: "block text-center py-2 text-sm font-medium text-dark-gray rounded-lg cursor-pointer transition-all peer-checked:bg-white peer-checked:text-primary peer-checked:shadow-sm" %>
+          </div>
+
+          <!-- 8% (値: 8) -->
+          <div class="flex-1">
+            <%= f.radio_button :tax_rate, 8, class: "hidden peer", id: "tax-8" %>
+            <%= f.label :tax_rate, "8%", value: 8, for: "tax-8", class: "block text-center py-2 text-sm font-medium text-dark-gray rounded-lg cursor-pointer transition-all peer-checked:bg-white peer-checked:text-primary peer-checked:shadow-sm" %>
+          </div>
+
+          <!-- 10% (値: 10) -->
+          <div class="flex-1">
+            <%= f.radio_button :tax_rate, 10, class: "hidden peer", id: "tax-10" %>
+            <%= f.label :tax_rate, "10%", value: 10, for: "tax-10", class: "block text-center py-2 text-sm font-medium text-dark-gray rounded-lg cursor-pointer transition-all peer-checked:bg-white peer-checked:text-primary peer-checked:shadow-sm" %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 登録ボタン -->
+    <div class="mx-auto px-6">
+      <%= f.submit "内容を確認して登録する", class: "card w-full bg-primary tracking-widest text-white px-6 py-4 rounded-full flex items-center justify-center font-bold no-underline", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } %>
+    </div>
+  <% end %>
+</div>

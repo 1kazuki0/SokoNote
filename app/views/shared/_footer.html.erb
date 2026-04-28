@@ -1,5 +1,5 @@
-<footer class="fixed bottom-0 left-0 w-full bg-white border-t border-light-gray">
-  <nav class="flex justify-around items-center h-16 max-w-xl mx-auto">
+<footer class="fixed bottom-0 left-0 w-full bg-white border-t border-light-gray z-30">
+  <nav class="flex justify-around items-center h-20 pb-5 max-w-4xl mx-auto">
     
     <!--「商品一覧画面」に遷移する内容 -->
     <%= link_to items_path, class: "flex flex-col items-center #{active_class('items', 'purchases')}" do %>
@@ -7,7 +7,7 @@
       <span class="text-xs mt-1"><%= t('footer.index') %></span>
     <% end %>
 
-    <!--「商品比較画面」に遷移する内容（現在はURLを"#"としています） -->
+    <!--「商品比較画面」に遷移する内容 -->
     <%= link_to comparison_path, class: "flex flex-col items-center #{active_class('comparison')}" do %>
       <span class="material-symbols-outlined text-28">balance</span>
       <span class="text-xs mt-1"><%= t('footer.comparison') %></span>

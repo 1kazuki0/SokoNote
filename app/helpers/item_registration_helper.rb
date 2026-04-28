@@ -1,0 +1,2 @@
+module ItemRegistrationHelper
+end

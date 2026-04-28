@@ -19,8 +19,14 @@
   <%= link_to "Didn't receive unlock instructions?", new_unlock_path(resource_name) %><br />
 <% end %>
 
+<%# LINEログイン用遷移（POST送信のため、button_toで実装 %> 
 <%- if devise_mapping.omniauthable? %>
   <%- resource_class.omniauth_providers.each do |provider| %>
-    <%= button_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider), data: { turbo: false } %><br />
+    <%= button_to omniauth_authorize_path(resource_name, provider), method: :post, data: { turbo: false }, class: "btn relative flex items-center mx-auto w-10/12 rounded-2xl overflow-hidden bg-[#06C755]" do %>
+      <div class="flex items-center justify-center w-14 h-14 border-r border-black/[0.08]">
+        <%= image_tag "btn_base.png", class: "w-10 h-10" %>
+      </div>
+      <span class="flex-1 text-center text-white font-bold text-base tracking-wider">LINEでログイン</span>
+    <% end %>
   <% end %>
 <% end %>

@@ -1,50 +1,51 @@
 class PurchasesController < ApplicationController
+  def index
+    @item = current_user.items.find(params[:item_id])
+    @q = @item.purchases.ransack(params[:q])
+    @q.sorts = [ "purchased_on desc" ] if @q.sorts.empty?
+    @purchases = @q.result(distinct: true).includes(:store, :content_unit, :pack_unit)
+    @stores = @item.purchases.includes(:store).map(&:store).compact.uniq
+    @lowest_purchase = @item.purchases.order(:unit_price).first
+  end
+
   def edit
-    @purchase = current_user.purchases.includes(:item, :store, item: :category).find(params[:id])
-    @form = PurchaseForm.new(
-      item_name:        @purchase.item.name,
-      category_name:    @purchase.item.category.name,
-      brand:            @purchase.brand,
-      store:            @purchase.store&.name, # storeは任意のためぼっち演算子&でnilを返す
-      content_quantity: @purchase.content_quantity,
-      content_unit:     @purchase.content_unit,
-      pack_quantity:    @purchase.pack_quantity,
-      pack_unit:        @purchase.pack_unit,
-      price:            @purchase.price,
-      tax_rate:         @purchase.tax_rate,
-      purchased_on:     @purchase.purchased_on
+    @purchase = current_user.purchases.includes(:item, :store, :content_unit, :pack_unit, item: :category).find(params[:id])
+    @categories = current_user.categories.order(:name)
+    @items = current_user.items.order(:name)
+    @brands = current_user.purchases.where.not(brand: [ nil, "" ]).distinct.pluck(:brand).sort
+    @content_units = current_user.content_units.order(:name)
+    @pack_units = current_user.pack_units.order(:name)
+    @stores = current_user.stores.order(:name)
+    @form = PurchaseUpdateForm.new(
+      category_name:      @purchase.item.category&.name,
+      item_name:          @purchase.item.name,
+      brand:              @purchase.brand,
+      content_quantity:   @purchase.content_quantity,
+      content_unit_name:  @purchase.content_unit.name,
+      pack_quantity:      @purchase.pack_quantity,
+      pack_unit_name:     @purchase.pack_unit&.name,
+      store_name:         @purchase.store&.name,
+      purchased_on:       @purchase.purchased_on,
+      price:              @purchase.price,
+      tax_rate:           @purchase.tax_rate
     )
   end
 
   def update
-    @purchase = current_user.purchases.includes(:item, :store, item: :category).find(params[:id])
-    @form = PurchaseForm.new(purchase_params)
-    if @form.valid?
-      begin
-        ActiveRecord::Base.transaction do
-          @purchase.item.category.update!(name: @form.category_name)
-          @purchase.item.update!(name: @form.item_name)
-          @purchase.store&.update!(name: @form.store) # 任意のためぼっち演算子
-          @purchase.update!(
-            brand: @form.brand,
-            content_quantity: @form.content_quantity,
-            content_unit: @form.content_unit,
-            pack_quantity: @form.pack_quantity,
-            pack_unit: @form.pack_unit,
-            price: @form.price,
-            tax_rate: @form.tax_rate,
-            purchased_on: @form.purchased_on,
-            unit_price: @form.set_unit_price
-          )
-        end
-          redirect_to item_path(@purchase.item), success: "商品の情報を更新しました"
-      rescue => e
-          @purchase = current_user.purchases.includes(:item, :store, item: :category).find(params[:id])
-          flash.now[:error] = "不具合です入力に問題があります"
-          render :edit, status: :unprocessable_entity
-      end
+    @purchase = current_user.purchases.includes(:item, :store, :content_unit, :pack_unit, item: :category).find(params[:id])
+    @form = PurchaseUpdateForm.new(purchase_updates_params)
+    @form.user = current_user
+    @form.purchase = @purchase
+    if @form.update
+      redirect_to item_purchases_path(@purchase.item), success: "商品情報の詳細編集に成功しました"
     else
-      flash.now[:error] = "入力に問題があります"
+      @categories = current_user.categories.order(:name)
+      @items = current_user.items.order(:name)
+      @brands = current_user.purchases.where.not(brand: [ nil, "" ]).distinct.pluck(:brand).sort
+      @content_units = current_user.content_units.order(:name)
+      @pack_units = current_user.pack_units.order(:name)
+      @stores = current_user.stores.order(:name)
+      flash.now[:error] = "商品情報の編集に失敗しました"
       render :edit, status: :unprocessable_entity
     end
   end
@@ -52,12 +53,12 @@ class PurchasesController < ApplicationController
   def destroy
     purchase = current_user.purchases.find(params[:id])
     purchase.destroy
-    redirect_to purchases_path, success: "購入履歴を削除しました"
+    redirect_to item_purchases_path(purchase.item), success: "購入履歴を削除しました"
   end
 
   private
 
-  def purchase_params
-    params.require(:purchase_form).permit(:item_name, :category_name, :brand, :store, :content_quantity, :content_unit, :pack_quantity, :pack_unit, :price, :tax_rate, :purchased_on)
+  def purchase_updates_params
+    params.require(:purchase_updates).permit(:category_name, :item_name, :brand, :content_quantity, :content_unit_name, :pack_quantity, :pack_unit_name, :store_name, :purchased_on, :price, :tax_rate)
   end
 end

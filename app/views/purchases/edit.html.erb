@@ -1,112 +1,159 @@
-<!-- 商品編集画面 -->
-<% content_for :title do %>
-  商品情報の編集
+<!-- 商品情報の詳細編集画面 -->
+<!-- ヘッダー配色の変更 -->
+<% content_for :header_class do %>
+  bg-primary text-white
 <% end %>
-<div class"flex flex-col md:flex-row items-center justify-center gap-6 p-4">
-  <div class="bg-white rounded-3xl shadow-xl w-full px-7 py-8 border border-light-gray">
-    <h1 class="text-center text-2xl font-bold text-black mb-6">商品情報の更新</h1>
-    <%= form_with model: @form, url: purchase_path(@purchase), method: :patch, local: false do |f| %>
-      <%= render 'shared/error_messages', object: @form %>
-      
-      <div class="mb-5">
-        <%= f.label :item_name, class: "block text-black text-sm font-semibold mb-2"%>
-        <div class="flex items-center border border-light-gray rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
-          <%= f.text_field :item_name, placeholder: "例：牛乳 / 箱ティッシュ", autofocus: true, autocomplete: "off", class: "flex-1 outline-none text-black text-sm bg-transparent placeholder-dark-middle"%>
-        </div>
+<!-- 戻るボタン -->
+<% content_for :arrow_back do %>
+  arrow_back
+<% end %>
+<!-- タイトル表示 -->
+<% content_for :title do %>
+  商品情報の詳細編集
+<% end %>
+
+<!-- 入力項目（全て） -->
+<%= form_with model: @form, url: item_purchase_path(@purchase.item, @purchase), method: :patch, scope: :purchase_updates do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <div class= "space-y-6">
+
+    <!-- 商品情報カード -->
+    <h1 class="text-xl font-bold border-b text-primary border-primary pb-2">商品情報</h1>
+    <div class="bg-white rounded-2xl border border-light-gray p-4 space-y-4">
+
+      <!-- カテゴリ名 -->
+      <%= f.label :category_name, class: "block text-black font-bold mb-2"%>
+      <div class="form flex">
+        <%= f.text_field :category_name, placeholder: "例：飲料 / 日用品", autocomplete: "off", list: "categories_list", class: "flex-auto outline-none text-black bg-transparent placeholder-gray" %>
+        <datalist id="categories_list">
+          <% @categories.each do |category| %>
+            <option value="<%= category.name %>">
+          <% end %>
+        </datalist>
       </div>
 
-      <div class="mb-5">
-        <%= f.label :category_name, class: "block text-black text-sm font-semibold mb-2"%>
-        <div class="flex items-center border border-light-gray rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
-          <%= f.text_field :category_name, placeholder: "例：飲料 / 日用品", autocomplete: "off", class: "flex-1 outline-none text-black text-sm bg-transparent placeholder-dark-middle"%>
-        </div>
-      </div>
-      
-      <div class="mb-5">
-        <%= f.label :brand, class: "block text-black text-sm font-semibold mb-2" %>
-        <div class="flex items-center border border-light-gray rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
-          <%= f.text_field :brand, placeholder: "例：伊藤園 / アタック", autofocus: true, autocomplete: "off", class: "flex-1 outline-none text-black text-sm bg-transparent placeholder-dark-middle" %>
-        </div>
+      <!-- 商品名 -->
+      <%= f.label :item_name, class: "block text-black font-bold mb-2"%>
+      <div class="form flex">
+        <%= f.text_field :item_name, placeholder: "例：牛乳 / 箱ティッシュ", autocomplete: "off", list: "items_list", class: "flex-auto outline-none text-black bg-transparent placeholder-gray" %>
+        <datalist id="items_list">
+          <% @items.each do |item| %>
+            <option value="<%= item.name %>">
+          <% end %>
+        </datalist>
       </div>
 
-      <div class="mb-5">
-        <%= f.label :store, class: "block text-black text-sm font-semibold mb-2" %>
-        <div class="flex items-center border border-light-gray rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
-          <%= f.text_field :store, placeholder: "例：〇〇スーパー〇〇店 / 〇〇薬局", autocomplete: "off", class: "flex-1 outline-none text-black text-sm bg-transparent placeholder-dark-middle"%>
-        </div>
-      </div>
-  
-      <div class="mb-5">
-        <div class="grid grid-cols-2 gap-3">
-          <div class="flex flex-col">
-            <%= f.label :content_quantity, class: "block text-black text-sm font-semibold mb-2" %>
-            <div class="flex items-center border border-light-gray rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
-              <%= f.number_field :content_quantity, placeholder: "例：3 , 500", autocomplete: "off", class: "flex-1 outline-none text-black text-sm bg-transparent placeholder-dark-middle"%>
-            </div>
-          </div>
-
-          <div class="flex flex-col">
-            <%= f.label :content_unit, class: "block text-black text-sm font-semibold mb-2" %>
-            <div class="flex items-center border border-light-gray rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
-              <%= f.text_field :content_unit, placeholder: "例：ml、g、枚、本 など", autocomplete: "off", class: "flex-1 outline-none text-black text-sm bg-transparent placeholder-dark-middle"%>
-            </div>
-          </div>
-          
-          <div class="flex flex-col">
-            <%= f.label :pack_quantity, class: "block text-black text-sm font-semibold mb-2" %>
-            <div class="flex items-center border border-light-gray rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
-              <%= f.number_field :pack_quantity, placeholder: "例：24 , 1", autocomplete: "off", class: "flex-1 outline-none text-black text-sm bg-transparent placeholder-dark-middle"%>
-            </div>
-          </div>
-
-          <div class="flex flex-col">
-            <%= f.label :pack_unit, class: "block text-black text-sm font-semibold mb-2" %>
-            <div class="flex items-center border border-light-gray rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
-              <%= f.text_field :pack_unit, placeholder: "パック、箱、袋 など", autocomplete: "off", class: "flex-1 outline-none text-black text-sm bg-transparent placeholder-dark-middle"%>
-            </div>
-          </div>
-        </div>
+      <!-- 店舗名 -->
+      <%= f.label :store_name, class: "block text-black font-bold mb-2"%>
+      <div class="form flex">
+        <%= f.text_field :store_name, placeholder: "例：〇〇スーパー〇〇店", autocomplete: "off", list: "stores_list", class: "flex-auto outline-none text-black bg-transparent placeholder-gray" %>
+        <datalist id="stores_list">
+          <% @stores.each do |store| %>
+            <option value="<%= store.name %>">
+          <% end %>
+        </datalist>
       </div>
 
-      <div class="mb-5">
-        <%= f.label :price, class: "block text-black text-sm font-semibold mb-2" %>
-        <div class="flex items-center border border-light-gray rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
-          <%= f.number_field :price, placeholder: "例：298 / 1200", autocomplete: "off", class: "flex-1 outline-none text-black text-sm bg-transparent placeholder-dark-middle"%>
-        </div>
+      <!-- ブランド名 -->
+      <%= f.label :brand, class: "block text-black font-bold mb-2"%>
+      <div class="form flex">
+        <%= f.text_field :brand, placeholder: "例：伊藤園 / 花王", autocomplete: "off", list: "brands_list", class: "flex-auto outline-none text-black bg-transparent placeholder-gray" %>
+        <datalist id="brands_list">
+          <% @brands.each do |brand| %>
+            <option value="<%= brand %>">
+          <% end %>
+        </datalist>
       </div>
 
+      <!-- 2列 -->
+      <div class="grid grid-cols-2 gap-2">
 
-      <div class="space-y-2 mb-5">
-        <%= f.label :tax_rate, class: "block text-black text-sm font-semibold mb-2" %>
-        <div class="flex bg-light-gray dark:bg-black p-1 rounded-xl">
-          
-          <div class="flex-1">
-            <%= f.radio_button :tax_rate, 0, checked: true, class: "hidden peer", id: "tax-none" %>
-            <%= f.label :tax_rate, "税抜", value: 0, for: "tax-none", class: "block text-center py-2 text-sm font-medium text-dark-gray dark:text-dark-middle rounded-lg cursor-pointer transition-all peer-checked:bg-white peer-checked:text-primary peer-checked:shadow-sm" %>
-          </div>
-          
-          <div class="flex-1">
-            <%= f.radio_button :tax_rate, 8, class: "hidden peer", id: "tax-8" %>
-            <%= f.label :tax_rate, "8%", value: 8, for: "tax-8", class: "block text-center py-2 text-sm font-medium text-dark-gray dark:text-dark-middle rounded-lg cursor-pointer transition-all peer-checked:bg-white peer-checked:text-primary peer-checked:shadow-sm" %>
-          </div>
-
-          <div class="flex-1">
-            <%= f.radio_button :tax_rate, 10, class: "hidden peer", id: "tax-10" %>
-            <%= f.label :tax_rate, "10%", value: 10, for: "tax-10", class: "block text-center py-2 text-sm font-medium text-dark-gray dark:text-dark-middle rounded-lg cursor-pointer transition-all peer-checked:bg-white peer-checked:text-primary peer-checked:shadow-sm" %>
+        <!-- 内容量 -->
+        <div>
+          <%= f.label :content_quantity, class: "block text-black font-bold mb-2"%>
+          <div class="form">
+            <%= f.number_field :content_quantity, placeholder: "例：3 / 500", autocomplete: "off", inputmode: "decimal", step: 0.01, class: "w-full flex-auto outline-none text-black bg-transparent placeholder-gray" %>
           </div>
         </div>
-      </div>
 
-      <div class="mb-5">
-        <%= f.label :purchased_on, class: "block text-black text-sm font-semibold mb-2" %>
-        <div class="flex items-center border border-light-gray rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
-          <%= f.date_field :purchased_on, class: "flex-1 outline-none text-black text-sm bg-transparent placeholder-dark-middle"%>
+        <!-- 単位（内容量） -->
+        <div>
+          <%= f.label :content_unit_name, class: "block text-black font-bold mb-2"%>
+          <div class="form">
+            <%= f.text_field :content_unit_name, placeholder: "例：ml / g", autocomplete: "off", list: "content_units_list", class: "w-full flex-auto outline-none text-black bg-transparent placeholder-gray" %>
+            <datalist id="content_units_list">
+              <% @content_units.each do |unit| %>
+                <option value="<%= unit.name %>">
+              <% end %>
+            </datalist>
+          </div>
+        </div>
+
+        <!-- 包装数 -->
+        <div>
+          <%= f.label :pack_quantity, class: "block text-black font-bold mb-2"%>
+          <div class="form">
+            <%= f.number_field :pack_quantity, placeholder: "例：1 / 6", autocomplete: "off", inputmode: "numeric", class: "w-full flex-auto outline-none text-black bg-transparent placeholder-gray" %>
+          </div>
+        </div>
+
+        <!-- 単位（包装数） -->
+        <div>
+          <%= f.label :pack_unit_name, class: "block text-black font-bold mb-2"%>
+          <div class="form">
+            <%= f.text_field :pack_unit_name, placeholder: "例：セット / 箱", autocomplete: "off", list: "pack_units_list", class: "w-full flex-auto outline-none text-black bg-transparent placeholder-gray" %>
+            <datalist id="pack_units_list">
+              <% @pack_units.each do |unit| %>
+                <option value="<%= unit.name %>">
+              <% end %>
+            </datalist>
+          </div>
         </div>
       </div>
-  
-      <div class="fixed bottom-28 left-0 right-0 mx-auto max-w-xl px-6 flex justify-end">
-        <%= f.submit "この内容で更新する", class: "bg-primary text-white px-6 py-4 rounded-full shadow-lg flex items-center justify-center font-bold no-underline hover:opacity-90 transition-opacity cursor-pointer"%>
-      </div>    
-    <% end %>
+
+      <!-- 登録日 -->
+      <%= f.label :purchased_on, class: "block text-black font-bold mb-2"%>
+      <div class="form flex">
+        <%= f.date_field :purchased_on, class: "flex-auto outline-none text-black bg-transparent" %>
+      </div>
+    </div>
+
+    <!-- 価格情報カード -->
+    <h1 class="text-xl font-bold border-b text-primary border-primary pb-2">価格情報</h1>
+    <div class="bg-white rounded-2xl border border-light-gray p-4 mb-10 space-y-4">
+
+      <!-- ユーザーが入力する価格 -->
+      <%= f.label :price, class: "block text-black font-bold mb-2"%>
+      <div class="form flex">
+        <%= f.number_field :price, placeholder: "例：298 / 1200", autocomplete: "off", inputmode: "numeric", class: "flex-auto outline-none text-black bg-transparent placeholder-gray" %>
+      </div>
+
+      <!-- 消費税率 -->
+      <%= f.label :tax_rate, class: "block text-black font-bold mb-2"%>
+      <div class="flex bg-light-gray dark:bg-black p-1 rounded-xl">
+        <!-- 税抜 (値: 0) -->
+        <div class="flex-1">
+          <%= f.radio_button :tax_rate, 0, class: "hidden peer", id: "tax-none" %>
+          <%= f.label :tax_rate, "税抜", value: 0, for: "tax-none", class: "block text-center py-2 text-sm font-medium text-dark-gray rounded-lg cursor-pointer transition-all peer-checked:bg-white peer-checked:text-primary peer-checked:shadow-sm" %>
+        </div>
+
+        <!-- 8% (値: 8) -->
+        <div class="flex-1">
+          <%= f.radio_button :tax_rate, 8, class: "hidden peer", id: "tax-8" %>
+          <%= f.label :tax_rate, "8%", value: 8, for: "tax-8", class: "block text-center py-2 text-sm font-medium text-dark-gray rounded-lg cursor-pointer transition-all peer-checked:bg-white peer-checked:text-primary peer-checked:shadow-sm" %>
+        </div>
+
+        <!-- 10% (値: 10) -->
+        <div class="flex-1">
+          <%= f.radio_button :tax_rate, 10, class: "hidden peer", id: "tax-10" %>
+          <%= f.label :tax_rate, "10%", value: 10, for: "tax-10", class: "block text-center py-2 text-sm font-medium text-dark-gray rounded-lg cursor-pointer transition-all peer-checked:bg-white peer-checked:text-primary peer-checked:shadow-sm" %>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
+
+  <!-- 登録ボタン -->
+  <div class="mx-auto px-6">
+    <%= f.submit "内容を確認して更新する", class: "card w-full bg-primary tracking-widest text-white px-6 py-4 rounded-full flex items-center justify-center font-bold no-underline", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } %>
+  </div>
+<% end %>

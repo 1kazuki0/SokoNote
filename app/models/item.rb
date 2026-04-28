@@ -1,11 +1,33 @@
 class Item < ApplicationRecord
   # --- nameカラム バリデーションの設定 ---
-  validates :name, presence: true,
-                   uniqueness: { scope: :category_id },
-                   length: { maximum: 30 }
+  validates :name, presence: true,                  # 空白禁止
+                   uniqueness: { scope: :user_id }, # 同一ユーザー内で重複禁止
+                   length: { maximum: 30 }          # 30文字以内
+
+  # --- バリデーション前に実行 ---
+  before_validation :normalize_name
 
   # --- Itemモデルのアソシエーション ---
-  belongs_to :user     # user_idを持つ（ユーザーを参照している）
-  belongs_to :category # category_idを持つ（カテゴリーを参照している）
-  has_many :purchases  # 複数の購入履歴を参照できる
+  belongs_to :user
+  belongs_to :category, optional: true     # category_idがnull許可に変更
+  has_many :purchases, dependent: :destroy # item削除時にpurchasesも削除
+
+  # --- ransack設定 Itemモデルのnameカラムのみ検索許可 ---
+  def self.ransackable_attributes(auth_object = nil)
+    %w[name category_id]
+  end
+
+  # --- ransack設定 Itemモデルの関連テーブルの使用許可 ---
+  def self.ransackable_associations(auth_object = nil)
+    %w[category]
+  end
+
+
+  private
+
+  # --- 前後の空白削除と空ならnilにする処理 ---
+  def normalize_name
+    self.name = name&.gsub(/\A[[:space:]]+|[[:space:]]+\z/, "")   # 全角半角空白削除
+    self.name = nil if name.blank?                                # 空ならnil
+  end
 end

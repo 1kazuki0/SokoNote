@@ -8,7 +8,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [ :create ]
   # before_action :configure_account_update_params, only: [:update]
 
-  # ゲストユーザーの更新・削除をアクション前に確認
+  # デモユーザーの更新・削除をアクション前に確認
   before_action :ensure_normal_user, only: [ :update, :destroy ]
 
   # GET /resource/sign_up
@@ -76,8 +76,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # 編集・削除を実装しようとした場合、設定画面にリダイレクトされる処理
   def ensure_normal_user
-    if resource.email == "guest@example.com"
-      redirect_to setting_path, alert: "ゲストユーザの更新・削除できません。"
+    if resource.demo?
+      redirect_to setting_path, alert: "デモユーザー更新・削除はできません。"
     end
   end
 end

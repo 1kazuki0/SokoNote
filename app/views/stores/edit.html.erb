@@ -1,0 +1,18 @@
+<!-- 店舗新規登録 -->
+<% content_for :arrow_back do %>
+  arrow_back
+<% end %>
+<% content_for :title do %>
+  店舗編集
+<% end %>
+
+<%= form_with model: @store do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <div class ="mb-10">
+    <%= f.label :name, class: "block text-black font-bold mb-2"%>
+    <div class="flex border border-light-gray rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
+      <%= f.text_field :name, placeholder: "例：〇〇スーパー〇〇店 / 〇〇薬局", autocomplete: "off", class: "flex-auto outline-none text-black bg-transparent placeholder-gray" %>
+    </div>
+  </div>
+  <%= f.submit "この内容で更新する", class: "card w-full bg-primary tracking-widest text-white px-6 py-4 rounded-full flex items-center justify-center font-bold no-underline", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } %>
+<% end %>

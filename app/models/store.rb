@@ -1,9 +1,26 @@
 class Store < ApplicationRecord
   # --- nameカラムのバリデーションの設定 ---
-  validates :name, uniqueness: { scope: :user_id },
-                   length: { maximum: 50 }
+  validates :name, presence: true,                  # 空白禁止
+                   uniqueness: { scope: :user_id }, # 同一ユーザー内で重複禁止
+                   length: { maximum: 30 }          # 30文字以内
+
+  # --- バリデーション前に実行 ---
+  before_validation :normalize_name
 
   # --- Storeモデルのアソシエーション ---
-  belongs_to :user    # user_idを持つ（ユーザーを参照している）
-  has_many :purchases # 店舗は購入履歴レコードを複数持てる
+  belongs_to :user
+  has_many :purchases, dependent: :nullify # store削除時にpurchases.store_idをnil
+
+  # --- ransack設定 Itemモデルのnameカラムのみ検索許可 ---
+  def self.ransackable_attributes(auth_object = nil)
+    %w[name]
+  end
+
+  private
+
+  # --- 前後の空白削除と空ならnilにする処理 ---
+  def normalize_name
+    self.name = name&.gsub(/\A[[:space:]]+|[[:space:]]+\z/, "")   # 全角半角空白削除
+    self.name = nil if name.blank?                                # 空ならnil
+  end
 end

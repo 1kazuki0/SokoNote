@@ -3,37 +3,33 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
     registrations: "users/registrations",
     passwords: "users/passwords",
-    sessions: "users/sessions"
+    sessions: "users/sessions",
+    omniauth_callbacks: "users/omniauth_callbacks"
   }
-
-  # ゲストユーザー用
-  devise_scope :user do
-    post "users/guest_sign_in", to: "users/sessions#guest_sign_in"
-  end
 
   # 未ログイン時のトップ画面
   root "home#top"
 
+  # 商品簡易登録用（登録用new・create・完了ダイアログcomplete・自動補助入力last_purchase）
+  resource :item_registration, only: [ :new, :create ] do
+    get :complete, :last_purchase
+  end
+
+  # カテゴリ一覧・登録・編集・削除
+  resources :categories, except: [ :show ]
+
+  # 店舗一覧・登録・編集・削除
+  resources :stores, except: [ :show ]
+
+  # 内容量単位一覧・登録・編集・削除
+  resources :content_units, except: [ :show ]
+
   # 商品一覧・登録（ウィザード形式 / 商品もカテゴリも新しく作る場合）
-  # step1：基本情報入力, step2：詳細入力, session：基本情報入力値の一時保持
   resources :items do
-    collection do
-      get :new_step1
-      get :new_step2
-      post :save_new_step1
-    end
+    resources :purchases, only: [ :index, :edit, :update, :destroy ]
   end
 
-  # 購入履歴詳細・編集・購入履歴登録（ウィザード形式 / 商品・カテゴリは既に決まっていて作る場合）
-  # step1：基本情報入力, step2：詳細入力, session：基本情報入力値の一時保持
-  resources :purchases do
-    collection do
-      get :new_step1
-      get :new_step2
-      post :session
-    end
-  end
-
+  # 単価比較画面
   get "comparison", to: "comparison#index"
   # 設定画面
   get "setting", to: "setting#index"
