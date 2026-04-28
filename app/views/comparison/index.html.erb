@@ -18,7 +18,7 @@
       </div>
       <h2 class="text-xl font-bold text-center mb-3">商品A</h2>
 
-      <%= form_with model: @purchase_a, url: new_step1_items_path, method: :get, scope: :purchase_a, class: "space-y-4 text-xs" do |f| %>
+      <%= form_with model: @purchase_a, url: new_item_registration_path, method: :get, scope: :purchase_a, class: "space-y-4 text-xs" do |f| %>
         <div>
           <%= f.label :content_quantity, "内容量" ,class: "text-black" %>
           <div class="mt-1 flex items-center border border-light-gray rounded-lg bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
@@ -83,7 +83,7 @@
         <span class="bg-primary text-white text-xs font-bold px-3 py-1 rounded-full">おトク！</span>
       </div>
       <h2 class="text-xl font-bold text-center mb-3">商品B</h2>
-      <%= form_with model: @purchase_b, url: new_step1_items_path, method: :get, scope: :purchase_b, class: "space-y-4 text-xs" do |f| %>
+      <%= form_with model: @purchase_b, url: new_item_registration_path, method: :get, scope: :purchase_b, class: "space-y-4 text-xs" do |f| %>
         <div>
           <%= f.label :content_quantity, "内容量" ,class: "text-black" %>
           <div class="mt-1 flex items-center border border-light-gray rounded-lg bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
