@@ -81,6 +81,10 @@ group :development, :test do
   # エラー時のデバッグを確認するgem
   gem "better_errors"
   gem "binding_of_caller"
+
+  # Sentry（エラー監視ツール）を使用できるgem
+  gem "sentry-ruby"
+  gem "sentry-rails"
 end
 
 group :development do
