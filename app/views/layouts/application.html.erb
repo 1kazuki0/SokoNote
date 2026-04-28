@@ -30,6 +30,8 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
     <!-- Googleアイコンの取得 （全アイコンを取得してしまっているため要検討）-->
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <!-- Sentry（エラー監視ツール）のフロントとバックの処理を繋ぐためのタグ -->
+    <%= Sentry.get_trace_propagation_meta.html_safe %>
   </head>
 
   <body class="bg-neutral max-w-4xl mx-auto">
