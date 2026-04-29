@@ -22,7 +22,7 @@ Rails.application.configure do
   # CSP違反するインラインに対し、リクエストごとに使い捨ての許可証(nonce)を発行する設定
   config.content_security_policy_nonce_generator = ->(request) { SecureRandom.base64(16) }
   # nonce検証を有効にするディレクティブを指定(script-srcとstyle-srcのインラインを nonce で許可制に)
-  config.content_security_policy_nonce_directives = %w(script-src style-src)
+  config.content_security_policy_nonce_directives = %w[ script-src style-src ]
   #
   #  # Report violations without enforcing the policy.
   # config.content_security_policy_report_only = true
