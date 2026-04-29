@@ -97,6 +97,9 @@ group :development do
 
   # デバッグ機能
   gem "pry-rails"
+
+  # N+1問題を検出するためのgem
+  gem "bullet"
 end
 
 group :test do
