@@ -36,7 +36,7 @@ Rails.application.routes.draw do
 
   # letter_opener_web のルーティング
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
-  
+
   # ヘルスチェック用エンドポイント。/upで確認（正常200,例外500）
   get "up" => "rails/health#show", as: :rails_health_check
 
