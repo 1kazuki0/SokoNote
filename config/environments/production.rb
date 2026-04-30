@@ -48,7 +48,10 @@ Rails.application.configure do
   # Can be used together with config.force_ssl for Strict-Transport-Security and secure cookies.
   # config.assume_ssl = true
 
-  # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
+  # HTTPS強制化により、通信が暗号化
+  # ・HTTPでアクセスされてもHTTPSでリダイレクト
+  # ・CookieにSecure属性を自動付与（HTTPでは送信させない）
+  # ・HSTSヘッダーを自動送信(ブラウザが以後HTTPSを強制)
   config.force_ssl = true
 
   # Skip http-to-https redirect for the default health check endpoint.
