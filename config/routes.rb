@@ -34,14 +34,13 @@ Rails.application.routes.draw do
   # 設定画面
   get "setting", to: "setting#index"
 
-  # letter_opener_webのルーティング
+  # letter_opener_web のルーティング
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
 
-  # --- 以下は現状非設定 ---
-
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
+  # ヘルスチェック用エンドポイント。/upで確認（正常200,例外500）
   get "up" => "rails/health#show", as: :rails_health_check
+
+  # --- 以下は現状非設定 ---
 
   # Render dynamic PWA files from app/views/pwa/*
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker

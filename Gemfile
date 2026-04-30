@@ -56,6 +56,11 @@ gem "omniauth-rails_csrf_protection"
 # 検索機能を実装できるgem
 gem "ransack"
 
+# Sentry（エラー監視ツール）を使用できるgem
+gem "sentry-ruby"
+gem "sentry-rails"
+
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
@@ -92,6 +97,9 @@ group :development do
 
   # デバッグ機能
   gem "pry-rails"
+
+  # N+1問題を検出するためのgem
+  gem "bullet"
 end
 
 group :test do
