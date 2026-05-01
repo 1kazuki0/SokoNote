@@ -24,8 +24,8 @@ Rails.application.routes.draw do
   # 内容量単位一覧・登録・編集・削除
   resources :content_units, except: [ :show ]
 
-  # 商品一覧・登録（ウィザード形式 / 商品もカテゴリも新しく作る場合）
-  resources :items do
+  # 商品一覧・購入履歴用（一覧・削除 / 一覧・編集・削除）
+  resources :items, only: [ :index, :destroy ] do
     resources :purchases, only: [ :index, :edit, :update, :destroy ]
   end
 

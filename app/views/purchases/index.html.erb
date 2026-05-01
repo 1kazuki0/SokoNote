@@ -10,158 +10,189 @@
   <%= "#{@item.name} 購入履歴" %>
 <% end %>
 
-<!-- 商品名・カテゴリ名の表示（カテゴリ名はnilの場合表示しない） -->
-<div class="flex items-center gap-2 mb-5">
-  <h1 class="text-xl font-bold text-black"><%= @item.name %></h1>
-  <% if @item.category.present? %>
-    <span class="text-xs font-bold text-primary bg-primary/20 rounded-full px-2 py-0.5 "><%= @item.category.name %></span>
-  <% end %>
-</div>
+<!-- 商品に対して購入履歴が1件以上登録されている場合 -->
+<% if @has_any_purchases %>
+  <!-- 商品名・カテゴリ名の表示（カテゴリ名はnilの場合表示しない） -->
+  <div class="flex items-center gap-2 mb-5">
+    <h1 class="text-xl font-bold text-black"><%= @item.name %></h1>
+    <% if @item.category.present? %>
+      <span class="text-xs font-bold text-primary bg-primary/20 rounded-full px-2 py-0.5 "><%= @item.category.name %></span>
+    <% end %>
+  </div>
 
-<!-- 最安値単価表示 -->
-<% if @lowest_purchase %>
-  <div class="bg-white border-2 border-accent rounded-2xl overflow-hidden mb-4">
-    <div class="h-1 w-full bg-accent"></div>
-    <div class="p-4">
-      
-      <!-- 最安値バッジ + 日付 -->
-      <div class="flex items-center justify-between mb-2">
-        <div class="inline-flex items-center gap-1 bg-accent/10 text-accent rounded-full px-3 py-1 text-xs font-medium">
-          <span class="material-symbols-outlined" style="font-size:13px;">star</span>
-          最安値
-        </div>
-        <span class="text-xs text-middle-gray"><%= @lowest_purchase.purchased_on %></span>
-      </div>
-
-      <!-- ブランド名 -->
-      <% if @lowest_purchase.brand.present? %>
-        <p class="text-sm text-middle-gray mb-3"><%= @lowest_purchase.brand %></p>
-      <% end %>
-
-      <!-- 最安単価 -->
-      <div class="text-center py-2 pb-4">
-        <p class="text-xs text-middle-gray mb-1">最安単価</p>
-        <div class="inline-flex items-baseline gap-1">
-          <span class="text-5xl font-bold text-accent leading-none"><%= @lowest_purchase.unit_price %></span>
-          <span class="text-sm text-accent">円/<%= @lowest_purchase.content_unit.name %></span>
-        </div>
-      </div>
-
-      <!-- 比較画面遷移ボタン -->
-      <div class= "flex justify-center pb-4">
-        <%= link_to comparison_path(purchase_id: @lowest_purchase.id), class: "flex text-center justify-center gap-2 px-8 py-3 rounded-full border border-primary text-primary hover:bg-primary hover:text-white" do %>
-          <span class="flex items-end justify-center gap-1">
-            <span class="material-symbols-outlined text-base">balance</span>
-            <span>この商品で比較します</span>
-          </span>
-        <% end %> 
-      </div>
+  <!-- 最安値単価表示 -->
+  <% if @lowest_purchase %>
+    <div class="bg-white border-2 border-accent rounded-2xl overflow-hidden mb-4">
+      <div class="h-1 w-full bg-accent"></div>
+      <div class="p-4">
         
-      <hr class="border-t border-accent/30 mb-3">
-      <!-- 店舗名・量・単位・価格 -->
-      <div class="flex items-center flex-wrap gap-2">
-        <% if @lowest_purchase.store.present? %>
-          <span class="bg-accent/10 text-accent rounded-full px-3 py-0.5 text-xs"><%= @lowest_purchase.store.name %></span>
+        <!-- 最安値バッジ + 日付 -->
+        <div class="flex items-center justify-between mb-2">
+          <div class="inline-flex items-center gap-1 bg-accent/10 text-accent rounded-full px-3 py-1 text-xs font-medium">
+            <span class="material-symbols-outlined" style="font-size:13px;">star</span>
+            最安値
+          </div>
+          <span class="text-xs text-middle-gray"><%= @lowest_purchase.purchased_on %></span>
+        </div>
+
+        <!-- ブランド名 -->
+        <% if @lowest_purchase.brand.present? %>
+          <p class="text-sm text-middle-gray mb-3"><%= @lowest_purchase.brand %></p>
         <% end %>
-        <% if @lowest_purchase.pack_unit.present? %>
-          <span class="text-xs text-black"><%= @lowest_purchase.pack_quantity %><%= @lowest_purchase.pack_unit.name %> × <%= @lowest_purchase.content_quantity %><%= @lowest_purchase.content_unit.name %> · ¥<%= @lowest_purchase.price %></span>
-        <% elsif @lowest_purchase.pack_quantity > 1 %>
-          <span class="text-xs text-black"><%= @lowest_purchase.pack_quantity %> × <%= @lowest_purchase.content_quantity %><%= @lowest_purchase.content_unit.name %> · ¥<%= @lowest_purchase.price %></span>
-        <% else %>
-          <span class="text-xs text-black"><%= @lowest_purchase.content_quantity %><%= @lowest_purchase.content_unit.name %> · ¥<%= @lowest_purchase.price %></span>
-        <% end %>
+
+        <!-- 最安単価 -->
+        <div class="text-center py-2 pb-4">
+          <p class="text-xs text-middle-gray mb-1">最安単価</p>
+          <div class="inline-flex items-baseline gap-1">
+            <span class="text-5xl font-bold text-accent leading-none"><%= @lowest_purchase.unit_price %></span>
+            <span class="text-sm text-accent">円/<%= @lowest_purchase.content_unit.name %></span>
+          </div>
+        </div>
+
+        <!-- 比較画面遷移ボタン -->
+        <div class= "flex justify-center pb-4">
+          <%= link_to comparison_path(purchase_id: @lowest_purchase.id), class: "flex text-center justify-center gap-2 px-8 py-3 rounded-full border border-primary text-primary hover:bg-primary hover:text-white" do %>
+            <span class="flex items-end justify-center gap-1">
+              <span class="material-symbols-outlined text-base">balance</span>
+              <span>この商品で比較します</span>
+            </span>
+          <% end %> 
+        </div>
+          
+        <hr class="border-t border-accent/30 mb-3">
+        <!-- 店舗名・量・単位・価格 -->
+        <div class="flex items-center flex-wrap gap-2">
+          <% if @lowest_purchase.store.present? %>
+            <span class="bg-accent/10 text-accent rounded-full px-3 py-0.5 text-xs"><%= @lowest_purchase.store.name %></span>
+          <% end %>
+          <% if @lowest_purchase.pack_unit.present? %>
+            <span class="text-xs text-black"><%= @lowest_purchase.pack_quantity %><%= @lowest_purchase.pack_unit.name %> × <%= @lowest_purchase.content_quantity %><%= @lowest_purchase.content_unit.name %> · ¥<%= @lowest_purchase.price %></span>
+          <% elsif @lowest_purchase.pack_quantity > 1 %>
+            <span class="text-xs text-black"><%= @lowest_purchase.pack_quantity %> × <%= @lowest_purchase.content_quantity %><%= @lowest_purchase.content_unit.name %> · ¥<%= @lowest_purchase.price %></span>
+          <% else %>
+            <span class="text-xs text-black"><%= @lowest_purchase.content_quantity %><%= @lowest_purchase.content_unit.name %> · ¥<%= @lowest_purchase.price %></span>
+          <% end %>
+        </div>
       </div>
+    </div>
+  <% end %>
+  <div class="flex justify-between items-center mb-5">
+    <h2 class="text-xl font-bold text-middle-gray">購入履歴</h2>
+    <div class="flex gap-4 text-xl text-middle-gray">
+      <span class="underline underline-offset-4"><%= sort_link(@q, :unit_price, "単価") %></span>
+      <span class="underline underline-offset-4"><%= sort_link(@q, :purchased_on, "購入日")%></span>
+    </div>
+  </div>
+  <div class="mb-4">
+    <%= search_form_for @q, url: item_purchases_path(@item) do |f| %>
+      <div class="form flex">
+        <span class="material-symbols-outlined text-middle-gray">search</span>
+        <%= f.search_field :store_name_cont, placeholder: "店舗名で絞り込み", list: "stores_list", class: "flex-auto outline-none pl-2 text-black bg-transparent placeholder-gray" %>
+        <datalist id="stores_list">
+          <% @stores.each do |store| %>
+            <option value="<%= store.name %>">
+          <% end %>
+        </datalist>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="space-y-2">
+    <% @purchases.each do |purchase| %>
+      <% is_lowest = purchase.id == @lowest_purchase&.id %>
+      <div class="swipe-card" data-controller="swipe" data-action="touchstart->swipe#touchstart touchend->swipe#touchend touchstart@document->swipe#outsideClick">
+
+        <!-- 左側の緑ボーダー線の固定 -->
+        <div class="absolute left-0 top-0 bottom-0 w-1.5 z-30 <%= is_lowest ? 'bg-accent' : 'bg-primary' %> rounded-l-2xl"></div>
+
+        <!-- テキスト部分の固定 -->
+        <div class="absolute left-3 top-0 bottom-0 right-10 flex flex-col justify-center py-4 px-2 z-10">
+          <div class="flex items-center justify-between mb-2">
+
+            <!-- 日付表示 -->
+            <span class="text-xs text-middle-gray"><%= purchase.purchased_on %></span>
+
+            <!-- 最安値バッジ表示 -->
+            <% if is_lowest %>
+              <div class="inline-flex items-center gap-1 bg-accent/10 text-accent rounded-full px-2 py-0.5 text-xs font-medium">
+                <span class="material-symbols-outlined text-xs">star</span>
+                最安値
+              </div>
+            <% end %>
+          </div>
+
+          <!-- 単価表示 -->
+          <div class="flex items-baseline gap-1 mb-0">
+            <span class="text-2xl font-bold <%= is_lowest ? 'text-accent' : 'text-primary' %> leading-none"><%= purchase.unit_price %></span>
+            <span class="text-xs <%= is_lowest ? 'text-accent' : 'text-middle-gray' %>">円/<%= purchase.content_unit.name %></span>
+          </div>
+          <hr class="border-t border-light-gray my-2">
+
+          <!-- 店舗名・量・単位・価格 -->
+          <div class="flex items-center flex-wrap gap-2">
+            <% if purchase.store.present? %>
+              <span class="<%= is_lowest ? 'bg-accent/10 text-accent' : 'bg-primary/10 text-primary' %> rounded-full px-3 py-0.5 text-xs"><%= purchase.store.name %></span>
+            <% end %>
+            <% if purchase.brand.present? %>
+              <span class="text-xs text-middle-gray"><%= purchase.brand %></span>
+            <% end %>
+            <% if purchase.pack_unit.present? %>
+              <span class="text-xs text-black"><%= purchase.pack_quantity %><%= purchase.pack_unit.name %> × <%= purchase.content_quantity %><%= purchase.content_unit.name %> · ¥<%= purchase.price %></span>
+            <% elsif purchase.pack_quantity > 1 %>
+              <span class="text-xs text-black"><%= purchase.pack_quantity %> × <%= purchase.content_quantity %><%= purchase.content_unit.name %> · ¥<%= purchase.price %></span>
+            <% else %>
+              <span class="text-xs text-black"><%= purchase.content_quantity %><%= purchase.content_unit.name %> · ¥<%= purchase.price %></span>
+            <% end %>
+          </div>
+        </div>
+
+        <!-- swipe-inner：アイコンのみ・スライドする層 -->
+        <div class="swipe-inner rounded-2xl <%= is_lowest ? 'border border-accent' : 'border border-light-gray' %>" style="min-height: 8rem;" data-swipe-target="inner">
+          <span class="material-symbols-outlined text-light-gray text-sm">keyboard_double_arrow_right</span>
+        </div>
+
+        <!-- スライドした時に表示される層 -->
+        <div class="swipe-actions" data-swipe-target="actions" style="transform: translateX(100%);">
+          <%= link_to edit_item_purchase_path(@item, purchase),
+                data: { action: "touchend->swipe#stopPropagation" },
+                class: "flex items-center justify-center w-16 bg-blue-400 text-white text-xs font-medium self-stretch" do %>
+            <span class="material-symbols-outlined" style="font-size:18px;">edit</span>
+          <% end %>
+          <%= link_to item_purchase_path(@item, purchase),
+                data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？", action: "touchend->swipe#stopPropagation" },
+                class: "flex items-center justify-center w-16 bg-red-400 text-white text-xs font-medium border-none cursor-pointer h-full" do %>
+            <span class="material-symbols-outlined" style="font-size:18px;">delete</span>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+<!-- 商品に対して購入履歴が0件の場合 -->
+<% else %>
+  <div class="flex flex-col items-center text-center py-8">
+    <h1 class="text-lg font-bold text-gray-600 mb-4">
+      <%= @item.name %>の購入履歴がありません
+    </h1>
+    <div class="mb-4 flex h-32 w-32 items-center justify-center rounded-full bg-light-gray">
+      <span class="material-symbols-outlined text-dark-gray" style="font-size: 80px;">receipt_long_off</span>
+    </div>
+    <p class="text-sm text-gray-400">
+      購入履歴を登録するか、
+    </p>
+    <p class="text-sm text-gray-400 mb-8">
+      不要であれば商品ごと削除できます
+    </p>
+    
+    <!-- 商品登録・商品削除遷移ボタン -->
+    <div class="w-full px-6 space-y-3">
+      <%= link_to new_item_registration_path, class: "card bg-primary text-white px-6 py-4 rounded-full flex items-center justify-center font-bold", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } do %>
+        <span class="text-lg">購入履歴を登録する</span>
+        <span class="material-symbols-outlined">add</span>
+      <% end %>
+      <%= button_to item_path(@item), method: :delete, form: { data: { turbo_confirm: "「#{@item.name}」を本当に削除しますか?" } }, class: "w-full card bg-white text-error px-6 py-4 border-2 border-error rounded-full flex items-center justify-center font-bold", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } do %>
+        <span class="text-lg">この商品を削除する</span>
+      <% end %>
     </div>
   </div>
 <% end %>
-<div class="flex justify-between items-center mb-5">
-  <h2 class="text-xl font-bold text-middle-gray">購入履歴</h2>
-  <div class="flex gap-4 text-xl text-middle-gray">
-    <span class="underline underline-offset-4"><%= sort_link(@q, :unit_price, "単価") %></span>
-    <span class="underline underline-offset-4"><%= sort_link(@q, :purchased_on, "購入日")%></span>
-  </div>
-</div>
-<div class="mb-4">
-  <%= search_form_for @q, url: item_purchases_path(@item) do |f| %>
-    <div class="form flex">
-      <span class="material-symbols-outlined text-middle-gray">search</span>
-      <%= f.search_field :store_name_cont, placeholder: "店舗名で絞り込み", list: "stores_list", class: "flex-auto outline-none pl-2 text-black bg-transparent placeholder-gray" %>
-      <datalist id="stores_list">
-        <% @stores.each do |store| %>
-          <option value="<%= store.name %>">
-        <% end %>
-      </datalist>
-    </div>
-  <% end %>
-</div>
-
-<div class="space-y-2">
-  <% @purchases.each do |purchase| %>
-    <% is_lowest = purchase.id == @lowest_purchase&.id %>
-    <div class="swipe-card" data-controller="swipe" data-action="touchstart->swipe#touchstart touchend->swipe#touchend touchstart@document->swipe#outsideClick">
-
-      <!-- 左側の緑ボーダー線の固定 -->
-      <div class="absolute left-0 top-0 bottom-0 w-1.5 z-30 <%= is_lowest ? 'bg-accent' : 'bg-primary' %> rounded-l-2xl"></div>
-
-      <!-- テキスト部分の固定 -->
-      <div class="absolute left-3 top-0 bottom-0 right-10 flex flex-col justify-center py-4 px-2 z-10">
-        <div class="flex items-center justify-between mb-2">
-
-          <!-- 日付表示 -->
-          <span class="text-xs text-middle-gray"><%= purchase.purchased_on %></span>
-
-          <!-- 最安値バッジ表示 -->
-          <% if is_lowest %>
-            <div class="inline-flex items-center gap-1 bg-accent/10 text-accent rounded-full px-2 py-0.5 text-xs font-medium">
-              <span class="material-symbols-outlined text-xs">star</span>
-              最安値
-            </div>
-          <% end %>
-        </div>
-
-        <!-- 単価表示 -->
-        <div class="flex items-baseline gap-1 mb-0">
-          <span class="text-2xl font-bold <%= is_lowest ? 'text-accent' : 'text-primary' %> leading-none"><%= purchase.unit_price %></span>
-          <span class="text-xs <%= is_lowest ? 'text-accent' : 'text-middle-gray' %>">円/<%= purchase.content_unit.name %></span>
-        </div>
-        <hr class="border-t border-light-gray my-2">
-
-        <!-- 店舗名・量・単位・価格 -->
-        <div class="flex items-center flex-wrap gap-2">
-          <% if purchase.store.present? %>
-            <span class="<%= is_lowest ? 'bg-accent/10 text-accent' : 'bg-primary/10 text-primary' %> rounded-full px-3 py-0.5 text-xs"><%= purchase.store.name %></span>
-          <% end %>
-          <% if purchase.brand.present? %>
-            <span class="text-xs text-middle-gray"><%= purchase.brand %></span>
-          <% end %>
-          <% if purchase.pack_unit.present? %>
-            <span class="text-xs text-black"><%= purchase.pack_quantity %><%= purchase.pack_unit.name %> × <%= purchase.content_quantity %><%= purchase.content_unit.name %> · ¥<%= purchase.price %></span>
-          <% elsif purchase.pack_quantity > 1 %>
-            <span class="text-xs text-black"><%= purchase.pack_quantity %> × <%= purchase.content_quantity %><%= purchase.content_unit.name %> · ¥<%= purchase.price %></span>
-          <% else %>
-            <span class="text-xs text-black"><%= purchase.content_quantity %><%= purchase.content_unit.name %> · ¥<%= purchase.price %></span>
-          <% end %>
-        </div>
-      </div>
-
-      <!-- swipe-inner：アイコンのみ・スライドする層 -->
-      <div class="swipe-inner rounded-2xl <%= is_lowest ? 'border border-accent' : 'border border-light-gray' %>" style="min-height: 8rem;" data-swipe-target="inner">
-        <span class="material-symbols-outlined text-light-gray text-sm">keyboard_double_arrow_right</span>
-      </div>
-
-      <!-- スライドした時に表示される層 -->
-      <div class="swipe-actions" data-swipe-target="actions" style="transform: translateX(100%);">
-        <%= link_to edit_item_purchase_path(@item, purchase),
-              data: { action: "touchend->swipe#stopPropagation" },
-              class: "flex items-center justify-center w-16 bg-blue-400 text-white text-xs font-medium self-stretch" do %>
-          <span class="material-symbols-outlined" style="font-size:18px;">edit</span>
-        <% end %>
-        <%= link_to item_purchase_path(@item, purchase),
-              data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？", action: "touchend->swipe#stopPropagation" },
-              class: "flex items-center justify-center w-16 bg-red-400 text-white text-xs font-medium border-none cursor-pointer h-full" do %>
-          <span class="material-symbols-outlined" style="font-size:18px;">delete</span>
-        <% end %>
-      </div>
-    </div>
-  <% end %>
-</div>

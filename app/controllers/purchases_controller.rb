@@ -6,6 +6,7 @@ class PurchasesController < ApplicationController
     @purchases = @q.result(distinct: true).includes(:store, :content_unit, :pack_unit)
     @stores = @item.purchases.includes(:store).map(&:store).compact.uniq
     @lowest_purchase = @item.purchases.order(:unit_price).first
+    @has_any_purchases = @item.purchases.exists? # 商品に対して購入履歴が存在している確認
   end
 
   def edit
