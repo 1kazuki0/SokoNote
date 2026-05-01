@@ -56,10 +56,8 @@ gem "omniauth-rails_csrf_protection"
 # 検索機能を実装できるgem
 gem "ransack"
 
-# Sentry（エラー監視ツール）を使用できるgem
-gem "sentry-ruby"
-gem "sentry-rails"
-
+# 認証機能のgem
+gem "devise", "~> 4.9"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -111,4 +109,9 @@ group :test do
   # webdrivers は不要！selenium 4.6以降は自動管理
 end
 
-gem "devise", "~> 4.9"
+# 本番環境のみ
+group :production do
+  # Sentry（エラー監視ツール）を使用できるgem
+  gem "sentry-ruby"
+  gem "sentry-rails"
+end

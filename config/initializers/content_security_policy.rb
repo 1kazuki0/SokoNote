@@ -13,16 +13,16 @@ Rails.application.configure do
     policy.img_src     :self, :https, :data          # 画像の読み込み
     policy.object_src  :none                         # <object>、<embed>、<applet> というHTMLタグで何かを埋め込むのを完全禁止
     policy.script_src  :self, :https                 # JavaScriptの読み込み <==　XSSで最重要！！！
-    policy.style_src   :self, :https                 # CSSの読み込み
+    policy.style_src   :self, :https, :unsafe_inline # CSSの読み込み
     # Specify URI for violation reports
     # policy.report_uri "/csp-violation-report-endpoint"
   end
   #
   #   # Generate session nonces for permitted importmap, inline scripts, and inline styles.
   # CSP違反するインラインに対し、リクエストごとに使い捨ての許可証(nonce)を発行する設定
-  config.content_security_policy_nonce_generator = ->(request) { SecureRandom.base64(16) }
+  # config.content_security_policy_nonce_generator = ->(request) { SecureRandom.base64(16) }
   # nonce検証を有効にするディレクティブを指定(script-srcとstyle-srcのインラインを nonce で許可制に)
-  config.content_security_policy_nonce_directives = %w[ script-src style-src ]
+  # config.content_security_policy_nonce_directives = %w[ script-src style-src ]
   #
   #  # Report violations without enforcing the policy.
   # config.content_security_policy_report_only = true
