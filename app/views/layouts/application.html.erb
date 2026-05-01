@@ -25,7 +25,7 @@
     <!-- Googleアイコンの取得 （全アイコンを取得してしまっているため要検討）-->
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     <!-- Sentry（エラー監視ツール）のフロントとバックの処理を繋ぐためのタグ -->
-    <%= Sentry.get_trace_propagation_meta.html_safe %>
+    <%= Sentry.get_trace_propagation_meta.html_safe if defined?(Sentry) %>
     <%= render 'shared/favicon' %>
   </head>
 
