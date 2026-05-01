@@ -10,14 +10,8 @@
     <!-- Google Analytics（GA4）の導入 -->
     <!-- Google tag (gtag.js) -->
     <% if ENV['GA_TRACKING_ID'].present? %>
+      <meta name="ga-tracking-id" content="<%= ENV['GA_TRACKING_ID'] %>">
       <script async src="https://www.googletagmanager.com/gtag/js?id=<%= ENV['GA_TRACKING_ID'] %>"></script>
-      <%= javascript_tag nonce: true do %>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', '<%= ENV['GA_TRACKING_ID'] %>');
-      <% end %>
     <% end %>
 
     <%= yield :head %>
