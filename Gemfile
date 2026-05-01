@@ -111,7 +111,6 @@ end
 
 # 本番環境のみ
 group :production do
-
   # Sentry（エラー監視ツール）を使用できるgem
   gem "sentry-ruby"
   gem "sentry-rails"
