@@ -63,7 +63,7 @@
 
     <!-- 商品登録遷移ボタン -->
     <div class="w-full px-6 mb-8">
-      <%= link_to new_store_path, class: "card bg-primary text-white px-6 py-4 rounded-full flex items-center justify-center font-bold", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } do %>
+      <%= link_to new_category_path, class: "card bg-primary text-white px-6 py-4 rounded-full flex items-center justify-center font-bold", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } do %>
         <span class="text-xl tracking-widest">カテゴリーを登録する</span>
         <span class="material-symbols-outlined">add_2</span>
       <% end %>
