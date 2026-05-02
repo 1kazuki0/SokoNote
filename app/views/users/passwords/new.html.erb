@@ -10,12 +10,12 @@
       <%= render "users/shared/error_messages", resource: resource %>
 
       <div class="mb-5">
-        <%= f.label :email, class: "block text-black text-sm font-semibold mb-2"%>
+        <%= f.label :email, class: "block text-black font-semibold mb-2"%>
         <div class="flex items-center border border-ligth-gray rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
           <span class="material-symbols-outlined text-middle-gray mr-2" style="font-size: 20px;">
             mail
           </span>
-          <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "example@email.com", required: true,  class: "flex-1 outline-none text-gray-700 text-sm bg-transparent placeholder-gray-400" %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "example@email.com", required: true,  class: "flex-1 outline-none text-gray-700 bg-transparent placeholder-gray-400" %>
         </div>
       </div>
 
@@ -27,6 +27,6 @@
     <% end %>
   </div>
 </div>
-<div class="mt-4 text-center text-sm text-dark-gray space-y-2">
+<div class="mt-4 text-center text-dark-gray space-y-2">
   <%= render "users/shared/links" %>
 </div>

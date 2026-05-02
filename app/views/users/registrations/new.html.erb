@@ -10,45 +10,45 @@
       <%= render "users/shared/error_messages", resource: resource %>
 
       <div class="mb-5">
-        <%= f.label :name, class: "block text-black text-sm font-semibold mb-2"%>
+        <%= f.label :name, class: "block text-black font-semibold mb-2"%>
         <div class="flex items-center border border-light-gray rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
           <span class="material-symbols-outlined text-middle-gray mr-2" style="font-size: 20px;">
             account_circle
           </span>
-          <%= f.text_field :name, placeholder: "お名前", class: "flex-1 outline-none text-black text-sm bg-transparent placeholder-gray-400"%>
+          <%= f.text_field :name, placeholder: "お名前", class: "flex-1 outline-none text-black bg-transparent placeholder-gray-400"%>
         </div>
       </div>
 
       <div class="mb-5">
-        <%= f.label :email, class: "block text-black text-sm font-semibold mb-2"%>
+        <%= f.label :email, class: "block text-black font-semibold mb-2"%>
         <div class="flex items-center border border-light-gray rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
           <span class="material-symbols-outlined text-middle-gray mr-2" style="font-size: 20px;">
             mail
           </span>
-          <%= f.email_field :email, autofocus: true, placeholder: "example@email.com", class: "flex-1 outline-none text-black text-sm bg-transparent placeholder-gray-400" %>
+          <%= f.email_field :email, autofocus: true, placeholder: "example@email.com", class: "flex-1 outline-none text-black bg-transparent placeholder-gray-400" %>
         </div>
       </div>
 
       <div class="mb-5">
         <div class="flex items-center gap-1 mb-2">
-          <%= f.label :password, class: "block text-black text-sm font-semibold" %>
+          <%= f.label :password, class: "block text-black font-semibold" %>
           <% if @minimum_password_length %>
-            <span class="text-sm text-black font-semibold">
+            <span class="text-black font-semibold">
               （<%= @minimum_password_length %>文字以上）
             </span>
           <% end %>
         </div>
         <div class="flex items-center border border-light-gray rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
           <span class="material-symbols-outlined text-middle-gray mr-2" style="font-size: 20px;">lock</span>
-          <%= f.password_field :password, autocomplete: "new-password", placeholder: "••••••••", class: "flex-1 outline-none text-gray-700 text-sm bg-transparent placeholder-gray-400" %>
+          <%= f.password_field :password, autocomplete: "new-password", placeholder: "••••••••", class: "flex-1 outline-none text-gray-700 bg-transparent placeholder-gray-400" %>
         </div>
       </div>
 
       <div class="mb-5">
-        <%= f.label :password_confirmation, class: "block text-black text-sm font-semibold mb-2" %>
+        <%= f.label :password_confirmation, class: "block text-black font-semibold mb-2" %>
         <div class="flex items-center border border-light-gray rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
           <span class="material-symbols-outlined text-middle-gray mr-2" style="font-size: 20px;">lock</span>
-          <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "••••••••", class: "flex-1 outline-none text-gray-700 text-sm bg-transparent placeholder-gray-400" %>
+          <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "••••••••", class: "flex-1 outline-none text-gray-700 bg-transparent placeholder-gray-400" %>
         </div>
       </div>
 
