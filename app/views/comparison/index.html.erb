@@ -18,23 +18,23 @@
       </div>
       <h2 class="text-xl font-bold text-center mb-3">商品A</h2>
 
-      <%= form_with model: @purchase_a, url: new_item_registration_path, method: :get, scope: :purchase_a, class: "space-y-4 text-xs" do |f| %>
+      <%= form_with model: @purchase_a, url: new_item_registration_path, method: :get, scope: :purchase_a, class: "space-y-4" do |f| %>
         <div>
           <%= f.label :content_quantity, "内容量" ,class: "text-black" %>
           <div class="mt-1 flex items-center border border-light-gray rounded-lg bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
-            <%= f.number_field :content_quantity, placeholder: "例：500", class: "w-full p-2 bg-transparent outline-none text-dark-gray text-sm", data: {compare_target: "contentquantityA", action: "input->compare#calculate"} %>
+            <%= f.number_field :content_quantity, placeholder: "例：500", class: "w-full p-2 bg-transparent outline-none text-black", data: {compare_target: "contentquantityA", action: "input->compare#calculate"} %>
           </div>
         </div>
         <div>
           <%= f.label :pack_quantity, "パック数", class: "text-black" %>
           <div class="mt-1 flex items-center border border-light-gray rounded-lg bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
-            <%= f.number_field :pack_quantity, placeholder: "例：3", class: "w-full p-2 bg-transparent outline-none text-dark-gray text-sm", data: {compare_target: "packquantityA", action: "input->compare#calculate" } %>
+            <%= f.number_field :pack_quantity, placeholder: "例：3", class: "w-full p-2 bg-transparent outline-none text-black", data: {compare_target: "packquantityA", action: "input->compare#calculate" } %>
           </div>
         </div>
         <div>
           <%= f.label :price, "価格", class: "text-black" %>
           <div class="mt-1 flex items-center border border-light-gray rounded-lg bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
-            <%= f.number_field :price, placeholder: "例：598", class: "w-full p-2 bg-transparent outline-none text-dark-gray text-sm", data: {compare_target: "priceA", action: "input->compare#calculate" } %>
+            <%= f.number_field :price, placeholder: "例：598", class: "w-full p-2 bg-transparent outline-none text-black", data: {compare_target: "priceA", action: "input->compare#calculate" } %>
           </div>
         </div>
         <div>
@@ -83,23 +83,23 @@
         <span class="bg-primary text-white text-xs font-bold px-3 py-1 rounded-full">おトク！</span>
       </div>
       <h2 class="text-xl font-bold text-center mb-3">商品B</h2>
-      <%= form_with model: @purchase_b, url: new_item_registration_path, method: :get, scope: :purchase_b, class: "space-y-4 text-xs" do |f| %>
+      <%= form_with model: @purchase_b, url: new_item_registration_path, method: :get, scope: :purchase_b, class: "space-y-4" do |f| %>
         <div>
           <%= f.label :content_quantity, "内容量" ,class: "text-black" %>
           <div class="mt-1 flex items-center border border-light-gray rounded-lg bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
-            <%= f.number_field :content_quantity, placeholder: "例：500", class: "w-full p-2 bg-transparent outline-none text-dark-gray text-sm", data: {compare_target: "contentquantityB", action: "input->compare#calculate" } %>
+            <%= f.number_field :content_quantity, placeholder: "例：500", class: "w-full p-2 bg-transparent outline-none text-black", data: {compare_target: "contentquantityB", action: "input->compare#calculate" } %>
           </div>
         </div>
         <div>
           <%= f.label :pack_quantity, "パック数", class: "text-black" %>
           <div class="mt-1 flex items-center border border-light-gray rounded-lg bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
-            <%= f.number_field :pack_quantity, placeholder: "例：3", class: "w-full p-2 bg-transparent outline-none text-dark-gray text-sm", data: {compare_target: "packquantityB", action: "input->compare#calculate" } %>
+            <%= f.number_field :pack_quantity, placeholder: "例：3", class: "w-full p-2 bg-transparent outline-none text-black", data: {compare_target: "packquantityB", action: "input->compare#calculate" } %>
           </div>
         </div>
         <div>
           <%= f.label :price, "価格", class: "text-black" %>
           <div class="mt-1 flex items-center border border-light-gray rounded-lg bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
-            <%= f.number_field :price, placeholder: "例：598", class: "w-full p-2 bg-transparent outline-none text-dark-gray text-sm", data: {compare_target: "priceB", action: "input->compare#calculate" } %>
+            <%= f.number_field :price, placeholder: "例：598", class: "w-full p-2 bg-transparent outline-none text-black", data: {compare_target: "priceB", action: "input->compare#calculate" } %>
           </div>
         </div>
         <div>
