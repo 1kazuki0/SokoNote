@@ -10,7 +10,7 @@ Rails.application.config.assets.version = "1.0"
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
 # .webmanifest を MIME type として登録
-Mime::Type.register "application/manifest+json", :webmanifest
+# Mime::Type.register "application/manifest+json", :webmanifest
 
-# favicon/site.webmanifest を precompile 対象に追加
-Rails.application.config.assets.precompile += %w[ favicon/site.webmanifest ]
+# # favicon/site.webmanifest を precompile 対象に追加
+# Rails.application.config.assets.precompile += %w[ favicon/site.webmanifest ]
