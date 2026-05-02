@@ -24,13 +24,13 @@
   <section>
     <p class="font-bold text-primary mb-2 px-1">マスタ管理</p>
     <div class="bg-white rounded-2xl shadow-sm ring ring-light-gray">
-      <!-- カテゴリマスタ -->
+      <!-- カテゴリーマスタ -->
       <%= link_to categories_path, class: "card shadow-none flex items-center gap-4 p-4 rounded-t-2xl hover:bg-light-gray hover:shadow-lg active:shadow-sm transition", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } do %>
         <div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary">
           <span class="material-symbols-outlined text-xl">category</span>
         </div>
         <div class="flex-1">
-          <p class="font-bold text-text-base text-sm">カテゴリ管理</p>
+          <p class="font-bold text-text-base text-sm">カテゴリー管理</p>
         </div>
         <span class="material-symbols-outlined text-middle-gray">chevron_right</span>
       <% end %>
@@ -38,7 +38,7 @@
       <!-- 店舗マスタ -->
       <%= link_to stores_path, class: "card shadow-none flex items-center gap-4 p-4 hover:bg-light-gray hover:shadow-lg active:shadow-sm transition", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } do %>
         <div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary">
-          <span class="material-symbols-outlined text-xl">privacy_tip</span>
+          <span class="material-symbols-outlined text-xl">storefront</span>
         </div>
         <p class="flex-1 font-bold text-text-base text-sm">店舗管理</p>
         <span class="material-symbols-outlined text-middle-gray">chevron_right</span>
