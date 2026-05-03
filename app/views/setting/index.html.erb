@@ -61,7 +61,7 @@
     <p class="font-bold text-primary mb-2 px-1">サポート &amp; 情報</p>
     <div class="bg-white rounded-2xl shadow-sm ring ring-light-gray">
       <!-- 利用規約 -->
-      <%= link_to "#", class: "card shadow-none flex items-center gap-4 p-4 rounded-t-2xl hover:bg-light-gray hover:shadow-lg active:shadow-sm transition" do %>
+      <%= link_to terms_path, class: "card shadow-none flex items-center gap-4 p-4 rounded-t-2xl hover:bg-light-gray hover:shadow-lg active:shadow-sm transition" do %>
         <div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary">
           <span class="material-symbols-outlined text-xl">description</span>
         </div>
@@ -70,7 +70,7 @@
       <% end %>
       <hr class="border-light-gray">
       <!-- プライバシーポリシー -->
-      <%= link_to "#", class: "card flex items-center gap-4 p-4 rounded-b-2xl hover:bg-light-gray transition" do %>
+      <%= link_to privacy_policy_path, class: "card flex items-center gap-4 p-4 rounded-b-2xl hover:bg-light-gray transition" do %>
         <div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary">
           <span class="material-symbols-outlined text-xl">privacy_tip</span>
         </div>
