@@ -94,3 +94,15 @@
     </div>
   </section>
 </main>
+
+<!-- フッター（利用規約・プライバシーポリシー・著作権マーク） -->
+<footer class="bg-white border-t border-slate-200 dark:border-slate-700 py-8 px-4">
+  <div class="max-w-screen-xl mx-auto flex flex-col items-center gap-4 text-sm text-slate-600 dark:text-slate-400">
+    <div class="flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
+      <%= link_to "利用規約", terms_path, class: "font-bold link text-primary whitespace-nowrap" %>
+      <span>と</span>
+      <%= link_to "プライバシーポリシー", privacy_policy_path, class: "font-bold link text-primary whitespace-nowrap" %>
+    </div>
+    <p>© 2026 SokoNote</p>
+  </div>
+</footer>
