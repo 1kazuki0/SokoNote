@@ -1,17 +1,21 @@
 <!-- パスワードリセット時のメール送信画面 -->
+<!-- ヘッダー配色の変更 -->
+<% content_for :header_class do %>
+  bg-primary text-white
+<% end %>
 <% content_for :arrow_back do %>
   arrow_back
 <% end %>
-<div class="flex flex-col md:flex-row items-center justify-center gap-6 p-4">
-  <div class="bg-white rounded-3xl shadow-xl w-full px-7 py-8">
+<div class="flex flex-col md:flex-row items-center justify-center gap-6">
+  <div class="bg-white rounded-2xl border border-light-gray w-full p-4">
     <h2 class="text-center text-2xl font-bold text-black mb-6"><%= t("devise.passwords.new.forgot_your_password") %></h2>
 
     <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
       <%= render "users/shared/error_messages", resource: resource %>
 
-      <div class="mb-5">
+      <div class="mb-10">
         <%= f.label :email, class: "block text-black font-semibold mb-2"%>
-        <div class="flex items-center border border-ligth-gray rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
+        <div class="flex items-center border border-light-gray rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
           <span class="material-symbols-outlined text-middle-gray mr-2" style="font-size: 20px;">
             mail
           </span>
@@ -19,14 +23,16 @@
         </div>
       </div>
 
-      <div class="mb-5">
-        <%= f.button :submit, class: "w-full bg-primary cursor-pointer hover:bg-[#5aad2e] active:bg-[#4d9a26] text-white font-bold text-lg rounded-2xl py-4 flex items-center justify-center gap-2 shadow-md transition duration-150" do %>
+      <div class="mb-10 px-2">
+        <%= f.button :submit, class: "card w-full bg-primary text-white px-6 py-4 rounded-full flex items-center justify-center font-bold text-xl tracking-widest", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } do %>
           <%= t("devise.passwords.new.send_me_reset_password_instructions") %>
         <% end %>
       </div>
     <% end %>
   </div>
 </div>
-<div class="mt-4 text-center text-dark-gray space-y-2">
-  <%= render "users/shared/links" %>
+
+<!-- ログイン画面移行動線 -->
+<div class="mt-4 text-center">
+  <%= link_to "ログイン画面に戻る", new_session_path(resource_name), class: "block mt-6 font-bold link text-primary whitespace-nowrap" %>
 </div>

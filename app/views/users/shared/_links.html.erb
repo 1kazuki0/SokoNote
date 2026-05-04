@@ -1,14 +1,16 @@
+<!-- ログイン画面動線 -->
 <%- if controller_name != 'sessions' %>
-  <%= link_to t("devise.shared.links.log_in"), new_session_path(resource_name), class: "block mt-6 text-center text-sm text-gray-500 underline" %>
+  <%= link_to t("devise.shared.links.log_in"), new_session_path(resource_name), class: "block mt-6 font-bold link text-primary whitespace-nowrap" %>
 <% end %>
 
+<!-- 新規アカウント作成画面動線 -->
 <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
-  <%= link_to t("devise.shared.links.sign_up"), new_registration_path(resource_name), class: "block mt-6 text-center text-sm text-gray-500 underline" %>
+  <%= link_to t("devise.shared.links.sign_up"), new_registration_path(resource_name), class: "block mt-6 font-bold link text-primary whitespace-nowrap" %>
 <% end %>
 
-<%# --- パスワードリセット --- %>
+<!-- パスワードリセット画面動線 -->
 <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
-  <%= link_to t("devise.shared.links.forgot_your_password"), new_user_password_path, class: "block mt-6 text-center text-sm text-gray-500 underline" %> <!-- パス new_password_path(resource_name) -->
+  <%= link_to t("devise.shared.links.forgot_your_password"), new_user_password_path, class: "block mt-6 font-bold link text-primary whitespace-nowrap" %>
 <% end %>
 
 <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
@@ -17,16 +19,4 @@
 
 <%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
   <%= link_to "Didn't receive unlock instructions?", new_unlock_path(resource_name) %><br />
-<% end %>
-
-<%# LINEログイン用遷移（POST送信のため、button_toで実装 %> 
-<%- if devise_mapping.omniauthable? %>
-  <%- resource_class.omniauth_providers.each do |provider| %>
-    <%= button_to omniauth_authorize_path(resource_name, provider), method: :post, data: { turbo: false }, class: "btn relative flex items-center mx-auto w-10/12 rounded-2xl overflow-hidden bg-[#06C755]" do %>
-      <div class="flex items-center justify-center w-14 h-14 border-r border-black/[0.08]">
-        <%= image_tag "btn_base.png", class: "w-10 h-10" %>
-      </div>
-      <span class="flex-1 text-center text-white font-bold text-base tracking-wider">LINEでログイン</span>
-    <% end %>
-  <% end %>
 <% end %>

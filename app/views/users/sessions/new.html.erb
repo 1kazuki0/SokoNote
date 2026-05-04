@@ -1,10 +1,14 @@
 <!-- ログイン画面 -->
+<!-- ヘッダー配色の変更 -->
+<% content_for :header_class do %>
+  bg-primary text-white
+<% end %>
 <% content_for :arrow_back do %>
   arrow_back
 <% end %>
-<div class="flex flex-col md:flex-row items-center justify-center gap-6 p-4"> 
-  <div class="bg-white rounded-3xl shadow-xl w-full px-7 py-8">
-    <h2 class="text-center text-2xl font-bold text-black mb-6"><%= t("devise.sessions.new.sign_in") %></h2>
+<div class="flex flex-col md:flex-row items-center justify-center gap-6"> 
+  <div class="bg-white rounded-2xl border border-light-gray w-full p-4">
+    <h2 class="text-center text-2xl font-bold text-black my-6"><%= t("devise.sessions.new.sign_in") %></h2>
 
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <div class="mb-5">
@@ -17,7 +21,7 @@
         </div>
       </div>
 
-      <div class="mb-5">
+      <div class="mb-10">
         <%= f.label :password, class: "block text-black font-semibold mb-2" %>
         <div class="flex items-center border border-light-gray rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
           <span class="material-symbols-outlined text-middle-gray mr-2" style="font-size: 20px;">lock</span>
@@ -25,22 +29,37 @@
         </div>
       </div>
 
-      <% if devise_mapping.rememberable? %>
-        <label class="flex items-center gap-2 text-dark-gray cursor-pointer select-none mb-6">
-          <%= f.check_box :remember_me,
-              class: "w-4 h-4 rounded border-dark-gray accent-primary cursor-pointer" %>
-          <span>ログインを記憶する</span>
-        </label>
-      <% end %>
-      <div class="mb-5">
-        <%= f.button :submit, class: "btn flex items-center justify-center w-full bg-primary font-bold text-white text-lg rounded-2xl py-4" do %>
+      <!-- 次回自動ログインチェック -->
+      <div class="flex justify-center mb-10">
+        <% if devise_mapping.rememberable? %>
+          <label class="flex items-center gap-2">
+            <%= f.check_box :remember_me, class: "w-5 h-5 accent-primary text-center cursor-pointer" %>
+            <span class="text-black">次回から自動的にログイン</span>
+          </label>
+        <% end %>
+      </div>
+      
+      <div class="mb-5 px-2">
+        <%= f.button :submit, class: "card w-full bg-primary text-white px-6 py-4 rounded-full flex items-center justify-center font-bold text-xl tracking-widest", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } do %>
           <%= t("devise.sessions.new.sign_in") %>
-          <span class="material-symbols-outlined" style="font-size: 22px;">login</span>
+          <span class="material-symbols-outlined">login</span>
         <% end %>
       </div>
     <% end %>
+    <div class="flex items-center gap-4 my-5 mx-2">
+      <hr class="flex-1 border-dark-gray">
+      <span class="text-dark-gray">または</span>
+      <hr class="flex-1 border-dark-gray">
+    </div>
+
+    <!-- LINEログイン動線 -->
+    <div class="px-2">
+      <%= render "users/shared/omniauth_links" %>
+    </div>
   </div>
 </div>
-<div class="mt-4 text-center text-sm text-dark-gray space-y-2">
+
+<!-- 新規登録画面・パスワードリセット 動線  -->
+<div class="mt-4 text-center space-y-2">
   <%= render "users/shared/links" %>
 </div>

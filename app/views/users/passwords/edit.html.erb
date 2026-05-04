@@ -1,6 +1,11 @@
 <!-- パスワードリセット画面 -->
-<div class="flex flex-col md:flex-row items-center justify-center gap-6 p-4">
-  <div class="bg-white rounded-3xl shadow-xl w-full px-7 py-8">
+<!-- ヘッダー配色の変更 -->
+<% content_for :header_class do %>
+  bg-primary text-white
+<% end %>
+
+<div class="flex flex-col md:flex-row items-center justify-center gap-6">
+  <div class="bg-white rounded-2xl border border-light-gray w-full p-4">
     <h2 class="text-center text-2xl font-bold text-black mb-6"><%= t("devise.passwords.edit.change_your_password") %></h2>
     <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
       <%= render "users/shared/error_messages", resource: resource %>
@@ -21,7 +26,7 @@
         </div>
       </div>
 
-      <div class="mb-5">
+      <div class="mb-10">
         <%= f.label :password_confirmation, class: "block text-black font-semibold mb-2" %>
         <div class="flex items-center border border-light-gray rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
           <span class="material-symbols-outlined text-middle-gray mr-2" style="font-size: 20px;">lock</span>
@@ -29,14 +34,18 @@
         </div>
       </div>
 
-      <div class="mb-5">
-        <%= f.button :submit, class: "w-full bg-primary cursor-pointer hover:bg-[#5aad2e] active:bg-[#4d9a26] text-white font-bold text-lg rounded-2xl py-4 flex items-center justify-center gap-2 shadow-md transition duration-150" do %>
+      <div class="mb-10 px-2">
+        <%= f.button :submit, class: "card w-full bg-primary text-white px-6 py-4 rounded-full flex items-center justify-center font-bold text-xl tracking-widest", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } do %>
           <%= t("devise.passwords.edit.change_my_password") %>
-          <span class="material-symbols-outlined" style="font-size: 22px;">lock_reset</span>
+          <span class="material-symbols-outlined">lock_reset</span>
         <% end %>
       </div>
     <% end %>
   </div>
 </div>
 
-<%= render "users/shared/links" %>
+<!-- ログイン画面移行動線 -->
+<div class="mt-4 text-center">
+  <%= link_to "ログイン画面に戻る", new_session_path(resource_name), class: "block mt-6 font-bold link text-primary whitespace-nowrap" %>
+</div>
+
