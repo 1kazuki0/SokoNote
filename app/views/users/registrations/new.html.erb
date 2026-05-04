@@ -59,7 +59,7 @@
       <!-- 利用規約・プライバシーポリシー同意チェック -->
       <div class="flex justify-center mb-10">
         <label class="flex items-center gap-2">
-          <%= check_box_tag :agreement, nil, nil, required: true, class: "w-5 h-5 accent-primary text-center" %>
+          <%= check_box_tag :agreement, nil, nil, required: true, class: "w-5 h-5 accent-primary text-center cursor-pointer" %>
           <span class="text-black">
             <%= link_to "利用規約", terms_path, class: "font-bold link text-primary whitespace-nowrap" %> と
             <%= link_to "プライバシーポリシー", privacy_policy_path, class: "font-bold link text-primary whitespace-nowrap" %>
@@ -68,7 +68,7 @@
         </label>
       </div>
 
-      <div class="mb-5">
+      <div class="mb-5 px-2">
         <%= f.button :submit, class: "card w-full bg-primary text-white px-6 py-4 rounded-full flex items-center justify-center font-bold text-xl tracking-widest", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } do %>
           <%= t("devise.registrations.new.sign_up") %>
           <span class="material-symbols-outlined">login</span>
@@ -82,7 +82,9 @@
     </div>
 
     <!-- LINE新規登録動線 -->
-    <%= render "users/shared/omniauth_links" %>
+    <div class="px-2">
+      <%= render "users/shared/omniauth_links" %>
+    </div>
   </div>
 </div>
 
