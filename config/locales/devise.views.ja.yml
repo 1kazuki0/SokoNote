@@ -110,7 +110,7 @@ ja:
         update: 更新
         we_need_your_current_password_to_confirm_your_changes: 変更を反映するには現在のパスワードを入力してください
       new:
-        sign_up: アカウント登録
+        sign_up: 新規アカウント登録
       signed_up: アカウント登録が完了しました。
       signed_up_but_inactive: ログインするためには、アカウントを有効化してください。
       signed_up_but_locked: アカウントがロックされているためログインできません。
@@ -133,7 +133,7 @@ ja:
         sign_in: ログイン
         sign_in_with_provider: "%{provider}でログイン"
         sign_up: アカウントをお持ちでない方はこちら
-        log_in: ログイン画面に移動する #追加
+        log_in: アカウントをお持ちの方はこちら #追加
         omniauth_sign_in: LINEでログイン
       minimum_password_length:
         other: "（%{count}字以上）"

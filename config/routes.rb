@@ -34,6 +34,12 @@ Rails.application.routes.draw do
   # 設定画面
   get "setting", to: "setting#index"
 
+  # 利用規約画面
+  get "terms", to: "terms#index"
+
+  # プライバシーポリシー
+  get "privacy_policy", to: "privacy_policy#index"
+
   # letter_opener_web のルーティング
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
 
