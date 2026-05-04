@@ -61,8 +61,8 @@
         <label class="flex items-center gap-2">
           <%= check_box_tag :agreement, nil, nil, required: true, class: "w-5 h-5 accent-primary text-center cursor-pointer" %>
           <span class="text-black">
-            <%= link_to "利用規約", terms_path, class: "font-bold link text-primary whitespace-nowrap" %> と
-            <%= link_to "プライバシーポリシー", privacy_policy_path, class: "font-bold link text-primary whitespace-nowrap" %>
+            <%= link_to "利用規約", terms_path, class: "font-bold link text-primary whitespace-nowrap, target: "_blank", rel: "noopener noreferrer" %> と
+            <%= link_to "プライバシーポリシー", privacy_policy_path, class: "font-bold link text-primary whitespace-nowrap, target: "_blank", rel: "noopener noreferrer" %>
             に同意します
           </span>
         </label>
