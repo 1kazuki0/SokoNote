@@ -1,43 +1,95 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<% content_for :header_class do %>
+  bg-primary text-white
+<% end %>
+<% content_for :arrow_back do %>
+  arrow_back
+<% end %>
+<% content_for :title do %>
+  プロフィール設定
+<% end %>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= render "users/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  <!-- ニックネーム -->
+  <div class="mb-5">
+    <%= f.label :name, class: "block text-black font-semibold mb-2"%>
+    <div class="flex items-center border border-light-gray rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
+      <span class="material-symbols-outlined text-middle-gray mr-2" style="font-size: 20px;">
+        account_circle
+      </span>
+      <%= f.text_field :name, autofocus: true, placeholder: "お名前", class: "flex-1 outline-none text-black bg-transparent placeholder-middle-gray" %>
+    </div>
+    <span class="text-middle-gray text-sm">※パスワードを入力しなくても変更可能です。</span>
   </div>
 
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+  <!-- LINEユーザーにはメールアドレス・パスワードのフォームを表示させない -->
+  <% unless current_user.line_user? %>
+    <!-- メールアドレス -->
+    <div class="mb-5">
+      <%= f.label :email, class: "block text-middle-gray font-semibold mb-2" %>
+      <div class="flex items-center border border-light-gray rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
+        <span class="material-symbols-outlined text-middle-gray mr-2" style="font-size: 20px;">
+          mail
+        </span>
+        <%= f.email_field :email, readonly: true, class: "flex-1 outline-none text-middle-gray bg-transparent placeholder-middle-gray" %>
+      </div>
+      <span class="text-middle-gray text-sm">※メールアドレスの変更は現在対応しておりません</span>
+    </div>
+
+    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+      <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+    <% end %>
+
+    <!-- 変更するパスワード -->
+    <div class="mb-5">
+      <div class="flex items-center gap-1 mb-2">
+        <%= f.label :password, class: "block text-black font-semibold" %>
+        <% if @minimum_password_length %>
+          <span class="text-black font-semibold">
+            （<%= @minimum_password_length %>文字以上）
+          </span>
+        <% end %>
+      </div>
+      <div class="flex items-center border border-light-gray rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
+        <span class="material-symbols-outlined text-middle-gray mr-2" style="font-size: 20px;">lock</span>
+        <%= f.password_field :password, autocomplete: "new-password", placeholder: "••••••••", class: "flex-1 outline-none text-black bg-transparent placeholder-middle-gray" %>
+      </div>
+    </div>
+
+    <!-- 変更するパスワードの確認用 -->
+    <div class="mb-5">
+      <%= f.label :password_confirmation, class: "block text-black font-semibold mb-2" %>
+      <div class="flex items-center border border-light-gray rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
+        <span class="material-symbols-outlined text-middle-gray mr-2" style="font-size: 20px;">lock</span>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "••••••••", class: "flex-1 outline-none text-black bg-transparent placeholder-middle-gray" %>
+      </div>
+    </div>
+
+    <!-- 変更前の現在のパスワード -->
+    <div>
+      <%= f.label :current_password, class: "block text-black font-semibold mb-2" %>
+      <div class="flex items-center border border-light-gray rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
+        <span class="material-symbols-outlined text-middle-gray mr-2" style="font-size: 20px;">lock</span>
+        <%= f.password_field :current_password, autocomplete: "current-password", placeholder: "••••••••", class: "flex-1 outline-none text-black bg-transparent placeholder-middle-gray" %>
+      </div>
+    </div>
+    <span class="text-middle-gray text-sm">※パスワードを変更するには、現在のパスワードが必要です</span>
   <% end %>
 
-  <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-    <% if @minimum_password_length %>
-      <br />
-      <em><%= @minimum_password_length %> characters minimum</em>
+  <div class="mt-10 mb-10 px-6">
+    <%= f.button :submit, class: "card w-full bg-primary text-white px-6 py-4 rounded-full flex items-center justify-center font-bold text-xl tracking-widest", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } do %>
+      <%= t("devise.registrations.edit.button") %>
+      <span class="material-symbols-outlined">login</span>
     <% end %>
   </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "current-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Update" %>
-  </div>
 <% end %>
+<div class="mb-10">
+  <hr class="flex-1 border-dark-gray">
+</div>
+<div class="px-6">
+  <%= button_to registration_path(resource_name), method: :delete, form: { data: { turbo_confirm: "アカウントを本当に削除しますか？ 削除した場合、データを復元することはできません" } }, class: "w-full card bg-error text-white px-6 py-4 border-2 border-error rounded-full flex items-center justify-center font-bold", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } do %>
+    <span class="text-xl tracking-widest">このアカウントを削除する</span>
+  <% end %>
+</div>
 
-<h3>Cancel my account</h3>
-
-<div>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
-
-<%= link_to "Back", :back %>
