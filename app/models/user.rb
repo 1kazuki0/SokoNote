@@ -39,7 +39,9 @@ class User < ApplicationRecord
   end
 
   # deviseのpassword（内部）メソッドを上書き（オーバーライド）
-  # LINEログイン経由のユーザー？ → その場合（true)、passwordが必要
+  # LINEログイン経由のユーザーはパスワード不要（false）
+  # 既存ユーザーがpassword/password_confirmation空欄の更新時もパスワード変更不要（false）
+  # それ以外（新規登録時など）はパスワード必須（true）
   def password_required?
     return false if line_user?
     return false if persisted? && password.blank? && password_confirmation.blank?
