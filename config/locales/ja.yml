@@ -17,7 +17,7 @@ ja:
       store:
         name: 店舗名
       category:
-        name: カテゴリ名
+        name: カテゴリー名
       item:
         name: 商品名
       purchase:

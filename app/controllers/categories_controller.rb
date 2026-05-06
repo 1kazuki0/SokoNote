@@ -10,9 +10,8 @@ class CategoriesController < ApplicationController
   def create
     @category = current_user.categories.new(category_params)
     if @category.save
-      redirect_to categories_path, success: "カテゴリを登録しました"
+      redirect_to categories_path, success: "カテゴリーを登録しました"
     else
-      flash.now[:error] = "カテゴリ登録に失敗しました"
       render :new, status: :unprocessable_entity
     end
   end
@@ -24,9 +23,8 @@ class CategoriesController < ApplicationController
   def update
     @category = current_user.categories.find(params[:id])
     if @category.update(category_params)
-      redirect_to categories_path, success: "カテゴリを更新しました"
+      redirect_to categories_path, success: "カテゴリーを更新しました"
     else
-      flash.now[:error] = "カテゴリの更新に失敗しました"
       render :edit, status: :unprocessable_entity
     end
   end
@@ -34,7 +32,7 @@ class CategoriesController < ApplicationController
   def destroy
     @category = current_user.categories.find(params[:id])
     @category.destroy
-    redirect_to categories_path, success: "カテゴリを削除しました", status: :see_other
+    redirect_to categories_path, success: "カテゴリーを削除しました", status: :see_other
   end
 
   private
