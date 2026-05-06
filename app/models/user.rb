@@ -4,7 +4,7 @@ class User < ApplicationRecord
   validates :email, uniqueness: true, unless: :line_user? # nil,空,空白禁止。emailは一意。しかしLINE登録者は対象外。presenceはオーバーライドに任せる。
   validates :provider, inclusion: { in: [ "line" ] }, allow_nil: true # "line"以外の文字は弾く。nilはOK
   validates :uid, presence: true, uniqueness: { scope: :provider }, if: :line_user? # LINE登録者の場合はnil,空,空白禁止で、provider内のuidが一意
-  validates :password, format: { without: /\s/, message: "は空白があると登録ができません" }, unless: :line_user? # nil,空,空白禁止。正規表現。しかしline登録者は対象外。presenceはオーバーライドに任せる。
+  validates :password, format: { without: /\s/, message: "は空白があると登録ができません" }, confirmation: true, unless: :line_user?, allow_blank: true # nil,空,空白禁止。正規表現。確認用フィールドと値確認。しかしline登録者は対象外。presenceはオーバーライドに任せる。
 
   # --- Userモデルのアソシエーション ---
   has_many :categories, dependent: :destroy
@@ -39,9 +39,11 @@ class User < ApplicationRecord
   end
 
   # deviseのpassword（内部）メソッドを上書き（オーバーライド）
-  # !は否定。LINEログイン経由じゃないですよね？ → その場合（true)、passwordが必要
+  # LINEログイン経由のユーザー？ → その場合（true)、passwordが必要
   def password_required?
-    !line_user?
+    return false if line_user?
+    return false if persisted? && password.blank? && password_confirmation.blank?
+    true
   end
 
   # デモユーザーかどうか判断するメソッド
