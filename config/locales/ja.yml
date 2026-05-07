@@ -37,6 +37,9 @@ ja:
     photo: 写真
     setting: 設定
   activemodel:
+    models:
+      item_registration_form: 商品
+      purchase_update_form: 購入履歴の詳細
     attributes:
       item_registration_form:
         item_name: 商品名

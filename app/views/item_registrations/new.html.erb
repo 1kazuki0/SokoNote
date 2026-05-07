@@ -21,12 +21,12 @@
     <div class="space-y-6">
 
       <!-- 商品情報カード -->
-      <h1 class="text-xl font-bold border-b  text-primary border-primary pb-2">商品情報</h1>
+      <h1 class="text-xl font-bold border-b text-primary border-primary pb-2">商品情報</h1>
       <div class="bg-white rounded-2xl border border-light-gray p-4 space-y-4">
 
         <!-- 商品名 -->
         <%= f.label :item_name, class: "block text-black font-bold mb-2"%>
-        <div class="form flex">
+        <div class="form <%= "border-error border-2" if f.object.errors[:content_unit_name].any? %> flex mb-0">
           <%= f.text_field :item_name, placeholder: "例：牛乳 / 箱ティッシュ", autocomplete: "off", list: "items_list", class: "flex-auto outline-none text-black bg-transparent placeholder-gray", data: { restore_values_target: "itemName", action: "change->restore-values#restoreValues" } %>
           <datalist id="items_list">
             <% @items.each do |item| %>
@@ -34,6 +34,8 @@
             <% end %>
           </datalist>
         </div>
+        <%= render "shared/field_error", object: f.object, field: :item_name %>
+
 
         <!-- 前回の値が反映された際の通知メッセージ -->
         <div data-restore-values-target="message" 
@@ -41,6 +43,7 @@
           <span>✓</span>
           <span>前回の登録内容を反映しました</span>
         </div>
+        <div class="mb-4"></div>
 
         <!-- 2列 -->
         <div class="grid grid-cols-2 gap-2">
@@ -48,15 +51,16 @@
           <!-- 内容量 -->
           <div>
             <%= f.label :content_quantity, class: "block text-black font-bold mb-2"%>
-            <div class="form">
+            <div class="form <%= "border-error border-2" if f.object.errors[:content_unit_name].any? %>">
               <%= f.number_field :content_quantity, placeholder: "例：3 , 500", autocomplete: "off", inputmode: "decimal", step: 0.01, class: "w-full flex-auto outline-none text-black bg-transparent placeholder-gray", data: { restore_values_target: "contentQuantity" } %>
             </div>
+            <%= render "shared/field_error", object: f.object, field: :content_quantity %>
           </div>
 
           <!-- 単位（内容量） -->
           <div>
             <%= f.label :content_unit_name, class: "block text-black font-bold mb-2"%>
-            <div class="form">
+            <div class="form <%= "border-error border-2" if f.object.errors[:content_unit_name].any? %>">
               <%= f.text_field :content_unit_name, placeholder: "例：ml、g", autocomplete: "off", list: "content_units_list", class: "w-full flex-auto outline-none text-black bg-transparent placeholder-gray", data: { restore_values_target: "contentUnit" } %>
               <datalist id="content_units_list">
                 <% @content_units.each do |unit| %>
@@ -64,6 +68,7 @@
                 <% end %>
               </datalist>
             </div>
+            <%= render "shared/field_error", object: f.object, field: :content_unit_name %>
           </div>
         </div>
       </div>
@@ -74,9 +79,11 @@
 
         <!-- ユーザーが入力する価格 -->
         <%= f.label :price, class: "block text-black font-bold mb-2"%>
-        <div class="form flex">
+        <div class="form <%= "border-error border-2" if f.object.errors[:price].any? %> flex mb-0">
           <%= f.number_field :price, placeholder: "例：298 / 1200", autocomplete: "off", inputmode: "numeric", class: "flex-auto outline-none text-black bg-transparent placeholder-gray" %>
         </div>
+        <%= render "shared/field_error", object: f.object, field: :price %>
+        <div class="mb-4"></div>
 
         <!-- 消費税率 -->
         <%= f.label :tax_rate, class: "block text-black font-bold mb-2"%>
