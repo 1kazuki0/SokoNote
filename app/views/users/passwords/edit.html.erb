@@ -4,11 +4,11 @@
   bg-primary text-white
 <% end %>
 
+<%= render "users/shared/error_messages", resource: resource, message: "パスワードの変更に失敗しました" %>
 <div class="flex flex-col md:flex-row items-center justify-center gap-6">
   <div class="bg-white rounded-2xl border border-light-gray w-full p-4">
     <h2 class="text-center text-2xl font-bold text-black mb-6"><%= t("devise.passwords.edit.change_your_password") %></h2>
     <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
-      <%= render "users/shared/error_messages", resource: resource %>
       <%= f.hidden_field :reset_password_token %>
 
       <div class="mb-5">
@@ -20,18 +20,20 @@
             </span>
           <% end %>
         </div>
-        <div class="flex items-center border border-light-gray rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
+        <div class="flex items-center border <%= f.object.errors[:password].any? ? "border-error border-2" : "border-light-gray" %> rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
           <span class="material-symbols-outlined text-middle-gray mr-2" style="font-size: 20px;">lock</span>
           <%= f.password_field :password, autocomplete: "new-password", placeholder: "••••••••", class: "flex-1 outline-none text-gray-700 bg-transparent placeholder-gray-400" %>
         </div>
+        <%= render "shared/field_error", object: f.object, field: :password %>
       </div>
 
       <div class="mb-10">
         <%= f.label :password_confirmation, class: "block text-black font-semibold mb-2" %>
-        <div class="flex items-center border border-light-gray rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
+        <div class="flex items-center border <%= f.object.errors[:password_confirmation].any? ? "border-error border-2" : "border-light-gray" %> rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
           <span class="material-symbols-outlined text-middle-gray mr-2" style="font-size: 20px;">lock</span>
           <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "••••••••", class: "flex-1 outline-none text-gray-700 bg-transparent placeholder-gray-400" %>
         </div>
+        <%= render "shared/field_error", object: f.object, field: :password_confirmation %>
       </div>
 
       <div class="mb-10 px-2">

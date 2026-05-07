@@ -9,17 +9,18 @@
 <% end %>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render "users/shared/error_messages", resource: resource %>
+  <%= render "users/shared/error_messages", resource: resource, message: "プロフィールの変更に失敗しました" %>
 
   <!-- ニックネーム -->
   <div class="mb-5">
     <%= f.label :name, class: "block text-black font-semibold mb-2"%>
-    <div class="flex items-center border border-light-gray rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
+    <div class="flex items-center border <%= f.object.errors[:name].any? ? "border-error border-2" : "border-light-gray" %> rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
       <span class="material-symbols-outlined text-middle-gray mr-2" style="font-size: 20px;">
         account_circle
       </span>
       <%= f.text_field :name, autofocus: true, placeholder: "お名前", class: "flex-1 outline-none text-black bg-transparent placeholder-middle-gray" %>
     </div>
+    <%= render "shared/field_error", object: f.object, field: :name %>
     <span class="text-middle-gray text-sm">※パスワードを入力しなくても変更可能です。</span>
   </div>
 
@@ -51,29 +52,32 @@
           </span>
         <% end %>
       </div>
-      <div class="flex items-center border border-light-gray rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
+      <div class="flex items-center border <%= f.object.errors[:password].any? ? "border-error border-2" : "border-light-gray" %> rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
         <span class="material-symbols-outlined text-middle-gray mr-2" style="font-size: 20px;">lock</span>
         <%= f.password_field :password, autocomplete: "new-password", placeholder: "••••••••", class: "flex-1 outline-none text-black bg-transparent placeholder-middle-gray" %>
       </div>
+      <%= render "shared/field_error", object: f.object, field: :password %>
     </div>
 
     <!-- 変更するパスワードの確認用 -->
     <div class="mb-5">
       <%= f.label :password_confirmation, class: "block text-black font-semibold mb-2" %>
-      <div class="flex items-center border border-light-gray rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
+      <div class="flex items-center border <%= f.object.errors[:password_confirmation].any? ? "border-error border-2" : "border-light-gray" %> rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
         <span class="material-symbols-outlined text-middle-gray mr-2" style="font-size: 20px;">lock</span>
         <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "••••••••", class: "flex-1 outline-none text-black bg-transparent placeholder-middle-gray" %>
       </div>
+      <%= render "shared/field_error", object: f.object, field: :password_confirmation %>
     </div>
 
     <!-- 変更前の現在のパスワード -->
     <div>
       <%= f.label :current_password, class: "block text-black font-semibold mb-2" %>
-      <div class="flex items-center border border-light-gray rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
+      <div class="flex items-center border <%= f.object.errors[:current_password].any? ? "border-error border-2" : "border-light-gray" %> rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
         <span class="material-symbols-outlined text-middle-gray mr-2" style="font-size: 20px;">lock</span>
         <%= f.password_field :current_password, autocomplete: "current-password", placeholder: "••••••••", class: "flex-1 outline-none text-black bg-transparent placeholder-middle-gray" %>
       </div>
     </div>
+    <%= render "shared/field_error", object: f.object, field: :current_password %>
     <span class="text-middle-gray text-sm">※パスワードを変更するには、現在のパスワードが必要です</span>
   <% end %>
 
