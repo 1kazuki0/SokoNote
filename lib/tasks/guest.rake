@@ -28,7 +28,7 @@ namespace :demo do
         stores[name] = demo.stores.create!(name: name)
       end
 
-      # 内容量単位
+      # 単位（内容量）
       content_units = {}
       %w[ml g 枚 個 ロール].each do |name|
         content_units[name] = demo.content_units.create!(name: name)
