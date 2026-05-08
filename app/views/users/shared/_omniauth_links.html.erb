@@ -1,11 +1,9 @@
 <!-- LINEログイン用遷移（POST送信のため、button_toで実装 --> 
 <%- if devise_mapping.omniauthable? %>
   <%- resource_class.omniauth_providers.each do |provider| %>
-    <%= button_to omniauth_authorize_path(resource_name, provider), method: :post, data: { turbo: false, controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" }, class: "card w-full bg-[#06C755] rounded-full relative flex items-center my-5 py-4 px-6" do %>
-      <div class="absolute left-0 top-0 flex items-center justify-center w-14 h-14 border-r border-black/[0.08]">
-        <%= image_tag "btn_base.png", class: "w-10 h-10" %>
-      </div>
-      <span class="flex-1 text-white text-xl font-bold tracking-widest">
+    <%= button_to omniauth_authorize_path(resource_name, provider), method: :post, data: { turbo: false, controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" }, class: "card w-full bg-[#06C755] rounded-full flex items-center justify-center gap-3 my-5 py-4 px-6" do %>
+      <%= image_tag "btn_base.png", class: "w-7 h-7" %>
+      <span class="text-white text-xl font-bold tracking-widest">
         <%= controller_name == "registrations" ? "LINEで新規登録" : "LINEでログイン" %>
       </span>
     <% end %>

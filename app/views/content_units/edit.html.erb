@@ -10,7 +10,7 @@
   <%= render 'shared/error_messages', object: f.object %>
   <div class ="mb-10">
     <%= f.label :name, class: "block text-black font-bold mb-2"%>
-    <div class="flex border <%= f.object.errors[:name].any? ? "border-error border-2 : "border-light-gray" %> rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
+    <div class="flex border <%= f.object.errors[:name].any? ? "border-error border-2" : "border-light-gray" %> rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
       <%= f.text_field :name, placeholder: "例：g / ml / 個", autocomplete: "off", class: "flex-auto outline-none text-black bg-transparent placeholder-gray" %>
     </div>
     <%= render "shared/field_error", object: f.object, field: :name %>
