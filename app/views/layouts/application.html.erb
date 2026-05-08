@@ -17,6 +17,14 @@
 
     <%= yield :head %>
 
+    <!-- OGP画像 -->
+    <meta property="og:title" content="SokoNote">
+    <meta property="og:description" content="スーパーの底値を記録・管理。単価比較で本当にお得な商品がすぐわかる節約アプリ。">
+    <meta property="og:image" content="<%= image_url('ogp.png') %>">
+    <meta property="og:url" content="<%= request.original_url %>">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="SokoNote">
+
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
     <!-- Googleアイコンの取得 （全アイコンを取得してしまっているため要検討）-->
