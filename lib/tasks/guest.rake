@@ -16,7 +16,7 @@ namespace :demo do
       demo.content_units.destroy_all
       demo.pack_units.destroy_all
 
-      # カテゴリ
+      # カテゴリー
       categories = {}
       %w[飲料 日用品 お肉 野菜 調味料 お菓子].each do |name|
         categories[name] = demo.categories.create!(name: name)
@@ -28,7 +28,7 @@ namespace :demo do
         stores[name] = demo.stores.create!(name: name)
       end
 
-      # 内容量単位
+      # 単位（内容量）
       content_units = {}
       %w[ml g 枚 個 ロール].each do |name|
         content_units[name] = demo.content_units.create!(name: name)

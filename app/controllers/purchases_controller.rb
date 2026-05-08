@@ -46,7 +46,6 @@ class PurchasesController < ApplicationController
       @content_units = current_user.content_units.order(:name)
       @pack_units = current_user.pack_units.order(:name)
       @stores = current_user.stores.order(:name)
-      flash.now[:error] = "商品情報の編集に失敗しました"
       render :edit, status: :unprocessable_entity
     end
   end

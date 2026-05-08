@@ -1,0 +1,6 @@
+<!-- バリデーションエラー時、フォーム直下エラー詳細メッセージ表示 -->
+<% if object.errors[field].any? %>
+  <p class= "mt-1 text-sm font-bold text-flash-error-text">
+    <%= object.errors.full_messages_for(field).first %>
+  </p>
+<% end %>

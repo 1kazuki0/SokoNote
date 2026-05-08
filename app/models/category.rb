@@ -9,7 +9,7 @@ class Category < ApplicationRecord
   belongs_to :user
   has_many :items, dependent: :nullify
 
-  # --- ransack設定 Categoryモデルのidカラムのみ検索許可（商品一覧でのカテゴリ絞り込み用） ---
+  # --- ransack設定 Categoryモデルのidカラムのみ検索許可（商品一覧でのカテゴリー絞り込み用） ---
   def self.ransackable_attributes(auth_object = nil)
     %w[id]
   end

@@ -3,17 +3,17 @@
   arrow_back
 <% end %>
 <% content_for :title do %>
-  内容量単位一覧
+  単位（内容量）一覧
 <% end %>
 
-<!-- 1件以上の内容量単位が登録されている場合 -->
+<!-- 1件以上の単位（内容量）が登録されている場合 -->
 <% if @content_units.any? %>
 
   <div class="space-y-4">
     <% @content_units.each do |content_unit| %>
       <div class="swipe-card" data-controller="swipe" data-action="touchstart->swipe#touchstart touchend->swipe#touchend touchstart@document->swipe#outsideClick">
 
-        <%# カテゴリ名：常に左端に固定表示 %>
+        <%# 単位（内容量）：常に左端に固定表示 %>
         <div class="absolute top-0 left-0 bottom-0 flex items-center px-5 z-10">
           <span class="text-sm font-bold text-gray-800"><%= content_unit.name %></span>
         </div>
@@ -43,16 +43,16 @@
   <%# 商品登録ボタン（FAB） %>
   <div class="fixed bottom-28 left-0 right-0 mx-auto max-w-xl px-6 flex justify-end z-25">
     <%= link_to new_content_unit_path, class: "card bg-primary text-white px-6 py-4 rounded-full flex items-center font-bold", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } do %>
-      <span class="text-lg">内容量単位追加</span>
+      <span class="text-lg">単位（内容量）追加</span>
       <span class="material-symbols-outlined">add</span>
     <% end %>
   </div>
 
-<!-- 内容量単位登録が0件の場合 -->
+<!-- 単位（内容量）登録が0件の場合 -->
 <% else %>
   <div class="flex flex-col items-center text-center py-8">
     <h1 class="text-3xl font-bold text-black mb-4">
-      内容量単位がありません
+      単位（内容量）がありません
     </h1>
     <div class="mb-4 flex h-32 w-32 items-center justify-center rounded-full bg-light-gray">
       <span class="material-symbols-outlined text-dark-gray" style="font-size: 80px;">speed</span>
@@ -65,7 +65,7 @@
     <!-- 商品登録遷移ボタン -->
     <div class="w-full px-6 mb-8">
       <%= link_to new_content_unit_path, class: "card bg-primary text-white px-6 py-4 rounded-full flex items-center justify-center font-bold", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } do %>
-        <span class="text-xl tracking-widest">内容量単位を登録する</span>
+        <span class="text-xl tracking-widest">単位（内容量）を登録する</span>
         <span class="material-symbols-outlined">add_2</span>
       <% end %>
     </div>

@@ -12,7 +12,6 @@ class StoresController < ApplicationController
     if @store.save
       redirect_to stores_path, success: "店舗を登録しました"
     else
-      flash.now[:error] = "店舗登録に失敗しました"
       render :new, status: :unprocessable_entity
     end
   end
@@ -26,7 +25,6 @@ class StoresController < ApplicationController
     if @store.update(store_params)
       redirect_to stores_path, success: "店舗を更新しました"
     else
-      flash.now[:error] = "店舗の更新に失敗しました。"
       render :edit, status: :unprocessable_entity
     end
   end

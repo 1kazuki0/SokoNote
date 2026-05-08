@@ -13,7 +13,6 @@ class ItemRegistrationsController < ApplicationController
     else
       @items = current_user.items.order(:name)
       @content_units = current_user.content_units.order(:name)
-      flash.now[:error] = "商品の登録に失敗しました"
       render :new, status: :unprocessable_entity
     end
   end
