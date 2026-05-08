@@ -6,7 +6,7 @@ ja:
       category: カテゴリー
       item: 商品
       purchase: 購入履歴
-      content_unit: 単位（単位名）
+      content_unit: 単位（内容量）
       pack_unit: 単位（包装）
     attributes:
       user:
@@ -17,7 +17,7 @@ ja:
       store:
         name: 店舗名
       category:
-        name: カテゴリ名
+        name: カテゴリー名
       item:
         name: 商品名
       purchase:
@@ -28,15 +28,18 @@ ja:
         tax_rate: 消費税
         purchased_on: 購入日
       content_unit:
-        name: 単位名（内容量）
+        name: 単位（内容量）
       pack_unit:
-        name: 単位名（包装）
+        name: 単位（包装）
   footer:
     index: 一覧
     comparison: 比較
     photo: 写真
     setting: 設定
   activemodel:
+    models:
+      item_registration_form: 商品
+      purchase_update_form: 購入履歴の詳細
     attributes:
       item_registration_form:
         item_name: 商品名

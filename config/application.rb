@@ -24,5 +24,9 @@ module Myapp
     # config.eager_load_paths << Rails.root.join("extras")
     # 日本語表記
     config.i18n.default_locale = :ja
+
+    # エラーがあるフィールドをどう装飾するか」を決める関数(Proc)
+    # バリデーションエラー時のデフォルトの装飾を無効化
+    config.action_view.field_error_proc = ->(html_tag, instance) { html_tag.html_safe }
   end
 end

@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   # 店舗一覧・登録・編集・削除
   resources :stores, except: [ :show ]
 
-  # 内容量単位一覧・登録・編集・削除
+  # 単位（内容量）一覧・登録・編集・削除
   resources :content_units, except: [ :show ]
 
   # 商品一覧・購入履歴用（一覧・削除 / 一覧・編集・削除）
