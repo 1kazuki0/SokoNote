@@ -26,7 +26,7 @@
 
         <!-- 商品名 -->
         <%= f.label :item_name, class: "block text-black font-bold mb-2"%>
-        <div class="form <%= "border-error border-2 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary" if f.object.errors[:content_unit_name].any? %> flex mb-0">
+        <div class="form <%= "border-error border-2 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary" if f.object.errors[:item_name].any? %> flex mb-0">
           <%= f.text_field :item_name, placeholder: "例：牛乳 / 箱ティッシュ", autocomplete: "off", list: "items_list", class: "flex-auto outline-none text-black bg-transparent placeholder-gray", data: { restore_values_target: "itemName", action: "change->restore-values#restoreValues" } %>
           <datalist id="items_list">
             <% @items.each do |item| %>
@@ -51,7 +51,7 @@
           <!-- 内容量 -->
           <div>
             <%= f.label :content_quantity, class: "block text-black font-bold mb-2"%>
-            <div class="form <%= "border-error border-2 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary" if f.object.errors[:content_unit_name].any? %>">
+            <div class="form <%= "border-error border-2 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary" if f.object.errors[:content_quantity].any? %>">
               <%= f.number_field :content_quantity, placeholder: "例：3 , 500", autocomplete: "off", inputmode: "decimal", step: 0.01, class: "w-full flex-auto outline-none text-black bg-transparent placeholder-gray", data: { restore_values_target: "contentQuantity" } %>
             </div>
             <%= render "shared/field_error", object: f.object, field: :content_quantity %>
