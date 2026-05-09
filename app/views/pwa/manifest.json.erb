@@ -1,3 +1,4 @@
+<!-- PWA（スマートフォンアプリ化）-->
 {
   "name": "SokoNote",
   "short_name": "SokoNote",
@@ -15,7 +16,48 @@
       "purpose": "maskable"
     }
   ],
+  "start_url": "/",
+  "id": "/",
+  "scope": "/",
+  "description": "底値 × 単価記録・比較Webアプリ",
   "theme_color": "#f9faf2",
   "background_color": "#f9faf2",
-  "display": "standalone"
+  "display": "standalone",
+  "lang": "ja",
+  "orientation": "portrait",
+  "shortcuts": [
+    {
+      "name": "一覧",
+      "url": "/items",
+      "icons": [
+        {
+          "src": "<%= asset_path 'shortcuts/list_alt.png' %>",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "登録",
+      "url": "/item_registration_new",
+      "icons": [
+        {
+          "src": "<%= asset_path 'shortcuts/add_2.png' %>",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "比較",
+      "url": "/comparison",
+      "icons": [
+        {
+          "src": "<%= asset_path 'shortcuts/balance.png' %>",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
 }
