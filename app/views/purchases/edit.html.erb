@@ -9,11 +9,11 @@
 <% end %>
 <!-- タイトル表示 -->
 <% content_for :title do %>
-  商品情報の詳細編集
+  購入履歴編集
 <% end %>
 
 <!-- 入力項目（全て） -->
-<%= form_with model: @form, url: item_purchase_path(@purchase.item, @purchase), method: :patch, scope: :purchase_updates do |f| %>
+<%= form_with model: @form, url: item_purchase_path(@purchase.item, @purchase), method: :patch, scope: :purchase_updates , data: { controller: "loading", action: "submit->loading#show" } do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
   <div class= "space-y-6">
 

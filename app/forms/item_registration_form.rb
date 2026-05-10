@@ -58,6 +58,11 @@ class ItemRegistrationForm
     errors.add(:base, "同じ名前のデータが既に存在します")
   end
 
+  # バリデーション失敗時のエラーメッセージの日本語動的表示（_error_messages.html.erb）
+  def new_record?
+    true
+  end
+
   private
 
   # normalize_blankメソッドを使用して、item_nameとcontent_unit_nameを適正化

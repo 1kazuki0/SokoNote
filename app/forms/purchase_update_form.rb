@@ -74,6 +74,12 @@ class PurchaseUpdateForm
     false
   end
 
+
+  # バリデーション失敗時のエラーメッセージの日本語動的表示（_error_messages.html.erb）
+  def new_record?
+    false
+  end
+
   private
 
   # normalize_blankメソッドを使用して、各カラムを適正化

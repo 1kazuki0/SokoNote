@@ -19,3 +19,6 @@ application.register("swipe", SwipeController)
 import RestoreValuesController from "./restore_values_controller"
 application.register("restore-values", RestoreValuesController)
 
+//  ローディングアニメーション読み込み
+import LoadingController from "./loading_controller"
+application.register("loading", LoadingController)

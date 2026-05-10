@@ -39,7 +39,7 @@ ja:
   activemodel:
     models:
       item_registration_form: 商品
-      purchase_update_form: 購入履歴の詳細
+      purchase_update_form: 購入履歴
     attributes:
       item_registration_form:
         item_name: 商品名
