@@ -16,7 +16,7 @@
 <div data-controller="restore-values" data-restore-values-url-value="<%= last_purchase_item_registration_path %>">
 
   <!-- 入力項目（商品名・内容量・単位・価格・消費税率） -->
-  <%= form_with model: @form, url: item_registration_path, method: :post, scope: :item_registrations do |f| %>
+  <%= form_with model: @form, url: item_registration_path, method: :post, scope: :item_registrations , data: { controller: "loading", action: "submit->loading#show" } do |f| %>
     <%= render 'shared/error_messages', object: f.object %>
     <div class="space-y-6">
 

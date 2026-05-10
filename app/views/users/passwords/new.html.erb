@@ -12,7 +12,7 @@
   <div class="bg-white rounded-2xl border border-light-gray w-full p-4">
     <h2 class="text-center text-2xl font-bold text-black mb-6"><%= t("devise.passwords.new.forgot_your_password") %></h2>
 
-    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, data: { controller: "loading", action: "submit->loading#show" } }) do |f| %>
 
       <div class="mb-10">
         <%= f.label :email, class: "block text-black font-semibold mb-2"%>
