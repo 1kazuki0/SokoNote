@@ -6,7 +6,7 @@
   店舗編集
 <% end %>
 
-<%= form_with model: @store do |f| %>
+<%= form_with model: @store, data: { controller: "loading", action: "submit->loading#show" } do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
   <div class ="mb-10">
     <%= f.label :name, class: "block text-black font-bold mb-2"%>

@@ -41,6 +41,7 @@
   </head>
 
   <body class="bg-neutral max-w-4xl mx-auto">
+    <%= render "shared/loading" %>
     <%= render 'shared/header' %>
     <main class= "px-4 pt-20 pb-50">
       <% flash.each do |message_type, message| %>
