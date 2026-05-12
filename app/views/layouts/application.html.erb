@@ -40,10 +40,12 @@
     <%= render 'shared/favicon' %>
   </head>
 
-  <body class="bg-neutral max-w-4xl mx-auto">
+  <body class="bg-neutral">
     <%= render "shared/loading" %>
-    <%= render 'shared/header' %>
-    <main class= "px-4 pt-20 pb-50">
+    <% if !content_for?(:lp_layout) %>
+      <%= render 'shared/header' %>
+    <% end %>
+    <main class="<%= content_for?(:lp_layout) ? "" : "max-w-xl mx-auto px-4 pt-20 pb-50" %>">
       <% flash.each do |message_type, message| %>
         <% bg_color = case message_type.to_sym
                       when :success, :notice
@@ -59,7 +61,7 @@
       <%= yield %>
     </main>
     <% if user_signed_in? %>
-    <%= render 'shared/footer' %>
+      <%= render 'shared/footer' %>
     <% end %>
   </body>
 </html>
