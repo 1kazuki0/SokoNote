@@ -1,102 +1,260 @@
-<main class="w-screen ml-[50%] -translate-x-1/2">  
-  <!-- Hero Section -->
-  <section class="overflow-hidden pt-8 pb-16 px-4">
-    <div class="text-center max-w-screen-xl mx-auto @container">
-      <div class="flex flex-col gap-8">
-        <div class="flex flex-col gap-6 items-center">
-          <div class="mb-5 inline-flex items-center text-left px-3 py-1 rounded-full bg-secondary/20 text-secondary text-sm font-bold">
-            節約をもっとスマートに
-          </div>
-          <h1 class="mb-5 text-2xl sm:text-4xl @[480px]:text-5xl font-black leading-tight tracking-tight text-slate-900 dark:text-white">
-            <span class="whitespace-nowrap">「もっと安く買えたかも」を防ぐ</span><br/>底値×単価記録アプリ
-          </h1>
-          <p class="mb-5 text-lg text-dark-gray dark:text-slate-400 leading-relaxed">
-            いつものお買い物をスマートに。単価比較で賢く節約。
-          </p>
-          <div class="flex flex-wrap gap-4 pt-2">
-            <%= link_to "ログイン", new_user_session_path,
-                class: "flex flex-1 @[480px]:flex-none min-w-[160px] cursor-pointer items-center justify-center rounded-xl h-14 px-8 bg-primary text-white text-lg font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all" %>
-            <%= link_to "新規登録", new_user_registration_path,
-                class: "flex flex-1 @[480px]:flex-none min-w-[160px] cursor-pointer items-center justify-center rounded-xl h-14 px-8 bg-accent text-white text-lg font-bold shadow-lg shadow-secondary/20 hover:scale-[1.02] active:scale-[0.98] transition-all" %>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+<% content_for :lp_layout, true %>
 
-  <!-- Problem / Solution -->
-  <section class="bg-secondary/5 py-20 px-4">
-    <div class="max-w-3xl mx-auto text-center">
-      <h2 class="text-2xl @[480px]:text-3xl font-bold mb-8 text-slate-900 dark:text-white">
-        お買い物でこんな悩みはありませんか？
-      </h2>
-      <div class="bg-white dark:bg-slate-800 p-8 @[480px]:p-12 rounded-3xl shadow-sm border border-secondary/10">
-        <p class="text-lg @[480px]:text-xl leading-loose text-slate-700 dark:text-slate-300">
-          スーパーや薬局で「別の店の方が安かった」「どちらが本当に安いの」迷った経験はありませんか？
-        </p>
-        <div class="my-8 flex justify-center text-primary">
-          <span class="material-symbols-outlined text-6xl">arrow_downward</span>
-        </div>
-        <p class="text-lg @[480px]:text-xl leading-loose font-bold text-slate-900 dark:text-white">
-          このアプリでは商品の価格と内容量から単価を自動で計算し、商品を比較できます。
-        </p>
-      </div>
-    </div>
-  </section>
+<!-- ヘッダー -->
+<section class="w-full border-b border-primary bg-neutral">
+  <nav class="flex flex-row justify-between items-center h-16 mx-4">
+    <%= link_to root_path do %>
+      <%= image_tag "lp/logo.png", class: "md:h-12 h-10" %>
+    <% end %> 
+    <%= link_to "ログイン", new_user_session_path, class: "card bg-primary text-white rounded-full font-bold mt-2 px-6 py-2", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } %>
+  </nav>
+</section>
 
-  <!-- Features -->
-  <section class="py-20 px-4">
-    <div class="max-w-screen-xl mx-auto">
-      <h2 class="text-center text-3xl font-black mb-16">主な機能</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <!-- Feature 1 -->
-        <div class="flex flex-col items-center text-center ring ring-gray-200 p-8 rounded-3xl bg-white dark:bg-slate-800 shadow-sm hover:shadow-md transition-shadow border border-slate-100 dark:border-slate-700">
-          <div class="w-16 h-16 bg-primary/10 text-primary rounded-2xl flex items-center justify-center mb-6">
-            <span class="material-symbols-outlined text-4xl">add_shopping_cart</span>
-          </div>
-          <h3 class="text-xl font-bold mb-4">簡単登録</h3>
-          <p class="text-slate-600 dark:text-slate-400">商品を素早く登録し、いつでも確認することができます。</p>
-        </div>
-        <!-- Feature 2 -->
-        <div class="flex flex-col items-center text-center ring ring-gray-200 p-8 rounded-3xl bg-white dark:bg-slate-800 shadow-sm hover:shadow-md transition-shadow border border-slate-100 dark:border-slate-700">
-          <div class="w-16 h-16 bg-primary/10 text-primary rounded-2xl flex items-center justify-center mb-6">
-            <span class="material-symbols-outlined text-4xl">balance</span>
-          </div>
-          <h3 class="text-xl font-bold mb-4">スマート比較</h3>
-          <p class="text-slate-600 dark:text-slate-400">同じ商品でどちらが安いか、単位を揃えて正確に比較できます。</p>
-        </div>
-        <!-- Feature 3 -->
-        <div class="flex flex-col items-center text-center ring ring-gray-200 p-8 rounded-3xl bg-white dark:bg-slate-800 shadow-sm hover:shadow-md transition-shadow border border-slate-100 dark:border-slate-700">
-          <div class="w-16 h-16 bg-primary/10 text-primary rounded-2xl flex items-center justify-center mb-6">
-            <span class="material-symbols-outlined text-4xl">insights</span>
-          </div>
-          <h3 class="text-xl font-bold mb-4">底値の把握</h3>
-          <p class="text-slate-600 dark:text-slate-400">今までの登録した商品で一番安い単価をすぐに知ることができます。</p>
-        </div>
-      </div>
-    </div>
-  </section>
+<!-- ファーストビュー -->
+<section class="relative" style="background-image: url('<%= asset_path("lp/hero.jpg") %>'); background-size: cover; background-position: center;">
+  <!-- 白オーバーレイ -->
+  <div class="absolute inset-0 bg-white/50"></div>
 
-  <!-- CTA Section -->
-  <section class="py-24 px-4 relative overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-br from-secondary to-primary opacity-10"></div>
-    <div class="max-w-3xl mx-auto text-center relative z-10">
-      <h2 class="text-3xl @[480px]:text-4xl font-black mb-6">早速使ってみましょう</h2>
-      <p class="text-lg text-slate-600 dark:text-slate-400 mb-10">
-        賢いお買い物習慣を、今日から始めませんか？
-      </p>
-      <div class="flex flex-col @[480px]:flex-row justify-center gap-4">
-        <%= link_to "ログインする", new_user_session_path,
-            class: "flex min-w-[180px] cursor-pointer items-center justify-center rounded-xl h-14 px-8 bg-primary text-white text-lg font-bold shadow-lg shadow-primary/20 hover:scale-[1.05] transition-transform" %>
-        <%= link_to "新規登録はこちら", new_user_registration_path,
-            class: "flex min-w-[180px] cursor-pointer items-center justify-center rounded-xl bg-accent h-14 px-8 text-white text-lg font-bold shadow-lg shadow-secondary/20 hover:scale-[1.05] transition-transform" %>
-      </div>
+  <!-- コンテンツ -->
+  <div class="relative flex md:flex-row flex-col justify-around items-center mx-4">
+    <div class="my-10">
+      <h1 class="text-2xl font-bold text-dark-gray">底値 × 単価記録・比較アプリ</h1>
+      <%= image_tag "lp/logo.png", class: "w-full max-w-md" %>
+      <%= link_to "https://lin.ee/XIpurrj", class: "card w-full bg-line rounded-full flex items-center justify-center gap-3 mt-10 mb-5 py-4 px-6", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } do %>
+        <%= image_tag "btn_base.png", class: "w-7 h-7", alt: "" %>
+        <span class="text-white text-xl font-bold tracking-widest">
+          友達追加でかんたん登録
+        </span>
+      <% end %>
+      <%= link_to "メールアドレスで新規登録", new_user_registration_path, class: "card w-full bg-accent tracking-widest text-white text-xl px-6 py-4 rounded-full flex items-center justify-center font-bold no-underline", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } %>
     </div>
-  </section>
-</main>
+    <div>
+      <%= image_tag "lp/lp_hand.png", class: "w-full max-w-xl pl-5" %>
+    </div>
+  </div>
+</section>
+
+<!-- 共感ビュー -->
+<section class="my-10 py-10">
+  <div class="relative flex justify-around items-center">
+    <h2 class="text-3xl md:text-5xl font-bold text-black">こんな経験ありませんか？</h2>
+  </div>
+  <div class="relative flex md:flex-row flex-col justify-around items-center mt-10">
+    <!-- 1人目 -->
+    <div class="my-2">
+      <%= image_tag "lp/empathy3.png", class: "h-70 md:h-100" %>
+    </div>
+    <!-- 2人目 -->
+    <div class="my-2">
+      <%= image_tag "lp/empathy2.png", class: "h-70 md:h-100" %>
+    </div>
+    <!-- 3人目 -->
+    <div class="my-2">
+      <%= image_tag "lp/empathy1.png", class: "h-70 md:h-100" %>
+    </div>
+  </div>
+</section>
+
+<!-- 本アプリの機能紹介 -->
+<section class="w-full bg-primary/20 my-10 py-10">
+  <div class="flex justify-center items-center">
+    <%= image_tag "lp/name.png", class: "h-10 md:h-16 w-auto", alt: "SokoNote" %>
+    <span class="text-3xl md:text-5xl font-bold text-black">でできること</span>
+  </div>
+  <div class="relative flex md:flex-row flex-col justify-around items-center mt-10 mx-5 gap-4">
+    <!-- 1つめ -->
+      <div class="my-2 flex flex-col items-center mx-5 flex-1 max-w-xs">
+        <div class="w-16 h-16 rounded-full bg-accent flex items-center justify-center text-white mb-5">
+          <span class="material-symbols-outlined">add_2</span>
+        </div>
+        <p class="text-black text-2xl font-bold mb-5 text-center">内容量・個数から単価を自動計算します</p>
+        <%= image_tag "lp/mobile1.png", class: "w-60 h-auto" %>
+      </div>
+    <!-- 2つめ -->
+      <div class="my-2 flex flex-col items-center mx-5 flex-1 max-w-xs">
+        <div class="w-16 h-16 rounded-full bg-accent flex items-center justify-center text-white mb-5">
+          <span class="material-symbols-outlined">bar_chart</span>
+        </div>
+        <p class="text-black text-2xl font-bold mb-5 text-center">登録した商品を比較することができます</p>
+        <%= image_tag "lp/mobile2.png", class: "w-60 h-auto" %>
+      </div>
+    <!-- 3つめ -->
+      <div class="my-2 flex flex-col items-center mx-5 flex-1 max-w-xs">
+        <div class="w-16 h-16 rounded-full bg-accent flex items-center justify-center text-white mb-5">
+          <span class="material-symbols-outlined">balance</span>
+        </div>
+        <p class="text-black text-2xl font-bold mb-5 text-center">同一商品で安い方を即座に判断できます</p>
+        <%= image_tag "lp/mobile3.png", class: "w-60 h-auto" %>
+      </div>
+  </div>
+</section>
+
+<!-- メールアドレスの登録方法 -->
+<section class="my-10 py-10">
+  <div class="flex justify-around items-center">
+    <h2 class="text-3xl md:text-5xl font-bold text-black">はじめかた</h2>
+  </div>
+  
+  <div class="relative flex md:flex-row flex-col justify-around items-center mt-10 mx-5 gap-4">
+    
+    <!-- 1つめ -->
+    <div class="my-2 flex flex-col items-center mx-5 flex-1 max-w-xs">
+      <div class="w-16 h-16 rounded-full bg-primary flex items-center justify-center text-white mb-5">
+        <span class="text-3xl">1</span>
+      </div>
+      <div class="bg-white rounded-2xl border border-light-gray p-6 mb-5 w-full h-80 flex items-center justify-center">
+        <%= image_tag "lp/startup1.png", class: "max-w-full max-h-full w-auto h-auto" %>
+      </div>
+      <p class="text-black text-2xl font-bold mb-5 text-center min-h-16">新規登録ボタンをタップ</p>
+    </div>
+
+    <!-- 2つめ -->
+    <div class="my-2 flex flex-col items-center mx-5 flex-1 max-w-xs">
+      <div class="w-16 h-16 rounded-full bg-primary flex items-center justify-center text-white mb-5">
+        <span class="text-3xl">2</span>
+      </div>
+      <div class="bg-white rounded-2xl border border-light-gray p-6 mb-5 w-full h-80 flex items-center justify-center">
+        <%= image_tag "lp/startup2.png", class: "max-w-full max-h-full w-auto h-auto" %>
+      </div>
+      <p class="text-black text-2xl font-bold mb-5 text-center min-h-16">ニックネーム・メールアドレス・パスワード入力</p>
+    </div>
+
+    <!-- 3つめ -->
+    <div class="my-2 flex flex-col items-center mx-5 flex-1 max-w-xs">
+      <div class="w-16 h-16 rounded-full bg-primary flex items-center justify-center text-white mb-5">
+        <span class="text-3xl">3</span>
+      </div>
+      <div class="bg-white rounded-2xl border border-light-gray p-6 mb-5 w-full h-80 flex items-center justify-center">
+        <%= image_tag "lp/startup3.png", class: "max-w-full max-h-full w-auto h-auto" %>
+      </div>
+      <p class="text-black text-2xl font-bold mb-5 text-center min-h-16">登録完了ですぐにご利用いただけます</p>
+    </div>
+  </div>
+</section>
+
+<!-- LINE公式アカウント経由での登録方法 -->
+<section class="w-full bg-primary/20 my-10 py-10">
+  <div class="flex justify-around items-center text-center">
+    <h2 class="text-3xl md:text-5xl font-bold text-black">
+      <span class="text-line">LINE公式アカウント</span>
+      で<br>かんたんログイン
+    </h2>
+  </div>
+    <div class="relative flex md:flex-row flex-col justify-around items-center mt-10 mx-5 gap-4">
+    
+    <!-- 1つめ -->
+    <div class="my-2 flex flex-col items-center mx-5 flex-1 max-w-xs">
+      <div class="w-16 h-16 rounded-full bg-line flex items-center justify-center text-white mb-5">
+        <span class="text-3xl">1</span>
+      </div>
+      <div class="bg-white rounded-2xl border border-light-gray p-6 mb-5 w-full h-80 flex items-center justify-center">
+        <%= image_tag "lp/startup_line1.png", class: "max-w-full max-h-full w-auto h-auto" %>
+      </div>
+      <p class="text-black text-2xl font-bold mb-5 text-center min-h-16">ボタンを押して公式アカウントに遷移</p>
+    </div>
+
+    <!-- 2つめ -->
+    <div class="my-2 flex flex-col items-center mx-5 flex-1 max-w-xs">
+      <div class="w-16 h-16 rounded-full bg-line flex items-center justify-center text-white mb-5">
+        <span class="text-3xl">2</span>
+      </div>
+      <div class="bg-white rounded-2xl border border-light-gray p-6 mb-5 w-full h-80 flex items-center justify-center">
+        <%= image_tag "lp/startup_line2.png", class: "max-w-full max-h-full w-auto h-auto" %>
+      </div>
+      <p class="text-black text-2xl font-bold mb-5 text-center min-h-16">友達追加を選択し、トーク画面へ</p>
+    </div>
+
+    <!-- 3つめ -->
+    <div class="my-2 flex flex-col items-center mx-5 flex-1 max-w-xs">
+      <div class="w-16 h-16 rounded-full bg-line flex items-center justify-center text-white mb-5">
+        <span class="text-3xl">3</span>
+      </div>
+      <div class="bg-white rounded-2xl border border-light-gray p-6 mb-5 w-full h-80 flex items-center justify-center">
+        <%= image_tag "lp/startup_line3.png", class: "max-w-full max-h-full w-auto h-auto" %>
+      </div>
+      <p class="text-black text-2xl font-bold mb-5 text-center min-h-16">トーク下のメッセージをタップしてログイン</p>
+    </div>
+  </div>
+</section>
+
+<!-- Question and Answer -->
+<section class="my-10 py-10">
+  <div class="flex justify-around items-center mb-8">
+    <h2 class="text-3xl md:text-5xl font-bold text-black">Q&A</h2>
+  </div>
+  <div class="mt-10 mx-5 md:mx-20 space-y-4">
+    <!-- Q1 -->
+    <details class="group bg-white border border-light-gray rounded-xl">
+      <summary class="flex items-center justify-between cursor-pointer p-5 list-none gap-3">
+        <div class="flex items-center gap-3 flex-1">
+          <span class="w-7 h-7 bg-primary text-white rounded-full flex items-center justify-center font-bold shrink-0">Q</span>
+          <p class="font-bold text-black text-xl">無料ですか？</p>
+        </div>
+        <span class="material-symbols-outlined text-middle-gray group-open:rotate-180 transition-transform shrink-0">
+          expand_more
+        </span>
+      </summary>
+      <!-- 開いた時だけ表示される部分 -->
+      <div class="px-5 pb-5 pl-14 text-dark-gray">
+        はい、すべての機能を無料でご利用いただけます。
+      </div>
+    </details>
+    <!-- Q2 -->
+    <details class="group bg-white border border-light-gray rounded-xl">
+      <summary class="flex items-center justify-between cursor-pointer p-5 list-none gap-3">
+        <div class="flex items-center gap-3 flex-1">
+          <span class="w-7 h-7 bg-primary text-white rounded-full flex items-center justify-center font-bold shrink-0">Q</span>
+          <p class="font-bold text-black text-xl">インストールする必要がありますか？</p>
+        </div>
+        <span class="material-symbols-outlined text-middle-gray group-open:rotate-180 transition-transform shrink-0">
+          expand_more
+        </span>
+      </summary>
+      <!-- 開いた時だけ表示される部分 -->
+      <div class="px-5 pb-5 pl-14 text-dark-gray">
+        インストールは不要です。ブラウザからご利用いただけます。
+      </div>
+    </details>
+
+    <!-- Q3 -->
+    <details class="group bg-white border border-light-gray rounded-xl">
+      <summary class="flex items-center justify-between cursor-pointer p-5 list-none gap-3">
+        <div class="flex items-center gap-3 flex-1">
+          <span class="w-7 h-7 bg-primary text-white rounded-full flex items-center justify-center font-bold shrink-0">Q</span>
+          <p class="font-bold text-black text-xl">どんな商品を登録できますか？</p>
+        </div>
+        <span class="material-symbols-outlined text-middle-gray group-open:rotate-180 transition-transform shrink-0">
+          expand_more
+        </span>
+      </summary>
+      <!-- 開いた時だけ表示される部分 -->
+      <div class="px-5 pb-5 pl-14 text-dark-gray">
+        食品・日用品・飲料・お菓子など、価格を比較したい商品であれば何でも登録できます。
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- 最終CTA（コール・トゥ・アクション） -->
+<section class="w-full bg-primary/20 mt-10 py-10">
+  <div class="flex justify-center items-center gap-2 mx-5">
+    <span class="text-3xl md:text-5xl font-bold text-black">さぁ</span>
+    <%= image_tag "lp/name.png", class: "h-10 md:h-16 w-auto", alt: "SokoNote" %>
+    <span class="text-3xl md:text-5xl font-bold text-black">をはじめましょう</span>
+  </div>
+  <div class="mt-10 mx-5 md:mx-10 flex flex-col md:flex-row justify-center items-center gap-4">
+    <%= link_to "https://lin.ee/XIpurrj", class: "card w-full bg-line rounded-full flex items-center justify-center gap-3 py-4 px-6", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } do %>
+      <%= image_tag "btn_base.png", class: "w-7 h-7", alt: "" %>
+      <span class="text-white text-xl font-bold tracking-widest">
+        友達追加でかんたん登録
+      </span>
+    <% end %>
+    <%= link_to "メールアドレスで新規登録", new_user_registration_path, class: "card w-full bg-accent tracking-widest text-white text-xl px-6 py-4 rounded-full flex items-center justify-center font-bold no-underline", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } %>
+  </div>
+</section>
 
 <!-- フッター（利用規約・プライバシーポリシー・著作権マーク） -->
-<footer class="bg-white border-t border-slate-200 dark:border-slate-700 py-8 px-4">
+<footer class="bg-white border-t border-slate-200 dark:border-slate-700 p-4">
   <div class="max-w-screen-xl mx-auto flex flex-col items-center gap-4 text-sm text-slate-600 dark:text-slate-400">
     <div class="flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
       <%= link_to "利用規約", terms_path, class: "font-bold link text-primary whitespace-nowrap" %>

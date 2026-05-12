@@ -1,5 +1,5 @@
 <header class="fixed top-0 left-0 w-full border-b border-primary z-50 <%= yield(:header_class).presence || "bg-neutral text-primary" %>">
-  <nav class="flex items-center h-16 px-8 max-w-5xl mx-auto">
+  <nav class="flex items-center h-16 px-8 max-w-xl mx-auto">
     <div class="flex items-center justify-start material-symbols-outlined mt-3">
       <%= link_to yield(:arrow_back).presence || "", :back %> 
     </div>
