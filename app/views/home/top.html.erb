@@ -4,7 +4,7 @@
 <section class="w-full border-b border-primary bg-neutral">
   <nav class="flex flex-row justify-between items-center h-16 mx-4">
     <%= link_to root_path do %>
-      <%= image_tag "lp/logo.png", class: "md:h-12 h-10" %>
+      <%= image_tag "lp/logo.png", class: "md:h-12 h-10", alt: "SokoNote ロゴ" %>
     <% end %> 
     <%= link_to "ログイン", new_user_session_path, class: "card bg-primary text-white rounded-full font-bold mt-2 px-6 py-2", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } %>
   </nav>
@@ -19,7 +19,7 @@
   <div class="relative flex md:flex-row flex-col justify-around items-center mx-4">
     <div class="my-10">
       <h1 class="text-2xl font-bold text-dark-gray">底値 × 単価記録・比較アプリ</h1>
-      <%= image_tag "lp/logo.png", class: "w-full max-w-md" %>
+      <%= image_tag "lp/logo.png", class: "w-full max-w-md", alt: "SokoNote ロゴ" %>
       <%= link_to "https://lin.ee/XIpurrj", class: "card w-full bg-line rounded-full flex items-center justify-center gap-3 mt-10 mb-5 py-4 px-6", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } do %>
         <%= image_tag "btn_base.png", class: "w-7 h-7", alt: "" %>
         <span class="text-white text-xl font-bold tracking-widest">
@@ -29,7 +29,7 @@
       <%= link_to "メールアドレスで新規登録", new_user_registration_path, class: "card w-full bg-accent tracking-widest text-white text-xl px-6 py-4 rounded-full flex items-center justify-center font-bold no-underline", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } %>
     </div>
     <div>
-      <%= image_tag "lp/lp_hand.png", class: "w-full max-w-xl pl-5" %>
+      <%= image_tag "lp/lp_hand.png", class: "w-full max-w-xl pl-5", alt: "スマートフォンでアプリを操作している手の画像" %>
     </div>
   </div>
 </section>
@@ -42,15 +42,16 @@
   <div class="relative flex md:flex-row flex-col justify-around items-center mt-10">
     <!-- 1人目 -->
     <div class="my-2">
-      <%= image_tag "lp/empathy3.png", class: "h-70 md:h-100" %>
+      <%= image_tag "lp/empathy3.png", class: "h-70 md:h-100", alt: "買い物で困っている人のイラスト" %>
+
     </div>
     <!-- 2人目 -->
     <div class="my-2">
-      <%= image_tag "lp/empathy2.png", class: "h-70 md:h-100" %>
+      <%= image_tag "lp/empathy2.png", class: "h-70 md:h-100", alt: "価格比較で悩んでいる人のイラスト" %>
     </div>
     <!-- 3人目 -->
     <div class="my-2">
-      <%= image_tag "lp/empathy1.png", class: "h-70 md:h-100" %>
+      <%= image_tag "lp/empathy1.png", class: "h-70 md:h-100", alt: "節約したい人のイラスト" %>
     </div>
   </div>
 </section>
@@ -68,7 +69,7 @@
           <span class="material-symbols-outlined">add_2</span>
         </div>
         <p class="text-black text-2xl font-bold mb-5 text-center">内容量・個数から単価を自動計算します</p>
-        <%= image_tag "lp/mobile1.png", class: "w-60 h-auto" %>
+        <%= image_tag "lp/mobile1.png", class: "w-60 h-auto", alt: "商品登録画面のスクリーンショット" %>
       </div>
     <!-- 2つめ -->
       <div class="my-2 flex flex-col items-center mx-5 flex-1 max-w-xs">
@@ -76,7 +77,8 @@
           <span class="material-symbols-outlined">bar_chart</span>
         </div>
         <p class="text-black text-2xl font-bold mb-5 text-center">登録した商品を比較することができます</p>
-        <%= image_tag "lp/mobile2.png", class: "w-60 h-auto" %>
+        <%= image_tag "lp/mobile2.png", class: "w-60 h-auto", alt: "商品一覧画面のスクリーンショット" %>
+
       </div>
     <!-- 3つめ -->
       <div class="my-2 flex flex-col items-center mx-5 flex-1 max-w-xs">
@@ -84,7 +86,7 @@
           <span class="material-symbols-outlined">balance</span>
         </div>
         <p class="text-black text-2xl font-bold mb-5 text-center">同一商品で安い方を即座に判断できます</p>
-        <%= image_tag "lp/mobile3.png", class: "w-60 h-auto" %>
+        <%= image_tag "lp/mobile3.png", class: "w-60 h-auto, alt: "比較画面のスクリーンショット - 同一商品の価格比較" %>
       </div>
   </div>
 </section>
@@ -103,7 +105,7 @@
         <span class="text-3xl">1</span>
       </div>
       <div class="bg-white rounded-2xl border border-light-gray p-6 mb-5 w-full h-80 flex items-center justify-center">
-        <%= image_tag "lp/startup1.png", class: "max-w-full max-h-full w-auto h-auto" %>
+        <%= image_tag "lp/startup1.png", class: "max-w-full max-h-full w-auto h-auto", alt: "ステップ1: 新規登録ボタンをタップする画面" %>
       </div>
       <p class="text-black text-2xl font-bold mb-5 text-center min-h-16">新規登録ボタンをタップ</p>
     </div>
@@ -114,7 +116,7 @@
         <span class="text-3xl">2</span>
       </div>
       <div class="bg-white rounded-2xl border border-light-gray p-6 mb-5 w-full h-80 flex items-center justify-center">
-        <%= image_tag "lp/startup2.png", class: "max-w-full max-h-full w-auto h-auto" %>
+        <%= image_tag "lp/startup2.png", class: "max-w-full max-h-full w-auto h-auto", alt: "ステップ2: ニックネーム、メールアドレス、パスワードを入力する画面" %>
       </div>
       <p class="text-black text-2xl font-bold mb-5 text-center min-h-16">ニックネーム・メールアドレス・パスワード入力</p>
     </div>
@@ -125,7 +127,7 @@
         <span class="text-3xl">3</span>
       </div>
       <div class="bg-white rounded-2xl border border-light-gray p-6 mb-5 w-full h-80 flex items-center justify-center">
-        <%= image_tag "lp/startup3.png", class: "max-w-full max-h-full w-auto h-auto" %>
+        <%= image_tag "lp/startup3.png", class: "max-w-full max-h-full w-auto h-auto", alt: "ステップ3: 登録完了画面" %>
       </div>
       <p class="text-black text-2xl font-bold mb-5 text-center min-h-16">登録完了ですぐにご利用いただけます</p>
     </div>
@@ -148,7 +150,7 @@
         <span class="text-3xl">1</span>
       </div>
       <div class="bg-white rounded-2xl border border-light-gray p-6 mb-5 w-full h-80 flex items-center justify-center">
-        <%= image_tag "lp/startup_line1.png", class: "max-w-full max-h-full w-auto h-auto" %>
+        <%= image_tag "lp/startup_line1.png", class: "max-w-full max-h-full w-auto h-auto", alt: "ステップ1: ボタンを押してLINE公式アカウントに遷移する画面" %>
       </div>
       <p class="text-black text-2xl font-bold mb-5 text-center min-h-16">ボタンを押して公式アカウントに遷移</p>
     </div>
@@ -159,7 +161,8 @@
         <span class="text-3xl">2</span>
       </div>
       <div class="bg-white rounded-2xl border border-light-gray p-6 mb-5 w-full h-80 flex items-center justify-center">
-        <%= image_tag "lp/startup_line2.png", class: "max-w-full max-h-full w-auto h-auto" %>
+        <%= image_tag "lp/startup_line2.png", class: "max-w-full max-h-full w-auto h-auto", alt: "ステップ2: 友達追加を選択してトーク画面へ移動" %>
+
       </div>
       <p class="text-black text-2xl font-bold mb-5 text-center min-h-16">友達追加を選択し、トーク画面へ</p>
     </div>
@@ -170,7 +173,7 @@
         <span class="text-3xl">3</span>
       </div>
       <div class="bg-white rounded-2xl border border-light-gray p-6 mb-5 w-full h-80 flex items-center justify-center">
-        <%= image_tag "lp/startup_line3.png", class: "max-w-full max-h-full w-auto h-auto" %>
+        <%= image_tag "lp/startup_line3.png", class: "max-w-full max-h-full w-auto h-auto", alt: "ステップ3: トーク下のメッセージをタップしてログイン" %>
       </div>
       <p class="text-black text-2xl font-bold mb-5 text-center min-h-16">トーク下のメッセージをタップしてログイン</p>
     </div>
