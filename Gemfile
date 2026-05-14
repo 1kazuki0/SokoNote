@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.2.3"
+gem "rails", "~> 7.2.3", ">= 7.2.3.1"
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 # Use postgresql as the database for Active Record
@@ -84,6 +84,9 @@ group :development, :test do
   # エラー時のデバッグを確認するgem
   gem "better_errors"
   gem "binding_of_caller"
+
+  # Gemfile.lockに記載されているgemの脆弱性をチェックするgem
+  gem "bundler-audit"
 end
 
 group :development do
