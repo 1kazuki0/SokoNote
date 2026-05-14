@@ -95,7 +95,7 @@
   <section>
     <div class="bg-white rounded-2xl shadow-sm ring ring-light-gray">
       <%= button_to destroy_user_session_path, method: :delete,
-          class: "card w-full flex items-center justify-center gap-2 p-4 text-error font-bold cursor-pointer text-sm hover:bg-error/10 rounded-2xl transition", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } do %>
+          class: "card w-full flex items-center border-2 border-error justify-center gap-2 p-4 text-error font-bold cursor-pointer hover:bg-error/10 rounded-2xl transition", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } do %>
         <span class="material-symbols-outlined text-xl">logout</span>
         ログアウト
       <% end %>
