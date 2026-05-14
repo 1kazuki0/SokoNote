@@ -85,7 +85,7 @@ group :development, :test do
   gem "better_errors"
   gem "binding_of_caller"
 
-  # Gemfile.lockに記載されているgemの脆弱性をチェックするgem 
+  # Gemfile.lockに記載されているgemの脆弱性をチェックするgem
   gem "bundler-audit"
 end
 
