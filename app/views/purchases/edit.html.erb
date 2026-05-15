@@ -4,9 +4,7 @@
   bg-primary text-white
 <% end %>
 <!-- 戻るボタン -->
-<% content_for :arrow_back do %>
-  arrow_back
-<% end %>
+<% content_for :back_path, item_purchases_path(@purchase.item) %>
 <!-- タイトル表示 -->
 <% content_for :title do %>
   購入履歴編集

@@ -1,7 +1,5 @@
-<%# ヘッダーを動的表示 %>
-<% content_for :arrow_back do %>
-  arrow_back
-<% end %>
+<!-- ヘッダーを動的表示 -->
+<% content_for :back_path, setting_path %>
 <% content_for :title do %>
   カテゴリー一覧
 <% end %>

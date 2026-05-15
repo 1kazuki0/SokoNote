@@ -3,9 +3,7 @@
 <% content_for :header_class do %>
   bg-primary text-white
 <% end %>
-<% content_for :arrow_back do %>
-  arrow_back
-<% end %>
+<% content_for :back_path, new_user_session_path %>
 
 <%= render "users/shared/error_messages", resource: resource, message: "メールの送信に失敗しました" %>
 <div class="flex flex-col md:flex-row items-center justify-center gap-6">
