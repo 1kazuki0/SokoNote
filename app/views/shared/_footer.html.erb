@@ -1,10 +1,16 @@
 <footer class="fixed bottom-0 left-0 w-full bg-white border-t border-light-gray z-30">
-  <nav class="flex justify-around items-center h-20 pb-5 max-w-xl mx-auto">
+  <nav class="flex justify-around items-center h-20 pb-3 max-w-xl mx-auto">
     
     <!--「商品一覧画面」に遷移する内容 -->
     <%= link_to items_path, class: "flex flex-col items-center #{active_class('items', 'purchases')}" do %>
       <span class="material-symbols-outlined">list_alt</span>
       <span class="text-xs mt-1"><%= t('footer.index') %></span>
+    <% end %>
+
+    <!-- 「商品登録画面」に遷移する内容 -->
+    <%= link_to new_item_registration_path, class: "flex flex-col items-center #{active_class('item_registrations')}" do %>
+      <span class="material-symbols-outlined text-28">add_2</span>
+      <span class="text-xs mt-1"><%= t('footer.item_registration') %></span>
     <% end %>
 
     <!--「商品比較画面」に遷移する内容 -->
@@ -13,17 +19,9 @@
       <span class="text-xs mt-1"><%= t('footer.comparison') %></span>
     <% end %>
 
-    <!--「チラシ撮影画面」に遷移する内容（現在はURLを"#"としています） -->
-    <%= link_to "#", class: "flex flex-col items-center #{active_class('#')}" do %>
-      <div class="flex flex-col items-center cursor-not-allowed relative group">
-        <span class="material-symbols-outlined text-28 group-hover:invisible">photo_camera</span>
-        <span class="text-xs mt-1 group-hover:invisible"><%= t('footer.photo') %></span>
-        <span class="text-[10px] absolute bottom-1 text-center bg-gray-200 px-1 rounded invisible group-hover:visible">coming soon</span>
-      </div>
-    <% end %>
     
     <!--「設定画面」に遷移する内容 -->
-    <%= link_to setting_path, class: "flex flex-col items-center #{active_class('setting')}" do %>
+    <%= link_to setting_path, class: "flex flex-col items-center #{active_class('setting', 'categories', 'content_units', 'privacy_policy', 'stores', 'terms', 'registrations')}" do %>
       <span class="material-symbols-outlined text-28">settings</span>
       <span class="text-xs mt-1"> <%= t('footer.setting') %></span>
     <% end %>
