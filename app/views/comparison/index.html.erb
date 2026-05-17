@@ -9,10 +9,10 @@
 <div data-controller="compare">
 
   <%# ─── 比較入力エリア ─── %>
-  <div class="grid grid-cols-2 gap-4 relative">
+  <div class="grid grid-cols-2 gap-2 relative">
 
     <%# ─── 商品A（内容量・パック数・価格のフォーム） ─── %>
-    <div class="bg-white rounded-2xl px-4 pb-4 pt-2 border border-light-gray shadow-sm "data-compare-target="cardA">
+    <div class="bg-white rounded-2xl p-2 border border-light-gray shadow-sm "data-compare-target="cardA">
       <div class="invisible text-center h-7" data-compare-target="badgeA">
         <span class="bg-primary text-white text-xs font-bold px-3 py-1 rounded-full">おトク！</span>
       </div>
@@ -22,19 +22,19 @@
         <div>
           <%= f.label :content_quantity, "内容量" ,class: "text-black" %>
           <div class="mt-1 flex items-center border border-light-gray rounded-lg bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
-            <%= f.number_field :content_quantity, placeholder: "例：500", class: "w-full p-2 bg-transparent outline-none text-black", data: {compare_target: "contentquantityA", action: "input->compare#calculate"} %>
+            <%= f.number_field :content_quantity, placeholder: "例：500", inputmode: "decimal", class: "w-full p-2 bg-transparent outline-none text-black", data: {compare_target: "contentquantityA", action: "input->compare#calculate"} %>
           </div>
         </div>
         <div>
           <%= f.label :pack_quantity, "パック数", class: "text-black" %>
           <div class="mt-1 flex items-center border border-light-gray rounded-lg bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
-            <%= f.number_field :pack_quantity, placeholder: "例：3", class: "w-full p-2 bg-transparent outline-none text-black", data: {compare_target: "packquantityA", action: "input->compare#calculate" } %>
+            <%= f.number_field :pack_quantity, placeholder: "例：3", inputmode: "numeric", class: "w-full p-2 bg-transparent outline-none text-black", data: {compare_target: "packquantityA", action: "input->compare#calculate" } %>
           </div>
         </div>
         <div>
           <%= f.label :price, "価格", class: "text-black" %>
           <div class="mt-1 flex items-center border border-light-gray rounded-lg bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
-            <%= f.number_field :price, placeholder: "例：598", class: "w-full p-2 bg-transparent outline-none text-black", data: {compare_target: "priceA", action: "input->compare#calculate" } %>
+            <%= f.number_field :price, placeholder: "例：598", inputmode: "numeric", class: "w-full p-2 bg-transparent outline-none text-black", data: {compare_target: "priceA", action: "input->compare#calculate" } %>
           </div>
         </div>
         <div>
@@ -65,20 +65,20 @@
         </div>
 
         <div class="mt-4 p-4 bg-light-gray/50 rounded-xl text-center">
-          <p class="text-sm text-middle-gray">単価（税抜）</p>
+          <p class="text-sm text-dark-gray">単価（税抜）</p>
           <p class="text-2xl font-bold text-back">
             <span data-compare-target="resultA">---</span>
             <span class="text-sm font-normal">円</span>
           </p>
         </div>
-        <div class="mt-4 p-4 flex justify-center">
-          <%= f.submit "Aを登録する", class: "text-base w-full p-2 md:px-4 py-3 rounded-full border border-primary text-primary hover:bg-primary hover:text-white"%>
+        <div class="mt-4 mb-2 flex justify-center">
+          <%= f.submit "Aで登録する", class: "card w-full bg-primary tracking-widest text-white px-6 py-4 rounded-full flex items-center justify-center font-bold no-underline", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } %>
         </div>
       <% end %>
     </div>
 
     <%# ─── 商品B（内容量・パック数・価格のフォーム） ─── %>
-    <div class="bg-white rounded-2xl px-4 pb-4 pt-2 border border-light-gray shadow-sm " data-compare-target="cardB">
+    <div class="bg-white rounded-2xl p-2 border border-light-gray shadow-sm " data-compare-target="cardB">
       <div class="invisible text-center h-7" data-compare-target="badgeB">
         <span class="bg-primary text-white text-xs font-bold px-3 py-1 rounded-full">おトク！</span>
       </div>
@@ -87,19 +87,19 @@
         <div>
           <%= f.label :content_quantity, "内容量" ,class: "text-black" %>
           <div class="mt-1 flex items-center border border-light-gray rounded-lg bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
-            <%= f.number_field :content_quantity, placeholder: "例：500", class: "w-full p-2 bg-transparent outline-none text-black", data: {compare_target: "contentquantityB", action: "input->compare#calculate" } %>
+            <%= f.number_field :content_quantity, placeholder: "例：500", inputmode: "decimal", class: "w-full p-2 bg-transparent outline-none text-black", data: {compare_target: "contentquantityB", action: "input->compare#calculate" } %>
           </div>
         </div>
         <div>
           <%= f.label :pack_quantity, "パック数", class: "text-black" %>
           <div class="mt-1 flex items-center border border-light-gray rounded-lg bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
-            <%= f.number_field :pack_quantity, placeholder: "例：3", class: "w-full p-2 bg-transparent outline-none text-black", data: {compare_target: "packquantityB", action: "input->compare#calculate" } %>
+            <%= f.number_field :pack_quantity, placeholder: "例：3", inputmode: "numeric", class: "w-full p-2 bg-transparent outline-none text-black", data: {compare_target: "packquantityB", action: "input->compare#calculate" } %>
           </div>
         </div>
         <div>
           <%= f.label :price, "価格", class: "text-black" %>
           <div class="mt-1 flex items-center border border-light-gray rounded-lg bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
-            <%= f.number_field :price, placeholder: "例：598", class: "w-full p-2 bg-transparent outline-none text-black", data: {compare_target: "priceB", action: "input->compare#calculate" } %>
+            <%= f.number_field :price, placeholder: "例：598", inputmode: "numeric", class: "w-full p-2 bg-transparent outline-none text-black", data: {compare_target: "priceB", action: "input->compare#calculate" } %>
           </div>
         </div>
         <div>
@@ -130,14 +130,14 @@
         </div>
 
         <div class="mt-4 p-4 bg-light-gray/50 rounded-xl text-center">
-          <p class="text-sm text-middle-gray">単価（税抜）</p>
+          <p class="text-sm text-dark-gray">単価（税抜）</p>
           <p class="text-2xl font-bold text-back">
             <span data-compare-target="resultB">---</span>
             <span class="text-sm font-normal">円</span>
           </p>
         </div>
-        <div class="mt-4 p-4 flex justify-center">
-          <%= f.submit "Bを登録する", class: "text-base w-full p-2 md:px-4 py-3 rounded-full border border-primary text-primary hover:bg-primary hover:text-white"%>
+        <div class="mt-4 mb-2 flex justify-center">
+          <%= f.submit "Bで登録する", class: "card w-full bg-primary tracking-widest text-white px-6 py-4 rounded-full flex items-center justify-center font-bold no-underline", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } %>
         </div>
       <% end %>
     </div>
