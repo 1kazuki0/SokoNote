@@ -11,7 +11,7 @@
 <!-- 商品に対して購入履歴が1件以上登録されている場合 -->
 <% if @has_any_purchases %>
   <!-- 商品名・カテゴリ名の表示（カテゴリ名はnilの場合表示しない） -->
-  <div class="flex items-center gap-2 mb-5">
+  <div class="flex items-center gap-2 mb-2">
     <h1 class="text-xl font-bold text-black"><%= @item.name %></h1>
     <% if @item.category.present? %>
       <span class="text-xs font-bold text-primary bg-primary/20 rounded-full px-2 py-0.5 "><%= @item.category.name %></span>
@@ -22,55 +22,87 @@
   <% if @lowest_purchase %>
     <div class="bg-white border-2 border-accent rounded-2xl overflow-hidden mb-4">
       <div class="h-1 w-full bg-accent"></div>
-      <div class="p-4">
+      <div class="pb-2">
         
-        <!-- 最安値バッジ + 日付 -->
-        <div class="flex items-center justify-between mb-2">
-          <div class="inline-flex items-center gap-1 bg-accent/10 text-accent rounded-full px-3 py-1 text-xs font-medium">
-            <span class="material-symbols-outlined" style="font-size:13px;">star</span>
-            最安値
-          </div>
-          <span class="text-xs text-middle-gray"><%= @lowest_purchase.purchased_on %></span>
+        <!-- 上部: バッジ + 記録日 -->
+        <div class="flex justify-between items-center px-2 bg-accent pb-1">
+          <span class="text-white text-xs font-bold px-2 py-0.5 rounded-full inline-flex items-center gap-1">
+            <span class="material-symbols-outlined" style="font-size: 20px;">trending_down</span>
+            現在最安値
+          </span>
+          <span class="text-xs text-white">
+            <%= @lowest_purchase.purchased_on.strftime("%Y-%m-%d") %>
+          </span>
         </div>
 
-        <!-- ブランド名 -->
-        <% if @lowest_purchase.brand.present? %>
-          <p class="text-sm text-middle-gray mb-3"><%= @lowest_purchase.brand %></p>
+        <!-- 中段: 左に単価 / 右に内容量・金額 (中央仕切り線) -->
+        <div class="grid grid-cols-2 p-2">
+
+          <!-- 左: 単価 -->
+          <div class="flex flex-col items-center justify-center border-r border-light-gray px-5 py-5">
+            <span class="text-sm text-dark-gray mb-1">1<%= @lowest_purchase.content_unit.name %>あたり</span>
+            <p class="leading-none">
+              <span class="text-5xl font-bold text-accent"><%= @lowest_purchase.unit_price %></span>
+              <span class="text-lg text-accent ml-0.5">円</span>
+            </p>
+          </div>
+
+          <!-- 右: 内容量 / 金額 (横仕切り線で2分割) -->
+          <div class="flex flex-col justify-center pl-2 gap-2">
+            <!-- 内容量 -->
+            <div class="flex items-center gap-2 md:ml-2">
+              <span class="material-symbols-outlined text-dark-gray" style="font-size: 20px;">package_2</span>
+              <span class="text-black">
+                <% if @lowest_purchase.pack_unit.present? %>
+                  <%= @lowest_purchase.content_quantity %><%= @lowest_purchase.content_unit.name %> × <%= @lowest_purchase.pack_quantity %><%= @lowest_purchase.pack_unit.name %>
+                <% else %>
+                  <%= @lowest_purchase.content_quantity %><%= @lowest_purchase.content_unit.name %>
+                <% end %>
+              </span>
+            </div>
+
+            <hr class="border-t border-light-gray">
+
+            <!-- 金額 + 税 -->
+            <div class="flex items-center gap-2 md:ml-2">
+              <span class="material-symbols-outlined text-dark-gray" style="font-size: 20px;">paid</span>
+              <span class="text-lg font-bold text-black">¥<%= number_with_delimiter(@lowest_purchase.price) %></span>
+              <span class="text-xs text-middle-gray">
+                (<%= case @lowest_purchase.tax_rate
+                    when 0 then "税抜"
+                    when 8 then "税込8%"
+                    when 10 then "税込10%"
+                    end %>)
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 下部: 店舗・ブランド (背景色付き) -->
+      <div class="bg-accent/10 grid grid-cols-2 px-4 py-3">
+        <!-- 店舗 -->
+        <div class="flex items-center justify-center gap-2 border-r border-accent/30 pr-3">
+          <span class="material-symbols-outlined text-dark-gray" style="font-size: 20px;" >storefront</span>
+          <span class="text-sm text-black">
+            <%= @lowest_purchase.store&.name || "—" %>
+          </span>
+        </div>
+        
+        <!-- ブランド -->
+        <div class="flex items-center justify-center gap-2 pl-3">
+          <span class="material-symbols-outlined text-dark-gray" style="font-size: 20px;">sell</span>
+          <span class="text-sm text-black">
+            <%= @lowest_purchase.brand&.presence || "—" %>
+          </span>
+        </div>
+      </div>
+      <div class="flex px-6 py-4 border-t border-light-gray items-center justify-center">
+        <%= link_to comparison_path(purchase_id: @lowest_purchase.id),
+            class: "inline-flex items-center gap-1 text-accent font-bold tracking-widest" do %>
+          <span class="material-symbols-outlined" style="font-size: 20px;">balance</span>
+          <span class="text-lg underline underline-offset-4">この商品で比較する</span>
         <% end %>
-
-        <!-- 最安単価 -->
-        <div class="text-center py-2 pb-4">
-          <p class="text-xs text-middle-gray mb-1">最安単価</p>
-          <div class="inline-flex items-baseline gap-1">
-            <span class="text-5xl font-bold text-accent leading-none"><%= @lowest_purchase.unit_price %></span>
-            <span class="text-sm text-accent">円/<%= @lowest_purchase.content_unit.name %></span>
-          </div>
-        </div>
-
-        <!-- 比較画面遷移ボタン -->
-        <div class= "flex justify-center pb-4">
-          <%= link_to comparison_path(purchase_id: @lowest_purchase.id), class: "flex text-center justify-center gap-2 px-8 py-3 rounded-full border border-primary text-primary hover:bg-primary hover:text-white" do %>
-            <span class="flex items-end justify-center gap-1">
-              <span class="material-symbols-outlined text-base">balance</span>
-              <span>この商品で比較します</span>
-            </span>
-          <% end %> 
-        </div>
-          
-        <hr class="border-t border-accent/30 mb-3">
-        <!-- 店舗名・量・単位・価格 -->
-        <div class="flex items-center flex-wrap gap-2">
-          <% if @lowest_purchase.store.present? %>
-            <span class="bg-accent/10 text-accent rounded-full px-3 py-0.5 text-xs"><%= @lowest_purchase.store.name %></span>
-          <% end %>
-          <% if @lowest_purchase.pack_unit.present? %>
-            <span class="text-xs text-black"><%= @lowest_purchase.pack_quantity %><%= @lowest_purchase.pack_unit.name %> × <%= @lowest_purchase.content_quantity %><%= @lowest_purchase.content_unit.name %> · ¥<%= @lowest_purchase.price %></span>
-          <% elsif @lowest_purchase.pack_quantity > 1 %>
-            <span class="text-xs text-black"><%= @lowest_purchase.pack_quantity %> × <%= @lowest_purchase.content_quantity %><%= @lowest_purchase.content_unit.name %> · ¥<%= @lowest_purchase.price %></span>
-          <% else %>
-            <span class="text-xs text-black"><%= @lowest_purchase.content_quantity %><%= @lowest_purchase.content_unit.name %> · ¥<%= @lowest_purchase.price %></span>
-          <% end %>
-        </div>
       </div>
     </div>
   <% end %>
@@ -128,48 +160,95 @@
           <div class="absolute left-0 top-0 bottom-0 w-1.5 z-30 <%= is_lowest ? 'bg-accent' : 'bg-primary' %> rounded-l-2xl"></div>
 
           <!-- テキスト部分の固定 -->
-          <div class="absolute left-3 top-0 bottom-0 right-10 flex flex-col justify-center py-4 px-2 z-10">
-            <div class="flex items-center justify-between mb-2">
+          <div class="absolute left-3 top-0 bottom-0 right-10 z-10 py-3 px-3">
+            <div class="flex h-full flex-col justify-between">
 
-              <!-- 日付表示 -->
-              <span class="text-xs text-middle-gray"><%= purchase.purchased_on %></span>
+              <!-- 1段目：購入日 -->
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-dark-gray" style="font-size: 18px;">
+                  calendar_month
+                </span>
 
-              <!-- 最安値バッジ表示 -->
-              <% if is_lowest %>
-                <div class="inline-flex items-center gap-1 bg-accent/10 text-accent rounded-full px-2 py-0.5 text-xs font-medium">
-                  <span class="material-symbols-outlined text-xs">star</span>
-                  最安値
-                </div>
-              <% end %>
-            </div>
+                <span class="text-xs text-middle-gray">
+                  <%= purchase.purchased_on.strftime("%Y-%m-%d") %>
+                </span>
+              </div>
 
-            <!-- 単価表示 -->
-            <div class="flex items-baseline gap-1 mb-0">
-              <span class="text-2xl font-bold <%= is_lowest ? 'text-accent' : 'text-primary' %> leading-none"><%= purchase.unit_price %></span>
-              <span class="text-xs <%= is_lowest ? 'text-accent' : 'text-middle-gray' %>">円/<%= purchase.content_unit.name %></span>
-            </div>
-            <hr class="border-t border-light-gray my-2">
+              <!-- 2段目：店舗名・ブランド -->
+              <div class="flex items-center flex-wrap gap-3">
 
-            <!-- 店舗名・量・単位・価格 -->
-            <div class="flex items-center flex-wrap gap-2">
-              <% if purchase.store.present? %>
-                <span class="<%= is_lowest ? 'bg-accent/10 text-accent' : 'bg-primary/10 text-primary' %> rounded-full px-3 py-0.5 text-xs"><%= purchase.store.name %></span>
-              <% end %>
-              <% if purchase.brand.present? %>
-                <span class="text-xs text-middle-gray"><%= purchase.brand %></span>
-              <% end %>
-              <% if purchase.pack_unit.present? %>
-                <span class="text-xs text-black"><%= purchase.pack_quantity %><%= purchase.pack_unit.name %> × <%= purchase.content_quantity %><%= purchase.content_unit.name %> · ¥<%= purchase.price %></span>
-              <% elsif purchase.pack_quantity > 1 %>
-                <span class="text-xs text-black"><%= purchase.pack_quantity %> × <%= purchase.content_quantity %><%= purchase.content_unit.name %> · ¥<%= purchase.price %></span>
-              <% else %>
-                <span class="text-xs text-black"><%= purchase.content_quantity %><%= purchase.content_unit.name %> · ¥<%= purchase.price %></span>
-              <% end %>
+                <% if purchase.store.present? %>
+                  <span class="<%= is_lowest ? 'bg-accent/10 text-accent' : 'bg-primary/10 text-primary' %> rounded-full px-3 py-0.5 text-xs font-bold">
+                    <%= purchase.store.name %>
+                  </span>
+                <% end %>
+
+                <% if purchase.brand.present? %>
+                  <div class="flex items-center gap-1 text-xs text-black">
+                    <span class="material-symbols-outlined text-dark-gray" style="font-size: 16px;">
+                      sell
+                    </span>
+
+                    <span><%= purchase.brand %></span>
+                  </div>
+                <% end %>
+
+              </div>
+
+              <!-- 3段目：内容量 -->
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-dark-gray" style="font-size: 18px;">
+                  package_2
+                </span>
+
+                <span class="text-sm text-black">
+                  <% if purchase.pack_unit.present? %>
+                    <%= purchase.content_quantity %><%= purchase.content_unit.name %> ×
+                    <%= purchase.pack_quantity %><%= purchase.pack_unit.name %>
+                  <% elsif purchase.pack_quantity > 1 %>
+                    <%= purchase.content_quantity %><%= purchase.content_unit.name %> ×
+                    <%= purchase.pack_quantity %>
+                  <% else %>
+                    <%= purchase.content_quantity %><%= purchase.content_unit.name %>
+                  <% end %>
+                </span>
+              </div>
+
+              <!-- 4段目：購入料金 -->
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-dark-gray" style="font-size: 18px;">
+                  paid
+                </span>
+
+                <span class="text-lg font-bold text-black">
+                  ¥<%= number_with_delimiter(purchase.price) %>
+                </span>
+
+                <span class="text-xs text-middle-gray">
+                  (<%= case purchase.tax_rate
+                      when 0 then "税抜"
+                      when 8 then "税込8%"
+                      when 10 then "税込10%"
+                      else "税区分未設定"
+                      end %>)
+                </span>
+              </div>
+
+              <!-- 5段目：単価 -->
+              <div class="<%= is_lowest ? 'bg-accent/10' : 'bg-primary/10' %> -mx-3 -ml-6 -mb-3 px-8 py-2 rounded-br-2xl">
+                <span class="text-2xl font-bold <%= is_lowest ? 'text-accent' : 'text-primary' %>">
+                  <%= purchase.unit_price %>
+                </span>
+
+                <span class="text-xs <%= is_lowest ? 'text-accent' : 'text-middle-gray' %>">
+                  円/<%= purchase.content_unit.name %>
+                </span>
+              </div>
+
             </div>
           </div>
-
           <!-- swipe-inner：アイコンのみ・スライドする層 -->
-          <div class="swipe-inner rounded-2xl <%= is_lowest ? 'border border-accent' : 'border border-light-gray' %>" style="min-height: 8rem;" data-swipe-target="inner">
+          <div class="swipe-inner rounded-2xl <%= is_lowest ? 'border border-accent' : 'border border-light-gray' %>" style="min-height: 11rem;" data-swipe-target="inner">
             <span class="material-symbols-outlined text-light-gray text-sm">keyboard_double_arrow_right</span>
           </div>
 
