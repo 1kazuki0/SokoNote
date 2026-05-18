@@ -67,12 +67,12 @@ export default class extends Controller {
     }
 
     if (a < b) {
-        this.compareResultItemTarget.textContent = `A商品の方が${(b - a).toFixed(2)}円安い！`
+        this.compareResultItemTarget.textContent = `Aの方が${(b - a).toFixed(2)}円安い！`
         this.cardATarget.classList.add("border-primary", "border-2", "shadow-lg")
         this.badgeATarget.classList.remove("invisible")
         this.compareResultItemTarget.classList.remove("invisible")
     } else if (b < a) {
-        this.compareResultItemTarget.textContent = `B商品の方が${(a - b).toFixed(2)}円安い！`
+        this.compareResultItemTarget.textContent = `Bの方が${(a - b).toFixed(2)}円安い！`
         this.cardBTarget.classList.add("border-primary", "border-2", "shadow-lg")
         this.badgeBTarget.classList.remove("invisible")
         this.compareResultItemTarget.classList.remove("invisible")
