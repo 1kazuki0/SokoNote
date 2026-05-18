@@ -9,11 +9,11 @@
 
   <div class="space-y-4">
     <% @stores.each do |store| %>
-      <div class="swipe-card" data-controller="swipe" data-action="touchstart->swipe#touchstart touchend->swipe#touchend touchstart@document->swipe#outsideClick">
+      <div class="swipe-card border border-light-gray" data-controller="swipe" data-action="touchstart->swipe#touchstart touchend->swipe#touchend touchstart@document->swipe#outsideClick">
 
         <%# 店舗名：常に左端に固定表示 %>
         <div class="absolute top-0 left-0 bottom-0 flex items-center px-5 z-10">
-          <span class="text-sm font-bold text-dark-gray"><%= store.name %></span>
+          <span class="text-sm font-bold text-black"><%= store.name %></span>
         </div>
 
         <%# カードリンク（スライドする層）：右側に配置 %>
@@ -30,9 +30,9 @@
       </div>
     <% end %>
   </div>
-  <%# 商品登録ボタン（FAB） %>
+  <!-- 店舗登録遷移ボタン -->
   <div class="fixed bottom-28 left-0 right-0 mx-auto max-w-xl px-6 flex justify-end z-25">
-    <%= link_to new_store_path, class: "card bg-primary text-white px-6 py-4 rounded-full flex items-center font-bold", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } do %>
+    <%= link_to new_store_path, class: "card bg-accent text-white px-6 py-4 rounded-full flex items-center font-bold", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } do %>
       <span class="text-lg">店舗追加</span>
       <span class="material-symbols-outlined">add</span>
     <% end %>
@@ -52,7 +52,7 @@
       よく使う店舗を登録しましょう
     </p>
 
-    <!-- 商品登録遷移ボタン -->
+    <!-- 店舗登録遷移ボタン -->
     <div class="w-full px-6 mb-8">
       <%= link_to new_store_path, class: "card bg-primary text-white px-6 py-4 rounded-full flex items-center justify-center font-bold", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } do %>
         <span class="text-xl tracking-widest">店舗を登録する</span>
