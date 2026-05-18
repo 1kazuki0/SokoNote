@@ -23,8 +23,8 @@
         <%# アクションボタン %>
         <div class="swipe-actions" data-swipe-target="actions" style="transform: translateX(100%);">
 
-          <%= link_to "編集", edit_category_path(category), data: { action: "touchend->swipe#stopPropagation" }, class: "flex items-center justify-center w-16 bg-blue-400 text-white text-xs font-medium self-stretch" %>
-          <%= link_to "削除", category_path(category), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？", action: "touchend->swipe#stopPropagation" }, class: "flex items-center justify-center w-16 bg-error text-white text-xs font-medium border-none cursor-pointer h-full" %>
+          <%= link_to "編集", edit_category_path(category), data: { action: "touchend->swipe#stopPropagation" }, class: "flex items-center justify-center w-16 bg-blue-400 text-white text-sm font-medium self-stretch" %>
+          <%= link_to "削除", category_path(category), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？", action: "touchend->swipe#stopPropagation" }, class: "flex items-center justify-center w-16 bg-error text-white text-sm font-medium border-none cursor-pointer h-full" %>
         </div>
       </div>
     <% end %>
