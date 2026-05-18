@@ -154,7 +154,7 @@
     <div class="space-y-2">
       <% @purchases.each do |purchase| %>
         <% is_lowest = purchase.id == @lowest_purchase&.id %>
-        <div class="swipe-card" data-controller="swipe" data-action="touchstart->swipe#touchstart touchend->swipe#touchend touchstart@document->swipe#outsideClick">
+        <div class="swipe-card <%= is_lowest ? 'border border-accent' : 'border border-light-gray' %>" data-controller="swipe" data-action="touchstart->swipe#touchstart touchend->swipe#touchend touchstart@document->swipe#outsideClick">
 
           <!-- 左側の緑ボーダー線の固定 -->
           <div class="absolute left-0 top-0 bottom-0 w-1.5 z-30 <%= is_lowest ? 'bg-accent' : 'bg-primary' %> rounded-l-2xl"></div>
@@ -235,7 +235,7 @@
               </div>
 
               <!-- 5段目：単価 -->
-              <div class="<%= is_lowest ? 'bg-accent/10' : 'bg-primary/10' %> -mx-3 -ml-6 -mb-3 px-8 py-2 rounded-br-2xl">
+              <div class="<%= is_lowest ? 'bg-accent/10' : 'bg-primary/10' %> -mr-15 -ml-6 -mb-3 px-8 py-2 rounded-br-2xl">
                 <span class="text-2xl font-bold <%= is_lowest ? 'text-accent' : 'text-primary' %>">
                   <%= purchase.unit_price %>
                 </span>
@@ -248,22 +248,14 @@
             </div>
           </div>
           <!-- swipe-inner：アイコンのみ・スライドする層 -->
-          <div class="swipe-inner rounded-2xl <%= is_lowest ? 'border border-accent' : 'border border-light-gray' %>" style="min-height: 11rem;" data-swipe-target="inner">
+          <div class="swipe-inner rounded-2xl" style="min-height: 11rem;" data-swipe-target="inner">
             <span class="material-symbols-outlined text-light-gray text-sm">keyboard_double_arrow_right</span>
           </div>
 
           <!-- スライドした時に表示される層 -->
           <div class="swipe-actions" data-swipe-target="actions" style="transform: translateX(100%);">
-            <%= link_to edit_item_purchase_path(@item, purchase),
-                  data: { action: "touchend->swipe#stopPropagation" },
-                  class: "flex items-center justify-center w-16 bg-blue-400 text-white text-xs font-medium self-stretch" do %>
-              <span class="material-symbols-outlined" style="font-size:18px;">edit</span>
-            <% end %>
-            <%= link_to item_purchase_path(@item, purchase),
-                  data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？", action: "touchend->swipe#stopPropagation" },
-                  class: "flex items-center justify-center w-16 bg-red-400 text-white text-xs font-medium border-none cursor-pointer h-full" do %>
-              <span class="material-symbols-outlined" style="font-size:18px;">delete</span>
-            <% end %>
+            <%= link_to "編集", edit_item_purchase_path(@item, purchase), data: { action: "touchend->swipe#stopPropagation" }, class: "flex items-center justify-center w-16 bg-blue-400 text-white text-sm font-medium self-stretch" %>
+            <%= link_to "削除", item_purchase_path(@item, purchase), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？", action: "touchend->swipe#stopPropagation" }, class: "flex items-center justify-center w-16 bg-error text-white text-sm font-medium border-none cursor-pointer h-full" %>
           </div>
         </div>
       <% end %>

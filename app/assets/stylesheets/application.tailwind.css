@@ -5,7 +5,6 @@
 @theme {
   /* 以下は配色を記述 */
   --color-primary: #6EA016; /* 明るい緑色 */
-  --color-secondary: #6EA016; /* 暗い緑色 */
   --color-accent: #F39800; /* オレンジ */
   --color-neutral: #FCFDF7; /* 背景色 */
   --color-error: #E65540; /* 赤 */
@@ -16,8 +15,6 @@
   --color-dark-gray: #818181; /* 濃灰 */
   --color-middle-gray: #B1B1B1; /* 中間灰 */
   --color-light-gray: #DFDFDF; /* 薄灰 */
-/* #F9D01F;黄色 */
-/*  #E65540;赤 */
 
   --color-flash-success-bg: #f7fee7;
   --color-flash-success-text: #166534;
