@@ -1,6 +1,11 @@
 class ItemRegistrationsController < ApplicationController
   def new
-    @form = ItemRegistrationForm.new
+    purchase_params = if params[:purchase_a].present?
+                        params[:purchase_a].permit(:item_name, :content_quantity, :content_unit_name, :price, :tax_rate)
+                      elsif params[:purchase_b].present?
+                        params[:purchase_b].permit(:item_name, :content_quantity, :content_unit_name, :price, :tax_rate)
+                      end
+    @form = ItemRegistrationForm.new(purchase_params)
     @items = current_user.items.order(:name)
     @content_units = current_user.content_units.order(:name)
   end
