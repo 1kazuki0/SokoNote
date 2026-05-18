@@ -13,7 +13,7 @@
 
         <%# 単位（内容量）：常に左端に固定表示 %>
         <div class="absolute top-0 left-0 bottom-0 flex items-center px-5 z-10">
-          <span class="text-sm font-bold text-gray-800"><%= content_unit.name %></span>
+          <span class="text-sm font-bold text-dark-gray"><%= content_unit.name %></span>
         </div>
 
         <%# カードリンク（スライドする層）：右側に配置 %>
@@ -24,16 +24,8 @@
         <%# アクションボタン %>
         <div class="swipe-actions" data-swipe-target="actions" style="transform: translateX(100%);">
 
-          <%= link_to "編集", edit_content_unit_path(content_unit),
-                data: { action: "touchend->swipe#stopPropagation" },
-                class: "flex items-center justify-center w-16
-                        bg-blue-400 text-white text-xs font-medium self-stretch" %>
-
-          <%= link_to "削除", content_unit_path(content_unit),
-                data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？", action: "touchend->swipe#stopPropagation" },
-                class: "flex items-center justify-center w-16
-                        bg-red-400 text-white text-xs font-medium
-                        border-none cursor-pointer h-full" %>
+          <%= link_to "編集", edit_content_unit_path(content_unit), data: { action: "touchend->swipe#stopPropagation" }, class: "flex items-center justify-center w-16 bg-blue-400 text-white text-xs font-medium self-stretch" %>
+          <%= link_to "削除", content_unit_path(content_unit), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？", action: "touchend->swipe#stopPropagation" }, class: "flex items-center justify-center w-16 bg-error text-white text-xs font-medium border-none cursor-pointer h-full" %>
         </div>
       </div>
     <% end %>

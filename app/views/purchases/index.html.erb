@@ -261,7 +261,7 @@
             <% end %>
             <%= link_to item_purchase_path(@item, purchase),
                   data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？", action: "touchend->swipe#stopPropagation" },
-                  class: "flex items-center justify-center w-16 bg-red-400 text-white text-xs font-medium border-none cursor-pointer h-full" do %>
+                  class: "flex items-center justify-center w-16 bg-error text-white text-xs font-medium border-none cursor-pointer h-full" do %>
               <span class="material-symbols-outlined" style="font-size:18px;">delete</span>
             <% end %>
           </div>

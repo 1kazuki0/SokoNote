@@ -19,12 +19,12 @@ export default class extends Controller {
 
     let restored = false
 
-    if (data.content_quantity && !this.contentQuantityTarget.value) {
+    if (data.content_quantity) {
       this.contentQuantityTarget.value = data.content_quantity
       this.highlight(this.contentQuantityTarget)
       restored = true
     }
-    if (data.content_unit_name && !this.contentUnitTarget.value) {
+    if (data.content_unit_name) {
       this.contentUnitTarget.value = data.content_unit_name
       this.highlight(this.contentUnitTarget)
       restored = true
