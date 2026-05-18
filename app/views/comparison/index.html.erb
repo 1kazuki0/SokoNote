@@ -100,11 +100,12 @@
         <% if @purchase_a&.content_unit %>
           <%= f.hidden_field :content_unit_name, value: @purchase_a.content_unit.name %>
         <% end %>
+        <div>
           <%= f.label :content_quantity, "内容量" ,class: "text-black" %>
           <div class="mt-1 flex items-center border border-light-gray rounded-lg bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
             <%= f.number_field :content_quantity, placeholder: "例：500", inputmode: "decimal", class: "w-full p-2 bg-transparent outline-none text-black", data: {compare_target: "contentquantityB", action: "input->compare#calculate" } %>
           </div>
-        </>
+        </div>
         <div>
           <%= f.label :pack_quantity, "パック数", class: "text-black" %>
           <div class="mt-1 flex items-center border border-light-gray rounded-lg bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
