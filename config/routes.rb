@@ -33,7 +33,8 @@ Rails.application.routes.draw do
   get "comparison", to: "comparison#index"
   # 設定画面
   get "setting", to: "setting#index"
-
+  # 使い方画面
+  get "guide", to: "guide#index"
   # 利用規約画面
   get "terms", to: "terms#index"
 
