@@ -1,2 +1,2 @@
-module GuideHelper
-end
+# module GuideHelper
+# end
