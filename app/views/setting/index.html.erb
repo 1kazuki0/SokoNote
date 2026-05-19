@@ -60,8 +60,17 @@
   <section>
     <p class="text-xl font-bold text-primary mb-2 px-1">サポート & 情報</p>
     <div class="bg-white rounded-2xl shadow-sm ring ring-light-gray">
+      <!-- 使い方を見る -->
+      <%= link_to guide_path, class: "card shadow-none flex items-center gap-4 p-4 rounded-t-2xl hover:bg-light-gray hover:shadow-lg active:shadow-sm transition", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } do %>
+        <div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary">
+          <span class="material-symbols-outlined text-xl">menu_book</span>
+        </div>
+        <p class="flex-1 font-bold">使い方を見る</p>
+        <span class="material-symbols-outlined text-middle-gray">chevron_right</span>
+      <% end %>
+      <hr class="border-light-gray">
       <!-- 利用規約 -->
-      <%= link_to terms_path, class: "card shadow-none flex items-center gap-4 p-4 rounded-t-2xl hover:bg-light-gray hover:shadow-lg active:shadow-sm transition", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } do %>
+      <%= link_to terms_path, class: "card shadow-none flex items-center gap-4 p-4 hover:bg-light-gray hover:shadow-lg active:shadow-sm transition", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } do %>
         <div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary">
           <span class="material-symbols-outlined text-xl">description</span>
         </div>
@@ -95,7 +104,7 @@
   <section>
     <div class="bg-white rounded-2xl shadow-sm ring ring-light-gray">
       <%= button_to destroy_user_session_path, method: :delete,
-          class: "card w-full flex items-center justify-center gap-2 p-4 text-error font-bold cursor-pointer text-sm hover:bg-error/10 rounded-2xl transition", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } do %>
+          class: "card w-full flex items-center border-2 border-error justify-center gap-2 p-4 text-error font-bold cursor-pointer hover:bg-error/10 rounded-2xl transition", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } do %>
         <span class="material-symbols-outlined text-xl">logout</span>
         ログアウト
       <% end %>

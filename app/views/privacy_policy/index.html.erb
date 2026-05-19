@@ -1,9 +1,11 @@
 <!-- プライバシーポリシー -->
-<% content_for :arrow_back do %>
-  arrow_back
-<% end %>
 <% content_for :title do %>
   プライバシーポリシー
+<% end %>
+<% if user_signed_in? %>
+  <% content_for :back_path, setting_path %>
+<% else %>
+  <% content_for :back_path, root_path %>
 <% end %>
 
 <!-- 白大枠 -->

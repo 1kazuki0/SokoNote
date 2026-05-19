@@ -3,9 +3,7 @@
 <% content_for :header_class do %>
   bg-primary text-white
 <% end %>
-<% content_for :arrow_back do %>
-  arrow_back
-<% end %>
+<% content_for :back_path, root_path %>
 
 <%= render "users/shared/error_messages", resource: resource, message: "アカウントの登録に失敗しました" %>
 <div class="flex flex-col md:flex-row items-center justify-center gap-6">
@@ -20,7 +18,7 @@
           <span class="material-symbols-outlined text-middle-gray mr-2" style="font-size: 20px;">
             account_circle
           </span>
-          <%= f.text_field :name, autofocus: true, placeholder: "お名前", class: "flex-1 outline-none text-black bg-transparent placeholder-gray-400"%>
+          <%= f.text_field :name, autofocus: true, placeholder: "お名前", class: "flex-1 outline-none text-black bg-transparent placeholder-middle-gray" %>
         </div>
         <%= render "shared/field_error", object: f.object, field: :name %>
       </div>
@@ -31,7 +29,7 @@
           <span class="material-symbols-outlined text-middle-gray mr-2" style="font-size: 20px;">
             mail
           </span>
-          <%= f.email_field :email, placeholder: "example@email.com", class: "flex-1 outline-none text-black bg-transparent placeholder-gray-400" %>
+          <%= f.email_field :email, placeholder: "example@email.com", class: "flex-1 outline-none text-black bg-transparent placeholder-middle-gray" %>
         </div>
         <%= render "shared/field_error", object: f.object, field: :email %>
       </div>
@@ -47,7 +45,7 @@
         </div>
         <div class="flex items-center border <%= f.object.errors[:password].any? ? "border-error border-2" : "border-light-gray" %> rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
           <span class="material-symbols-outlined text-middle-gray mr-2" style="font-size: 20px;">lock</span>
-          <%= f.password_field :password, autocomplete: "new-password", placeholder: "••••••••", class: "flex-1 outline-none text-gray-700 bg-transparent placeholder-gray-400" %>
+          <%= f.password_field :password, autocomplete: "new-password", placeholder: "••••••••", class: "flex-1 outline-none text-dark-gray bg-transparent placeholder-middle-gray" %>
         </div>
         <%= render "shared/field_error", object: f.object, field: :password %>
       </div>
@@ -56,7 +54,7 @@
         <%= f.label :password_confirmation, class: "block text-black font-semibold mb-2" %>
         <div class="flex items-center border <%= f.object.errors[:password_confirmation].any? ? "border-error border-2" : "border-light-gray" %> rounded-xl px-3 py-3 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition">
           <span class="material-symbols-outlined text-middle-gray mr-2" style="font-size: 20px;">lock</span>
-          <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "••••••••", class: "flex-1 outline-none text-gray-700 bg-transparent placeholder-gray-400" %>
+          <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "••••••••", class: "flex-1 outline-none text-dark-gray bg-transparent placeholder-middle-gray" %>
         </div>
         <%= render "shared/field_error", object: f.object, field: :password_confirmation %>
       </div>

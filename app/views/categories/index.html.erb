@@ -1,7 +1,5 @@
-<%# ヘッダーを動的表示 %>
-<% content_for :arrow_back do %>
-  arrow_back
-<% end %>
+<!-- ヘッダーを動的表示 -->
+<% content_for :back_path, setting_path %>
 <% content_for :title do %>
   カテゴリー一覧
 <% end %>
@@ -10,38 +8,30 @@
 <% if @categories.any? %>
   <div class="space-y-4">
     <% @categories.each do |category| %>
-      <div class="swipe-card" data-controller="swipe" data-action="touchstart->swipe#touchstart touchend->swipe#touchend touchstart@document->swipe#outsideClick">
+      <div class="swipe-card border border-light-gray" data-controller="swipe" data-action="touchstart->swipe#touchstart touchend->swipe#touchend touchstart@document->swipe#outsideClick">
 
         <%# カテゴリー名：常に左端に固定表示 %>
         <div class="absolute top-0 left-0 bottom-0 flex items-center px-5 z-10">
-          <span class="text-sm font-bold text-gray-800"><%= category.name %></span>
+          <span class="text-sm font-bold text-black"><%= category.name %></span>
         </div>
 
         <%# カードリンク（スライドする層）：右側に配置 %>
         <div class="swipe-inner" data-swipe-target="inner">
-          <span class="material-symbols-outlined text-gray-300 text-sm">keyboard_double_arrow_right</span>
+          <span class="material-symbols-outlined text-light-gray text-sm">keyboard_double_arrow_right</span>
         </div>
 
         <%# アクションボタン %>
         <div class="swipe-actions" data-swipe-target="actions" style="transform: translateX(100%);">
 
-          <%= link_to "編集", edit_category_path(category),
-                data: { action: "touchend->swipe#stopPropagation" },
-                class: "flex items-center justify-center w-16
-                        bg-blue-400 text-white text-xs font-medium self-stretch" %>
-
-          <%= link_to "削除", category_path(category),
-                data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？", action: "touchend->swipe#stopPropagation" },
-                class: "flex items-center justify-center w-16
-                        bg-red-400 text-white text-xs font-medium
-                        border-none cursor-pointer h-full" %>
+          <%= link_to "編集", edit_category_path(category), data: { action: "touchend->swipe#stopPropagation" }, class: "flex items-center justify-center w-16 bg-blue-400 text-white text-sm font-medium self-stretch" %>
+          <%= link_to "削除", category_path(category), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？", action: "touchend->swipe#stopPropagation" }, class: "flex items-center justify-center w-16 bg-error text-white text-sm font-medium border-none cursor-pointer h-full" %>
         </div>
       </div>
     <% end %>
   </div>
-  <%# 商品登録ボタン（FAB） %>
+  <!-- カテゴリー登録遷移ボタン -->
   <div class="fixed bottom-28 left-0 right-0 mx-auto max-w-xl px-6 flex justify-end z-25">
-    <%= link_to new_category_path, class: "card bg-primary text-white px-6 py-4 rounded-full flex items-center font-bold", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } do %>
+    <%= link_to new_category_path, class: "card bg-accent text-white px-6 py-4 rounded-full flex items-center font-bold", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } do %>
       <span class="text-lg">カテゴリー追加</span>
       <span class="material-symbols-outlined">add</span>
     <% end %>
@@ -61,7 +51,7 @@
       よく使うカテゴリーを登録しましょう
     </p>
 
-    <!-- 商品登録遷移ボタン -->
+    <!-- カテゴリー登録遷移ボタン -->
     <div class="w-full px-6 mb-8">
       <%= link_to new_category_path, class: "card bg-primary text-white px-6 py-4 rounded-full flex items-center justify-center font-bold", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } do %>
         <span class="text-xl tracking-widest">カテゴリーを登録する</span>
