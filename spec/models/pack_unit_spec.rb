@@ -24,6 +24,11 @@ RSpec.describe PackUnit, type: :model do
         expect(pack_unit.errors[:name]).to include("を入力してください")
       end
 
+      it "9文字なら有効（境界値）" do
+        pack_unit.name = "a" * 9
+        expect(pack_unit).to be_valid
+      end
+
       it "10文字ちょうどなら有効(境界値)" do
         pack_unit.name = "a" * 10
         expect(pack_unit).to be_valid

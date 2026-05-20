@@ -24,6 +24,11 @@ RSpec.describe Store, type: :model do
         expect(store.errors[:name]).to include("を入力してください")
       end
 
+      it "29文字なら有効（境界値）" do
+        store.name = "a" * 29
+        expect(store).to be_valid
+      end
+
       it "30文字ちょうどなら有効(境界値)" do
         store.name = "a" * 30
         expect(store).to be_valid

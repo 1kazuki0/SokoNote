@@ -23,6 +23,11 @@ RSpec.describe Category, type: :model do
         expect(category).to be_invalid
         expect(category.errors[:name]).to include("を入力してください")
       end
+      
+      it "29文字なら有効（境界線)" do
+        category.name = "a" * 29
+        expect(category).to be_valid
+      end
 
       it "30文字ちょうどなら有効(境界値)" do
         category.name = "a" * 30

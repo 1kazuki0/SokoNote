@@ -23,6 +23,11 @@ RSpec.describe Item, type: :model do
         expect(item).to be_invalid
         expect(item.errors[:name]).to include("を入力してください")
       end
+      
+      it "29文字なら有効（境界値）" do
+        item.name = "a" * 29
+        expect(item).to be_valid
+      end
 
       it "30文字ちょうどなら有効(境界値)" do
         item.name = "a" * 30

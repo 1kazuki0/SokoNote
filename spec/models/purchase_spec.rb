@@ -31,6 +31,11 @@ RSpec.describe Purchase, type: :model do
         expect(purchase).to be_valid
       end
 
+      it "29文字なら有効（境界値）" do
+        purchase.brand = "a" * 29
+        expect(purchase).to be_valid
+      end
+
       it "30文字ちょうどなら有効(境界値)" do
         purchase.brand = "a" * 30
         expect(purchase).to be_valid
