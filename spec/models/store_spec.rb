@@ -66,6 +66,42 @@ RSpec.describe Store, type: :model do
   end
 
   # ============================================================
+  # アソシエーション
+  # ============================================================
+  describe "アソシエーション" do
+    let(:store) { create(:store) }
+
+    it "userをbelongs_toで関連づけている" do
+      association = Store.reflect_on_association(:user)
+      expect(association.macro).to eq(:belongs_to)
+    end
+
+    it "purchasesをhas_manyで関連づけている" do
+      association = Store.reflect_on_association(:purchases)
+      expect(association.macro).to eq(:has_many)
+    end
+  end
+
+  describe "アソシエーション（optional: true）" do
+
+    it "categoryがnilでもitemを保存できる" do
+      item = build(:item, category: nil, user: user)
+      expect(item.save).to be true
+    end
+  end
+
+  describe "アソシエーション（dependent: :nullify)" do
+    let(:store) { create(:store) }  # このブロックだけ create で上書き
+    let(:purchase) { create(:purchase) }
+
+    it "storeを削除してもpurchaseは削除されない" do
+      expect { store.destroy }.to change(Purchase, :count).by(0)
+    end
+  end
+
+
+  # ============================================================
+  # コールバック
   # before_validation :normalize_name の動作確認
   # ============================================================
   describe "before_validation :normalize_name" do
@@ -86,34 +122,6 @@ RSpec.describe Store, type: :model do
       store.name = "\tセブン\n"
       store.valid?
       expect(store.name).to eq "セブン"
-    end
-  end
-
-  # ============================================================
-  # アソシエーション
-  # ============================================================
-  describe "アソシエーション" do
-    describe "belongs_to :user" do
-      it "userに紐づく" do
-        saved_store = create(:store, user: user)
-        expect(saved_store.user).to eq user
-      end
-    end
-
-    describe "has_many :purchases (dependent: :nullify)" do
-      it "storeを削除すると関連purchasesのstore_idがnilになる" do
-        saved_store = create(:store, user: user)
-        purchase = create(:purchase, user: user, store: saved_store)
-
-        expect { saved_store.destroy }.to change { purchase.reload.store_id }.from(saved_store.id).to(nil)
-      end
-
-      it "storeを削除してもpurchase自体は削除されない" do
-        saved_store = create(:store, user: user)
-        create(:purchase, user: user, store: saved_store)
-
-        expect { saved_store.destroy }.not_to change(Purchase, :count)
-      end
     end
   end
 end

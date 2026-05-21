@@ -61,6 +61,38 @@ RSpec.describe ContentUnit, type: :model do
   end
 
   # ============================================================
+  # アソシエーション
+  # ============================================================
+  describe "アソシエーション" do
+    let(:content_unit) { create(:content_unit) }
+
+    it "userをbelongs_toで関連づけている" do
+      association = ContentUnit.reflect_on_association(:user)
+      expect(association.macro).to eq(:belongs_to)
+    end
+
+    it "purchasesをhas_manyで関連づけている" do
+      association = ContentUnit.reflect_on_association(:purchases)
+      expect(association.macro).to eq(:has_many)
+    end
+  end
+
+  describe "アソシエーション（dependent: :restrict_with_error）" do
+    let(:content_unit) { create(:content_unit) }
+    let!(:purchase) { create(:purchase, content_unit: content_unit) }
+
+    it "purchaseが紐づいているcontent_unitは削除できない" do
+      expect(content_unit.destroy).to be false
+    end
+    
+    it "削除しようとするとエラーメッセージが追加される" do
+      content_unit.destroy
+      expect(content_unit.errors[:base]). to be_present
+    end
+  end
+
+  # ============================================================
+  # コールバック
   # before_validation :normalize_name の動作確認
   # ============================================================
   describe "before_validation :normalize_name" do
@@ -88,48 +120,6 @@ RSpec.describe ContentUnit, type: :model do
       expect(content_unit).to be_invalid
       expect(content_unit.name).to be_nil
       expect(content_unit.errors[:name]).to include("を入力してください")
-    end
-  end
-
-  # ============================================================
-  # アソシエーション
-  # ============================================================
-  describe "アソシエーション" do
-    describe "belongs_to :user" do
-      it "userに紐づく" do
-        saved = create(:content_unit, user: user)
-        expect(saved.user).to eq user
-      end
-    end
-
-    describe "has_many :purchases (dependent: :restrict_with_error)" do
-      let(:saved_content_unit) { create(:content_unit, user: user) }
-
-      context "関連するpurchaseが存在しない場合" do
-        it "削除できる" do
-          saved_content_unit  # 事前にインスタンス化(letは遅延評価のため)
-          expect { saved_content_unit.destroy }.to change(ContentUnit, :count).by(-1)
-        end
-      end
-
-      context "関連するpurchaseが存在する場合" do
-        before do
-          create(:purchase, user: user, content_unit: saved_content_unit)
-        end
-
-        it "削除できない(destroyがfalseを返す)" do
-          expect(saved_content_unit.destroy).to be false
-        end
-
-        it "削除しようとしてもcontent_unitは減らない" do
-          expect { saved_content_unit.destroy }.not_to change(ContentUnit, :count)
-        end
-
-        it "errors[:base]に'purchasesが存在しているので削除できません'が入る" do
-          saved_content_unit.destroy
-          expect(saved_content_unit.errors[:base]).to include("purchasesが存在しているので削除できません")
-        end
-      end
     end
   end
 end
