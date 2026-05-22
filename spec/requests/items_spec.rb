@@ -1,153 +1,182 @@
-# require "rails_helper"
+require "rails_helper"
 
-# RSpec.describe "Items", type: :request do
-#   let(:user) { User.create(name: "sokonote", email: "sokonote@email.com", password: "password") }
+RSpec.describe "Items", type: :request do
+  let(:user) { create(:user) }
+  describe "GET /items（商品一覧画面）" do
+    context "ログインしていない場合" do
+      before { get items_path }
 
-#   describe "GET /items" do
-#     context "ログインしていない場合" do
-#       it "ログイン画面にリダイレクトされる" do
-#         get items_path
-#         expect(response).to have_http_status(302)
-#       end
-#     end
+      it "ログイン画面へリダイレクトされる" do
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
 
-#     context "ログインしている場合" do
-#       it "HTTPステータスコード200を返す" do
-#         sign_in user
-#         get items_path
-#         expect(response).to have_http_status(200)
-#       end
-#     end
-#   end
+    context "ログインしている場合" do
+      before { sign_in user }
 
-#   describe "GET /new_step1_items" do
-#     context "ログインしていない場合" do
-#       it "ログイン画面にリダイレクトされる" do
-#         get new_step1_items_path
-#         expect(response).to have_http_status(302)
-#       end
-#     end
+      context "商品を1件も登録していない場合" do
+        before { get items_path }
 
-#     context "ログインしている場合" do
-#       it "HTTPステータスコード200を返す" do
-#         sign_in user
-#         get new_step1_items_path
-#         expect(response).to have_http_status(200)
-#       end
-#     end
-#   end
+        it "HTTPステータス200を返す" do
+          expect(response).to have_http_status(200)
+        end
 
-#   describe "POST /save_new_step1_items" do
-#     context "ログインしていない場合" do
-#       it "ログイン画面にリダイレクトされる" do
-#         post save_new_step1_items_path
-#         expect(response).to have_http_status(302)
-#       end
-#     end
+        it "使い方画面へのリンクが含まれる" do
+          expect(response.body).to include(guide_path)
+        end
 
-#     context "ログインしている場合" do
-#       context "無効なデータの場合" do
-#         it "new_step1にrenderする" do
-#           sign_in user
-#           post save_new_step1_items_path, params: { item_new_step1: { item_name: nil } }
-#           expect(response).to have_http_status(422)
-#         end
-#       end
+        it "商品登録画面へのリンクが含まれる" do
+          expect(response.body).to include(new_item_registration_path)
+        end
 
-#       context "有効なデータの場合" do
-#         it "new_step2にリダイレクトされる" do
-#           sign_in user
-#           post save_new_step1_items_path, params: { item_new_step1: { item_name: "ハム", category_name: "食品", content_quantity: 5, pack_quantity: 3, price: 210, tax_rate: 0, unit_price: 14 } }
-#           expect(response).to redirect_to new_step2_items_path
-#         end
-#       end
-#     end
-#   end
+        it "「商品を登録しましょう」文言が含まれる" do
+          expect(response.body).to include("商品を登録しましょう")
+        end
+      end
 
-#   describe "GET /new_step2_items" do
-#     context "ログインしていない場合" do
-#       it "ログイン画面にリダイレクトされる" do
-#         get new_step2_items_path
-#         expect(response).to have_http_status(302)
-#       end
-#     end
+      context "商品が1件以上登録している場合" do
+        let!(:item1) { create(:item, user: user, name: "牛乳") }
+        let!(:item2) { create(:item, user: user, name: "パン") }
 
-#     context "ログインしている場合" do
-#       context "new_step1のsessionデータがない場合" do
-#         it "new_step1_items_pathにリダイレクトされる" do
-#           sign_in user
-#           get new_step2_items_path
-#           expect(response).to redirect_to new_step1_items_path
-#         end
-#       end
+        before { get items_path }
 
-#       context "new_step1のsessionデータがある場合" do
-#         it "HTTPステータスコード200を返す" do
-#           sign_in user
-#           post save_new_step1_items_path, params: { item_new_step1: { item_name: "ハム", category_name: "食品", content_quantity: 5, pack_quantity: 3, price: 210, tax_rate: 0, unit_price: 14 } }
-#           get new_step2_items_path
-#           expect(response).to have_http_status(200)
-#         end
-#       end
-#     end
-#   end
-#   describe "POST /items" do
-#     context "ログインしていない場合" do
-#       it "ログイン画面にリダイレクトされる" do
-#         post items_path
-#         expect(response).to have_http_status(302)
-#       end
-#     end
+        it "HTTPステータス200を返す" do
+          expect(response).to have_http_status(200)
+        end
 
-#     context "ログインしている場合" do
-#       before do
-#         sign_in user
-#         post save_new_step1_items_path, params: { item_new_step1: { item_name: "ハム", category_name: "食品", content_quantity: 5, pack_quantity: 3, price: 210, tax_rate: 0, unit_price: 14 } }
-#       end
+        it "自分の商品名が表示される" do
+          expect(response.body).to include("牛乳")
+          expect(response.body).to include("パン")
+        end
 
-#       context "バリデーションエラーの場合" do
-#         it "new_step2_items_pathにrenderされる" do
-#           post items_path, params: { item_new_step2: { store: "スーパー大阪店", brand: "日本ハム", content_unit: "枚", pack_unit: "パック", purchased_on: nil } }
-#           expect(response).to have_http_status(422)
-#         end
-#       end
+        it "検索フォームが表示される" do
+          expect(response.body).to include("商品を検索")
+        end
 
-#       context "必要な値が入力された場合" do
-#         it "items_pathにリダイレクトされる" do
-#           post items_path, params: { item_new_step2: { store: "スーパー大阪店", brand: "日本ハム", content_unit: "枚", pack_unit: "パック", purchased_on: "2026/3/12" } }
-#           expect(response).to redirect_to items_path
-#         end
-#       end
-#     end
-#   end
+        it "商品登録画面へのリンクが含まれる" do
+          expect(response.body).to include(new_item_registration_path)
+        end
 
-#   describe "GET /items/1" do
-#     let(:category) { user.categories.create(name: "食品") }
-#     let(:item) { category.items.create(name: "ハム", user: user) }
-#     context "ログインしていない場合" do
-#       it "ログイン画面にリダイレクトされる" do
-#         get item_path(item)
-#         expect(response).to have_http_status(302)
-#       end
-#     end
+        context "他のユーザーの商品がある場合" do
+          let(:other_user) { create(:user) }
+          let!(:other_item) { create(:item, user: other_user) }
 
-#     context "ログインしている場合" do
-#       it "HTTPステータスコード200を返す" do
-#         sign_in user
-#         get item_path(item)
-#         expect(response).to have_http_status(200)
-#       end
-#     end
+          it "他のユーザーの商品は表示されない" do
+            get items_path
+            expect(response.body).not_to include("他人の商品")
+          end
+        end
+      end
 
-#     context "他のユーザーのitemの場合" do
-#       let(:other_user) { User.create(name: "other", email: "other@email.com", password: "password") }
-#       let(:other_category) { other_user.categories.create(name: "食品") }
-#       let(:other_item) { other_category.items.create(name: "ハム", user: other_user) }
-#       it "HTTPステータスコード404を返す" do
-#         sign_in user
-#         get item_path(other_item)
-#         expect(response).to have_http_status(404)
-#       end
-#     end
-#   end
-# end
+      context "検索機能" do
+        let!(:milk) { create(:item, user: user, name: "牛乳") }
+        let!(:bread) { create(:item, user: user, name: "パン") }
+
+        it "商品名で部分一致検索ができる" do
+          get items_path, params: { q: { name_cont: "牛" } }
+          expect(response.body).to include("牛乳")
+          expect(response.body).not_to include("パン")
+        end
+
+        it "検索結果が0件の場合「見つかりませんでした」が表示される" do
+          get items_path, params: { q: { name_cont: "存在しない商品" } }
+          expect(response.body).to include("検索した結果、見つかりませんでした")
+        end
+      end
+
+      context "カテゴリ絞り込み" do
+        let!(:food_category) { create(:category, user: user, name: "食品") }
+        let!(:daily_category) { create(:category, user: user, name: "日用品") }
+        let!(:milk) { create(:item, user: user, name: "牛乳", category: food_category) }
+        let!(:soap) { create(:item, user: user, name: "石鹸", category: daily_category) }
+        let!(:no_category_item) { create(:item, user: user, name: "未分類商品", category: nil) }
+
+        it "特定カテゴリで絞り込みできる" do
+          get items_path, params: { q: { category_id_eq: food_category.id } }
+          expect(response.body).to include("牛乳")
+          expect(response.body).not_to include("石鹸")
+        end
+
+        it "カテゴリ未登録の商品だけ絞り込みできる" do
+          get items_path, params: { q: { category_id_null: "1" } }
+          expect(response.body).to include("未分類商品")
+          expect(response.body).not_to include("牛乳")
+          expect(response.body).not_to include("石鹸")
+        end
+      end
+    end
+  end
+
+  describe "DELETE /items/:id （商品削除）" do
+    let!(:item) { create(:item, user: user) }
+
+    context "ログインしていない場合" do
+      it "ログイン画面へリダイレクトされる" do
+        delete item_path(item)
+        expect(response).to redirect_to(new_user_session_path)
+      end
+
+      it "商品が削除されない" do
+        expect { delete item_path(item) }.not_to change(Item, :count)
+      end
+    end
+
+    context "ログインしている場合" do
+      before { sign_in user }
+      
+      context "購入履歴がない場合" do
+        it "商品が削除される" do
+          expect { delete item_path(item) }.to change(Item, :count).by(-1)
+        end
+
+        it "商品一覧画面へリダイレクトされる" do
+          delete item_path(item)
+          expect(response).to redirect_to(items_path)
+        end
+
+        it "フラッシュメッセージが設定される" do
+          delete item_path(item)
+          expect(flash[:success]).to include(item.name)
+          expect(flash[:success]).to include("削除しました")
+        end
+      end
+
+      context "購入履歴がある場合" do
+        let!(:purchase) { create(:purchase, item: item) }
+
+        it "商品が削除されない" do
+          expect{ delete item_path(item) }.not_to change(Item, :count)
+        end
+
+        it "購入履歴画面へリダイレクトされる" do
+          delete item_path(item)
+          expect(response).to redirect_to(item_purchases_path(item))
+        end
+
+        it "フラッシュメッセージが設定される" do
+          delete item_path(item)
+          expect(flash[:error]).to eq("購入履歴がある商品は削除できません")
+        end
+      end
+
+      context "他のユーザーの商品の場合" do
+        let(:other_user) { create(:user) }
+        let!(:other_item) { create(:item, user: other_user) }
+
+        it "HTTPステータス404を返す" do
+          delete item_path(other_item)
+          expect(response).to have_http_status(:not_found)
+        end
+
+        it "商品が削除されない" do
+          expect {
+            begin
+              delete item_path(other_item)
+            rescue ActiveRecord::RecordNotFound
+            end
+          }.not_to change(Item, :count)
+        end
+      end
+    end
+  end
+end
