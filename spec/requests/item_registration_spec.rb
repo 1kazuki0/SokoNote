@@ -100,7 +100,7 @@ RSpec.describe "ItemRegistrations", type: :request do
         end
 
         it "ContentUnitが1件作成される" do
-          expect { post item_registration_path, params: valid_params }.to change(Purchase, :count).by(1)
+          expect { post item_registration_path, params: valid_params }.to change(ContentUnit, :count).by(1)
         end
 
         it "完了画面へリダイレクトされる" do
@@ -287,14 +287,14 @@ RSpec.describe "ItemRegistrations", type: :request do
           let(:other_user) { create(:user) }
           let!(:other_item) { create(:item, user: other_user, name: "他人の商品") }
           let!(:other_purchase) { create(:purchase, item: other_item, user: other_user) }
-        end
 
-        before { get last_purchase_item_registration_path, params: { name: "他人の商品" } }
+          before { get last_purchase_item_registration_path, params: { name: "他人の商品" } }
 
-        it "nil値のJSONを返す（他人のデータは取得できない）" do
-          json = JSON.parse(response.body)
-          expect(json["content_quantity"]).to be_nil
-          expect(json["content_unit_name"]).to be_nil
+          it "nil値のJSONを返す（他人のデータは取得できない）" do
+            json = JSON.parse(response.body)
+            expect(json["content_quantity"]).to be_nil
+            expect(json["content_unit_name"]).to be_nil
+          end
         end
       end
     end

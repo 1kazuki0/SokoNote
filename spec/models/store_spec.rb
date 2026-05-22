@@ -91,10 +91,11 @@ RSpec.describe Store, type: :model do
 
   describe "アソシエーション（dependent: :nullify)" do
     let(:store) { create(:store) }  # このブロックだけ create で上書き
-    let(:purchase) { create(:purchase) }
+    let!(:purchase) { create(:purchase, store: store, user: store.user) }
 
     it "storeを削除してもpurchaseは削除されない" do
-      expect { store.destroy }.to change(Purchase, :count).by(0)
+      expect { store.destroy }.not_to change(Purchase, :count)
+      expect(purchase.reload.store_id).to be_nil
     end
   end
 

@@ -75,10 +75,11 @@ RSpec.describe Category, type: :model do
 
   describe "アソシエーション（dependent: :nullify)" do
     let(:category) { create(:category) }  # このブロックだけ create で上書き
-    let(:item) { create(:item) }
+    let!(:item) { create(:item, category: category) }
 
     it "categoryを削除してもitemは削除されない" do
       expect { category.destroy }.to change(Item, :count).by(0)
+      expect(item.reload.category_id).to be_nil
     end
   end
 
