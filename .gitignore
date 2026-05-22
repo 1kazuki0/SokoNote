@@ -41,3 +41,6 @@
 
 .DS_Store
 /vendor/bundle
+
+# カバレッジレポートはgit管理不要のため記載
+/coverage/

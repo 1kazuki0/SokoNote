@@ -24,6 +24,11 @@ RSpec.describe Item, type: :model do
         expect(item.errors[:name]).to include("を入力してください")
       end
 
+      it "29文字なら有効（境界値）" do
+        item.name = "a" * 29
+        expect(item).to be_valid
+      end
+
       it "30文字ちょうどなら有効(境界値)" do
         item.name = "a" * 30
         expect(item).to be_valid
@@ -73,8 +78,46 @@ RSpec.describe Item, type: :model do
       end
     end
   end
+  # ============================================================
+  # アソシエーション
+  # ============================================================
+  describe "アソシエーション" do
+    let(:item) { create(:item) }
+
+    it "userをbelongs_toで関連づけている" do
+      association = Item.reflect_on_association(:user)
+      expect(association.macro).to eq(:belongs_to)
+    end
+
+    it "categoryをbelongs_toで関連づけている" do
+      association = Item.reflect_on_association(:category)
+      expect(association.macro).to eq(:belongs_to)
+    end
+
+    it "purchasesをhas_manyで関連づけている" do
+      association = Item.reflect_on_association(:purchases)
+      expect(association.macro).to eq(:has_many)
+    end
+  end
+
+  describe "アソシエーション（optional: true）" do
+    it "categoryがnilでもitemを保存できる" do
+      item = build(:item, category: nil, user: user)
+      expect(item.save).to be true
+    end
+  end
+
+  describe "アソシエーション（dependent: :destroy）" do
+    let(:item) { create(:item) }
+    let!(:purchase) { create(:purchase, item: item) } # !を入れることで、テスト実行前にデータを作成する（通常は:purchaseを初めて使ったタイミング）
+
+    it "itemを削除するとpurchasesも削除される" do
+      expect { item.destroy }.to change(Purchase, :count).by(-1)
+    end
+  end
 
   # ============================================================
+  # コールバック
   # before_validation :normalize_name の動作確認
   # ============================================================
   describe "before_validation :normalize_name" do
@@ -102,48 +145,6 @@ RSpec.describe Item, type: :model do
       expect(item).to be_invalid
       expect(item.name).to be_nil
       expect(item.errors[:name]).to include("を入力してください")
-    end
-  end
-
-  # ============================================================
-  # アソシエーション
-  # ============================================================
-  describe "アソシエーション" do
-    describe "belongs_to :user" do
-      it "userに紐づく" do
-        saved = create(:item, user: user)
-        expect(saved.user).to eq user
-      end
-    end
-
-    describe "belongs_to :category (optional: true)" do
-      it "categoryに紐づく" do
-        category = create(:category, user: user)
-        saved = create(:item, user: user, category: category)
-        expect(saved.category).to eq category
-      end
-
-      it "categoryがnilでも保存できる" do
-        saved = build(:item, :not_category_item, user: user)
-        expect(saved).to be_valid
-        expect { saved.save! }.not_to raise_error
-      end
-    end
-
-    describe "has_many :purchases (dependent: :destroy)" do
-      it "itemを削除すると関連purchasesも削除される" do
-        saved_item = create(:item, user: user)
-        create(:purchase, user: user, item: saved_item)
-
-        expect { saved_item.destroy }.to change(Purchase, :count).by(-1)
-      end
-
-      it "複数のpurchaseがあっても全て削除される" do
-        saved_item = create(:item, user: user)
-        create_list(:purchase, 3, user: user, item: saved_item)
-
-        expect { saved_item.destroy }.to change(Purchase, :count).by(-3)
-      end
     end
   end
 end

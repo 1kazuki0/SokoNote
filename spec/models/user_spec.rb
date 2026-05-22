@@ -166,8 +166,42 @@ RSpec.describe User, type: :model do
   end
 
   # ============================================================
-  # アソシエーション (dependent: :destroy)
+  # アソシエーション
   # ============================================================
+  describe "アソシエーション" do
+    let(:user) { create(:user) }  # このブロックだけ create で上書き
+
+    it "categoriesをhas_manyで関連づけている" do
+      association = User.reflect_on_association(:categories)
+      expect(association.macro).to eq(:has_many)
+    end
+
+    it "itemsをhas_manyで関連づけている" do
+      association = User.reflect_on_association(:items)
+      expect(association.macro).to eq(:has_many)
+    end
+
+    it "storesをhas_manyで関連づけている" do
+      association = User.reflect_on_association(:stores)
+      expect(association.macro).to eq(:has_many)
+    end
+
+    it "purchasesをhas_manyで関連づけている" do
+      association = User.reflect_on_association(:purchases)
+      expect(association.macro).to eq(:has_many)
+    end
+
+    it "content_unitsをhas_manyで関連づけている" do
+      association = User.reflect_on_association(:content_units)
+      expect(association.macro).to eq(:has_many)
+    end
+
+    it "pack_unitsをhas_manyで関連づけている" do
+      association = User.reflect_on_association(:pack_units)
+      expect(association.macro).to eq(:has_many)
+    end
+  end
+
   describe "アソシエーション (dependent: :destroy)" do
     let(:user) { create(:user) }  # このブロックだけ create で上書き
 
@@ -179,6 +213,142 @@ RSpec.describe User, type: :model do
     it "userを削除するとitemsも削除される" do
       user.items.create!(name: "牛乳")
       expect { user.destroy }.to change(Item, :count).by(-1)
+    end
+
+    it "userを削除するとstoresも削除される" do
+      user.stores.create!(name: "〇〇スーパー大阪店")
+      expect { user.destroy }.to change(Store, :count).by(-1)
+    end
+
+    it "userを削除するとpurchasesも削除される" do
+      item = user.items.create!(name: "牛乳")
+      content_unit = user.content_units.create!(name: "ml")
+      item.purchases.create!(brand: nil, content_quantity: 1000, pack_quantity: 1, price: 200, tax_rate: 0, unit_price: 0.2, purchased_on: "2026/01/01", content_unit: content_unit, user: user)
+      expect { user.destroy }.to change(Purchase, :count).by(-1)
+    end
+
+    it "userを削除するとcontent_unitsも削除される" do
+      user.content_units.create!(name: "ml")
+      expect { user.destroy }.to change(ContentUnit, :count).by(-1)
+    end
+
+    it "userを削除するとpack_unitsも削除される" do
+      user.pack_units.create!(name: "パック")
+      expect { user.destroy }. to change(PackUnit, :count).by(-1)
+    end
+  end
+
+  # ============================================================
+  # ビジネスロジック
+  # ============================================================
+  describe "ビジネスロジック" do
+    describe "#line_user?" do
+      context "LINEログイン経由の登録ではない場合" do
+        let(:user) { create(:user) }  # このブロックだけ create で上書き
+        it "falseを返す" do
+          expect(user.line_user?).to be false
+        end
+      end
+
+      context "LINEログイン経由の登録の場合" do
+        let(:line_user) { create(:user, :line_user) }
+        it "trueを返す" do
+          expect(line_user.line_user?).to be true
+        end
+      end
+    end
+
+    describe "#email_required?" do
+      context "LINEログイン経由の登録ではない場合" do
+        let(:user) { create(:user) }  # このブロックだけ create で上書き
+        it "trueを返す" do
+          expect(user.email_required?).to be true
+        end
+      end
+
+      context "LINEログイン経由の登録の場合" do
+        let(:line_user) { create(:user, :line_user) }
+        it "falseを返す" do
+          expect(line_user.email_required?).to be false
+        end
+      end
+    end
+
+    describe "#password_required?" do
+      context "LINEログイン経由の登録の場合" do
+        let(:line_user) { create(:user, :line_user) }
+        it "falseを返す" do
+          expect(line_user.password_required?).to be false
+        end
+
+        context "通常メールアドレス登録のユーザーの場合" do
+          let(:user) { create(:user) }
+
+          context "新規登録時（未保存）" do
+            let(:new_user) { build(:user) }
+            it "trueを返す" do
+              expect(new_user.password_required?).to be true
+            end
+          end
+
+          context "既存ユーザーがパスワードを入力していない場合" do
+            it "falseを返す" do
+              user.password = nil
+              user.password_confirmation = nil
+              expect(user.password_required?).to be false
+            end
+          end
+
+          context "既存ユーザーがパスワードを変更しようとしている場合" do
+            it "trueを返す" do
+              user.password = "newpassword"
+              user.password_confirmation = "newpassword"
+              expect(user.password_required?).to be true
+            end
+          end
+        end
+      end
+    end
+
+    describe "#demo?" do
+      context "emailがデモユーザーのメールアドレスと一致する場合" do
+        let(:demo_user) { create(:user, name: ENV.fetch("DEMO_USER_NAME"), email: ENV.fetch("DEMO_USER_EMAIL"), password: ENV.fetch("DEMO_USER_PASSWORD")) } # デモユーザーの作成
+        it "trueを返す" do
+          expect(demo_user.demo?).to be true
+        end
+      end
+
+      context "emailがデモユーザーのメールアドレスと一致しない場合" do
+        let(:user) { build(:user, email: "sample@email.com") }
+        it "falseを返す" do
+          expect(user.demo?).to be false
+        end
+      end
+    end
+  end
+  # ============================================================
+  # コールバック
+  # before_update :prevent_demo_user_changes の動作確認
+  # ============================================================
+  describe "コールバック" do
+    describe "before_update :prevent_demo_user_changes" do
+      context "デモユーザーではない場合" do
+        let(:user) { create(:user) }  # このブロックだけ create で上書き
+        it "nameは変更することができる" do
+          user.name = "名前変更"
+          expect(user.save).to be true
+        end
+      end
+
+      context "デモユーザーの場合" do
+        let(:demo_user) { create(:user, name: ENV.fetch("DEMO_USER_NAME"), email: ENV.fetch("DEMO_USER_EMAIL"), password: ENV.fetch("DEMO_USER_PASSWORD")) } # デモユーザーの作成
+        context "name,email,passwordのいずれかを変更しようとした場合" do
+          it "保存に失敗してエラーメッセージを返す" do
+            demo_user.name = "名前変更"
+            expect(demo_user.save).to be false
+          end
+        end
+      end
     end
   end
 end

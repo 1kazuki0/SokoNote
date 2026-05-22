@@ -110,6 +110,9 @@ group :test do
   # CapybaraとChromeをつなぐ橋の役割を持つgem
   gem "selenium-webdriver"
   # webdrivers は不要！selenium 4.6以降は自動管理
+
+  # Ruby用のコードカバレッジ計測するgem
+  gem "simplecov", require: false
 end
 
 # 本番環境のみ

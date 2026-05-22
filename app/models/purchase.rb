@@ -12,7 +12,7 @@ class Purchase < ApplicationRecord
   before_validation :normalize_brand
 
 
-  # --- Itemモデルのアソシエーション ---
+  # --- Purchaseモデルのアソシエーション ---
   belongs_to :user
   belongs_to :item
   belongs_to :store, optional: true # store_idがnull許可に変更

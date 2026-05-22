@@ -112,6 +112,9 @@ jobs:
           RAILS_ENV: test
           DATABASE_URL: postgres://postgres:postgres@localhost:5432/myapp_test # PostgreSQLへの接続先を環境変数で指定
           MAIL_FROM: "from@example.com" # SMTPのテスト用メールフォームを指定
+          DEMO_USER_EMAIL: demo@example.com
+          DEMO_USER_PASSWORD: password
+          DEMO_USER_NAME: デモユーザー
           # REDIS_URL: redis://localhost:6379/0
         run: bundle exec rspec spec/models spec/requests  spec/system # runはシェルコマンドを実行できる
 

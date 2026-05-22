@@ -15,6 +15,10 @@
 # 　→　つまり、重いものはrails_helper.rbに書く。
 # 参照 https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
+# テストフレームワークの一番前に記載（simplecovを読み込む記述）
+require 'simplecov'
+SimpleCov.start
+
 # Rspec全体の設定。設定内容はconfigという名前で扱う
 RSpec.configure do |config|
   # 以下は通常trueで、Rspecの期待値検証をどのライブラリで動かすか決めている。ここでは:rspec  でRspecを使用している。
