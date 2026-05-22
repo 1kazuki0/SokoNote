@@ -4,7 +4,7 @@ RSpec.describe "User::Sessions", type: :request do
   describe "GET /user/sign_in（ログイン画面）" do
     context "ログインしていない場合" do
       before { get new_user_session_path }
-      
+
       it "HTTPステータス200を返す" do
         expect(response).to have_http_status(200)
       end
@@ -63,7 +63,7 @@ RSpec.describe "User::Sessions", type: :request do
     context "パラメータが無効な場合" do
       context "パスワードが誤り" do
         let(:user_params) { { user: { email: user.email, password: "wrong_password" } } }
-        
+
         it "HTTPステータス422を返す" do
           post user_session_path, params: user_params
           expect(response).to have_http_status(422)

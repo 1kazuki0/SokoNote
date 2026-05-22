@@ -83,7 +83,6 @@ RSpec.describe Store, type: :model do
   end
 
   describe "アソシエーション（optional: true）" do
-
     it "categoryがnilでもitemを保存できる" do
       item = build(:item, category: nil, user: user)
       expect(item.save).to be true

@@ -87,7 +87,7 @@ RSpec.describe "Users::Registrations", type: :request do
         sign_in user
         get edit_user_registration_path
       end
-      
+
       it "HTTPステータス200を返す" do
         expect(response).to have_http_status(200)
       end
@@ -106,7 +106,7 @@ RSpec.describe "Users::Registrations", type: :request do
   describe "PATCH /users（アカウント更新処理）" do
     let(:user) { create(:user) }
     before { sign_in user }
-  
+
     context "パラメータが有効の場合" do
       let(:user) { create(:user, password: "password") }
       let(:user_params) { { user: { name: "テストネーム" } } }
@@ -123,7 +123,7 @@ RSpec.describe "Users::Registrations", type: :request do
     end
 
     context "パラメータが無効の場合" do
-      let(:user_params) { { user: attributes_for(:user, name: nil ) } }
+      let(:user_params) { { user: attributes_for(:user, name: nil) } }
       it "HTTPステータス422を返す" do
         patch user_registration_path, params: user_params
         expect(response).to have_http_status(422)

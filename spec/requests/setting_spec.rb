@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Setting", type: :request do # モデルの存在しないcontrollerのため"Setting"で文字列指定
   let(:user) { create(:user) }
-  
+
   describe "GET /setting（設定画面）" do
     context "ログインしていない場合" do
       it "ログイン画面へリダイレクトされる" do

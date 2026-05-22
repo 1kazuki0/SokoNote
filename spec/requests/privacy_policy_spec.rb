@@ -36,4 +36,3 @@ RSpec.describe "PrivacyPolicies", type: :request do
     end
   end
 end
-

@@ -203,7 +203,7 @@ RSpec.describe "Stores", type: :request do
     context "他のユーザーの店舗にアクセスした場合" do
       let(:other_user) { create(:user) }
       let!(:other_store) { create(:store, user: other_user) }
-      
+
       before { sign_in user }
 
       it "HTTPステータス404を返す" do
@@ -214,7 +214,7 @@ RSpec.describe "Stores", type: :request do
   end
 
   describe "PATCH /stores/:id（更新処理）" do
-    let!(:store) { create(:store, user: user, name: "店舗A" ) }
+    let!(:store) { create(:store, user: user, name: "店舗A") }
 
     context "ログインしていない場合" do
       it "ログイン画面へリダイレクトされる" do
@@ -246,7 +246,7 @@ RSpec.describe "Stores", type: :request do
       end
 
       context "パラメータが無効な場合" do
-        let(:invalid_params) { { store: { name: ""} } }
+        let(:invalid_params) { { store: { name: "" } } }
 
         it "更新されない" do
           patch store_path(store), params: invalid_params

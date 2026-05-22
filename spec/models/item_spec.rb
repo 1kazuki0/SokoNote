@@ -101,7 +101,6 @@ RSpec.describe Item, type: :model do
   end
 
   describe "アソシエーション（optional: true）" do
-
     it "categoryがnilでもitemを保存できる" do
       item = build(:item, category: nil, user: user)
       expect(item.save).to be true
@@ -110,7 +109,7 @@ RSpec.describe Item, type: :model do
 
   describe "アソシエーション（dependent: :destroy）" do
     let(:item) { create(:item) }
-    let!(:purchase) { create(:purchase, item: item)} #!を入れることで、テスト実行前にデータを作成する（通常は:purchaseを初めて使ったタイミング） 
+    let!(:purchase) { create(:purchase, item: item) } # !を入れることで、テスト実行前にデータを作成する（通常は:purchaseを初めて使ったタイミング）
 
     it "itemを削除するとpurchasesも削除される" do
       expect { item.destroy }.to change(Purchase, :count).by(-1)

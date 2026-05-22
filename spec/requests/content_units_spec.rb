@@ -203,7 +203,7 @@ RSpec.describe "ContentUnits", type: :request do
     context "他のユーザーの単位（内容量）にアクセスした場合" do
       let(:other_user) { create(:user) }
       let!(:other_content_unit) { create(:content_unit, user: other_user) }
-      
+
       before { sign_in user }
 
       it "HTTPステータス404を返す" do
@@ -214,7 +214,7 @@ RSpec.describe "ContentUnits", type: :request do
   end
 
   describe "PATCH /content_units/:id（更新処理）" do
-    let!(:content_unit) { create(:content_unit, user: user, name: "単位（内容量）A" ) }
+    let!(:content_unit) { create(:content_unit, user: user, name: "単位（内容量）A") }
 
     context "ログインしていない場合" do
       it "ログイン画面へリダイレクトされる" do
@@ -246,7 +246,7 @@ RSpec.describe "ContentUnits", type: :request do
       end
 
       context "パラメータが無効な場合" do
-        let(:invalid_params) { { content_unit: { name: ""} } }
+        let(:invalid_params) { { content_unit: { name: "" } } }
 
         it "更新されない" do
           patch content_unit_path(content_unit), params: invalid_params

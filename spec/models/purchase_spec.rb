@@ -270,12 +270,11 @@ RSpec.describe Purchase, type: :model do
   end
 
   describe "アソシエーション（optional: true）" do
-
     it "storeがnilでもpurchaseを保存できる" do
       purchase = build(:purchase, store: nil, user: user, item: item, content_unit: content_unit, pack_unit: pack_unit)
       expect(purchase.save).to be true
     end
-    
+
     it "pack_unitがnilでもpurchaseを保存できる" do
       purchase = build(:purchase, store: store, user: user, item: item, content_unit: content_unit, pack_unit: nil)
       expect(purchase.save).to be true

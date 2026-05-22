@@ -23,7 +23,7 @@ RSpec.describe Category, type: :model do
         expect(category).to be_invalid
         expect(category.errors[:name]).to include("を入力してください")
       end
-      
+
       it "29文字なら有効（境界線)" do
         category.name = "a" * 29
         expect(category).to be_valid
@@ -59,7 +59,7 @@ RSpec.describe Category, type: :model do
   # ============================================================
   # アソシエーション
   # ============================================================
-  describe "アソシエーション" do 
+  describe "アソシエーション" do
     let(:category) { create(:category) }  # このブロックだけ create で上書き
 
     it "userをbelongs_toで関連づけている" do

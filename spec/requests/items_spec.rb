@@ -123,7 +123,7 @@ RSpec.describe "Items", type: :request do
 
     context "ログインしている場合" do
       before { sign_in user }
-      
+
       context "購入履歴がない場合" do
         it "商品が削除される" do
           expect { delete item_path(item) }.to change(Item, :count).by(-1)
@@ -145,7 +145,7 @@ RSpec.describe "Items", type: :request do
         let!(:purchase) { create(:purchase, item: item) }
 
         it "商品が削除されない" do
-          expect{ delete item_path(item) }.not_to change(Item, :count)
+          expect { delete item_path(item) }.not_to change(Item, :count)
         end
 
         it "購入履歴画面へリダイレクトされる" do

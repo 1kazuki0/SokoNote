@@ -35,7 +35,7 @@ RSpec.describe "ItemRegistrations", type: :request do
           get new_item_registration_path, params: {
             purchase_a: {
               item_name: "牛乳",
-              content_quantity: "1000", 
+              content_quantity: "1000",
               content_unit_name: "ml",
               price: "200",
               tax_rate: "8"
@@ -135,7 +135,7 @@ RSpec.describe "ItemRegistrations", type: :request do
       context "パラメータが無効な場合" do
         let(:invalid_params) do
           {
-            item_registrations: { 
+            item_registrations: {
               item_name: "",
               content_quantity: 1000,
               content_unit_name: "ml",
@@ -300,4 +300,3 @@ RSpec.describe "ItemRegistrations", type: :request do
     end
   end
 end
-

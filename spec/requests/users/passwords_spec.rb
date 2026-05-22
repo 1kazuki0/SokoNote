@@ -34,7 +34,7 @@ RSpec.describe "User::Passwords", type: :request do
       let(:user_params) { { user: { email: "" } } }
 
       it "メールが送信されない" do
-        expect { post user_password_path, params: user_params} .not_to change { ActionMailer::Base.deliveries.count }
+        expect { post user_password_path, params: user_params } .not_to change { ActionMailer::Base.deliveries.count }
       end
 
       it "リセット要求フォームへリダイレクトされる" do

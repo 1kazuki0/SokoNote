@@ -168,9 +168,9 @@ RSpec.describe User, type: :model do
   # ============================================================
   # アソシエーション
   # ============================================================
-  describe "アソシエーション" do 
+  describe "アソシエーション" do
     let(:user) { create(:user) }  # このブロックだけ create で上書き
-    
+
     it "categoriesをhas_manyで関連づけている" do
       association = User.reflect_on_association(:categories)
       expect(association.macro).to eq(:has_many)
@@ -249,7 +249,7 @@ RSpec.describe User, type: :model do
           expect(user.line_user?).to be false
         end
       end
-      
+
       context "LINEログイン経由の登録の場合" do
         let(:line_user) { create(:user, :line_user) }
         it "trueを返す" do
@@ -283,7 +283,7 @@ RSpec.describe User, type: :model do
 
         context "通常メールアドレス登録のユーザーの場合" do
           let(:user) { create(:user) }
-            
+
           context "新規登録時（未保存）" do
             let(:new_user) { build(:user) }
             it "trueを返す" do
@@ -317,7 +317,7 @@ RSpec.describe User, type: :model do
           expect(demo_user.demo?).to be true
         end
       end
-      
+
       context "emailがデモユーザーのメールアドレスと一致しない場合" do
         let(:user) { build(:user, email: "sample@email.com") }
         it "falseを返す" do

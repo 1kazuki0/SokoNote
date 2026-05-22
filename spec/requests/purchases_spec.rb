@@ -264,7 +264,7 @@ RSpec.describe "Purchase", type: :request do
       end
     end
   end
-  
+
   describe "DELETE /items/:item_id/purchases/:id（購入履歴削除）" do
     let!(:purchase) do
       create(:purchase, user: user, item: item, content_unit: content_unit)
@@ -283,7 +283,7 @@ RSpec.describe "Purchase", type: :request do
 
     context "ログインしている場合" do
       before { sign_in user }
-      
+
       it "購入履歴が1件削除される" do
         expect { delete item_purchase_path(item, purchase) }.to change(Purchase, :count).by(-1)
       end
@@ -311,12 +311,10 @@ RSpec.describe "Purchase", type: :request do
         end
 
         it "HTTPステータス404を返す" do
-          delete item_purchase_path(other_item, other_purchase) 
+          delete item_purchase_path(other_item, other_purchase)
           expect(response).to have_http_status(404)
         end
       end
     end
   end
 end
-
-

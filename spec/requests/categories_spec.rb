@@ -203,7 +203,7 @@ RSpec.describe "Categories", type: :request do
     context "他のユーザーのカテゴリーにアクセスした場合" do
       let(:other_user) { create(:user) }
       let!(:other_category) { create(:category, user: other_user) }
-      
+
       before { sign_in user }
 
       it "HTTPステータス404を返す" do
@@ -214,7 +214,7 @@ RSpec.describe "Categories", type: :request do
   end
 
   describe "PATCH /categories/:id（更新処理）" do
-    let!(:category) { create(:category, user: user, name: "食品" ) }
+    let!(:category) { create(:category, user: user, name: "食品") }
 
     context "ログインしていない場合" do
       it "ログイン画面へリダイレクトされる" do
@@ -246,7 +246,7 @@ RSpec.describe "Categories", type: :request do
       end
 
       context "パラメータが無効な場合" do
-        let(:invalid_params) { { category: { name: ""} } }
+        let(:invalid_params) { { category: { name: "" } } }
 
         it "更新されない" do
           patch category_path(category), params: invalid_params
@@ -323,5 +323,3 @@ RSpec.describe "Categories", type: :request do
     end
   end
 end
-
-

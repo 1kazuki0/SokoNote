@@ -84,7 +84,7 @@ RSpec.describe ContentUnit, type: :model do
     it "purchaseが紐づいているcontent_unitは削除できない" do
       expect(content_unit.destroy).to be false
     end
-    
+
     it "削除しようとするとエラーメッセージが追加される" do
       content_unit.destroy
       expect(content_unit.errors[:base]). to be_present

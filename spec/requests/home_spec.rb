@@ -8,7 +8,7 @@ RSpec.describe "Home", type: :request do
       it "HTTPステータス200を返す" do
         expect(response).to have_http_status(200)
       end
-    
+
       it "ログインへのリンクが含まれる" do
         expect(response.body).to include(new_user_session_path)
       end
@@ -38,4 +38,3 @@ RSpec.describe "Home", type: :request do
     end
   end
 end
-
