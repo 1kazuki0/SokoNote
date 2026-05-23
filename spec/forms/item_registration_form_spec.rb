@@ -8,7 +8,7 @@ RSpec.describe ItemRegistrationForm, type: :model do
 
   describe "属性デフォルト値" do
     let(:form) { ItemRegistrationForm.new }
-    
+
     it "tax_rateのデフォルトは0" do
       expect(form.tax_rate).to eq(0)
     end
@@ -119,14 +119,14 @@ RSpec.describe ItemRegistrationForm, type: :model do
     end
 
     describe "tax_rate" do
-      [0, 8, 10].each do |valid_rate|
+      [ 0, 8, 10 ].each do |valid_rate|
         it "#{valid_rate}で有効" do
           form = ItemRegistrationForm.new(valid_attributes.merge(tax_rate: valid_rate))
           expect(form).to be_valid
         end
       end
 
-      [1, 5, 15].each do |invalid_rate|
+      [ 1, 5, 15 ].each do |invalid_rate|
         it "#{invalid_rate}で無効" do
           form = ItemRegistrationForm.new(valid_attributes.merge(tax_rate: invalid_rate))
           expect(form).not_to be_valid
@@ -304,7 +304,7 @@ RSpec.describe ItemRegistrationForm, type: :model do
   describe "単価計算" do
     context "tax_rate: 0 (税抜)の場合" do
       let(:form) do
-        f = ItemRegistrationForm.new( item_name: "牛乳", content_quantity: 1000, content_unit_name: "ml", price: 200, tax_rate: 0 )
+        f = ItemRegistrationForm.new(item_name: "牛乳", content_quantity: 1000, content_unit_name: "ml", price: 200, tax_rate: 0)
         f.user = user
         f
       end
@@ -332,7 +332,7 @@ RSpec.describe ItemRegistrationForm, type: :model do
 
     context "tax_rate: 10 (税込10%)の場合" do
       let(:form) do
-        f = ItemRegistrationForm.new(item_name: "牛乳", content_quantity: 1000, content_unit_name: "ml", price: 220, tax_rate: 10 )
+        f = ItemRegistrationForm.new(item_name: "牛乳", content_quantity: 1000, content_unit_name: "ml", price: 220, tax_rate: 10)
         f.user = user
         f
       end

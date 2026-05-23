@@ -184,14 +184,14 @@ RSpec.describe PurchaseUpdateForm, type: :model do
     end
 
     describe "tax_rate" do
-      [0, 8, 10].each do |valid_rate|
+      [ 0, 8, 10 ].each do |valid_rate|
         it "#{valid_rate} で有効" do
           form = PurchaseUpdateForm.new(valid_attributes.merge(tax_rate: valid_rate))
           expect(form).to be_valid
         end
       end
 
-      [1, 5, 15].each do |invalid_rate|
+      [ 1, 5, 15 ].each do |invalid_rate|
         it "#{invalid_rate} で無効" do
           form = PurchaseUpdateForm.new(valid_attributes.merge(tax_rate: invalid_rate))
           expect(form).not_to be_valid
