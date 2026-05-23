@@ -103,7 +103,7 @@ RSpec.describe ItemRegistrationForm, type: :model do
       end
 
       it "0以下で無効" do
-        form = ItemRegistrationForm.new(valid_attributes.merge(price: nil))
+        form = ItemRegistrationForm.new(valid_attributes.merge(price: 0))
         expect(form).not_to be_valid
       end
 
