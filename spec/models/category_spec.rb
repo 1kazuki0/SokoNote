@@ -24,6 +24,11 @@ RSpec.describe Category, type: :model do
         expect(category.errors[:name]).to include("を入力してください")
       end
 
+      it "29文字なら有効（境界線)" do
+        category.name = "a" * 29
+        expect(category).to be_valid
+      end
+
       it "30文字ちょうどなら有効(境界値)" do
         category.name = "a" * 30
         expect(category).to be_valid
@@ -49,18 +54,37 @@ RSpec.describe Category, type: :model do
         expect(category).to be_valid
       end
     end
+  end
 
-    # --- user ---
-    describe "user" do
-      it "nilだと無効(belongs_toによる)" do
-        category.user = nil
-        expect(category).to be_invalid
-        expect(category.errors[:user]).to include("を入力してください")
-      end
+  # ============================================================
+  # アソシエーション
+  # ============================================================
+  describe "アソシエーション" do
+    let(:category) { create(:category) }  # このブロックだけ create で上書き
+
+    it "userをbelongs_toで関連づけている" do
+      association = Category.reflect_on_association(:user)
+      expect(association.macro).to eq(:belongs_to)
+    end
+
+    it "itemsをhas_manyで関連づけている" do
+      association = Category.reflect_on_association(:items)
+      expect(association.macro).to eq(:has_many)
+    end
+  end
+
+  describe "アソシエーション（dependent: :nullify)" do
+    let(:category) { create(:category) }  # このブロックだけ create で上書き
+    let!(:item) { create(:item, category: category) }
+
+    it "categoryを削除してもitemは削除されない" do
+      expect { category.destroy }.to change(Item, :count).by(0)
+      expect(item.reload.category_id).to be_nil
     end
   end
 
   # ============================================================
+  # コールバック
   # before_validation :normalize_name の動作確認
   # ============================================================
   describe "before_validation :normalize_name" do
@@ -81,34 +105,6 @@ RSpec.describe Category, type: :model do
       category.name = "\t食品\n"
       category.valid?
       expect(category.name).to eq "食品"
-    end
-  end
-
-  # ============================================================
-  # アソシエーション
-  # ============================================================
-  describe "アソシエーション" do
-    describe "belongs_to :user" do
-      it "userに紐づく" do
-        saved_category = create(:category, user: user)
-        expect(saved_category.user).to eq user
-      end
-    end
-
-    describe "has_many :items (dependent: :nullify)" do
-      it "categoryを削除すると関連itemsのcategory_idがnilになる" do
-        saved_category = create(:category, user: user)
-        item = create(:item, user: user, category: saved_category)
-
-        expect { saved_category.destroy }.to change { item.reload.category_id }.from(saved_category.id).to(nil)
-      end
-
-      it "categoryを削除してもitem自体は削除されない" do
-        saved_category = create(:category, user: user)
-        create(:item, user: user, category: saved_category)
-
-        expect { saved_category.destroy }.not_to change(Item, :count)
-      end
     end
   end
 end

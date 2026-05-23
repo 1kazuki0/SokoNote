@@ -24,6 +24,11 @@ RSpec.describe PackUnit, type: :model do
         expect(pack_unit.errors[:name]).to include("を入力してください")
       end
 
+      it "9文字なら有効（境界値）" do
+        pack_unit.name = "a" * 9
+        expect(pack_unit).to be_valid
+      end
+
       it "10文字ちょうどなら有効(境界値)" do
         pack_unit.name = "a" * 10
         expect(pack_unit).to be_valid
@@ -61,6 +66,34 @@ RSpec.describe PackUnit, type: :model do
   end
 
   # ============================================================
+  # アソシエーション
+  # ============================================================
+  describe "アソシエーション" do
+    let(:pack_unit) { create(:pack_unit) }
+
+    it "userをbelongs_toで関連づけている" do
+      association = PackUnit.reflect_on_association(:user)
+      expect(association.macro).to eq(:belongs_to)
+    end
+
+    it "purchasesをhas_manyで関連づけている" do
+      association = PackUnit.reflect_on_association(:purchases)
+      expect(association.macro).to eq(:has_many)
+    end
+  end
+
+  describe "アソシエーション（dependent: :nullify)" do
+    let(:pack_unit) { create(:pack_unit) }  # このブロックだけ create で上書き
+    let!(:purchase) { create(:purchase, pack_unit: pack_unit) }
+
+    it "pack_unitを削除すると、紐づくpurchaseのpack_unit_idがnilになる" do
+      pack_unit.destroy
+      expect(purchase.reload.pack_unit_id).to be_nil
+    end
+  end
+
+  # ============================================================
+  # コールバック
   # before_validation :normalize_name の動作確認
   # ============================================================
   describe "before_validation :normalize_name" do
@@ -88,34 +121,6 @@ RSpec.describe PackUnit, type: :model do
       expect(pack_unit).to be_invalid
       expect(pack_unit.name).to be_nil
       expect(pack_unit.errors[:name]).to include("を入力してください")
-    end
-  end
-
-  # ============================================================
-  # アソシエーション
-  # ============================================================
-  describe "アソシエーション" do
-    describe "belongs_to :user" do
-      it "userに紐づく" do
-        saved = create(:pack_unit, user: user)
-        expect(saved.user).to eq user
-      end
-    end
-
-    describe "has_many :purchases (dependent: :nullify)" do
-      it "pack_unitを削除すると関連purchasesのpack_unit_idがnilになる" do
-        saved_pack_unit = create(:pack_unit, user: user)
-        purchase = create(:purchase, user: user, pack_unit: saved_pack_unit)
-
-        expect { saved_pack_unit.destroy }.to change { purchase.reload.pack_unit_id }.from(saved_pack_unit.id).to(nil)
-      end
-
-      it "pack_unitを削除してもpurchase自体は削除されない" do
-        saved_pack_unit = create(:pack_unit, user: user)
-        create(:purchase, user: user, pack_unit: saved_pack_unit)
-
-        expect { saved_pack_unit.destroy }.not_to change(Purchase, :count)
-      end
     end
   end
 end

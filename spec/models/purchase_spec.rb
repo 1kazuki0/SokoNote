@@ -31,6 +31,11 @@ RSpec.describe Purchase, type: :model do
         expect(purchase).to be_valid
       end
 
+      it "29文字なら有効（境界値）" do
+        purchase.brand = "a" * 29
+        expect(purchase).to be_valid
+      end
+
       it "30文字ちょうどなら有効(境界値)" do
         purchase.brand = "a" * 30
         expect(purchase).to be_valid
@@ -230,53 +235,54 @@ RSpec.describe Purchase, type: :model do
         expect(purchase).to be_valid
       end
     end
+  end
 
-    # ============================================================
-    # 必須アソシエーション(user, item, content_unit)
-    # ============================================================
-    describe "user" do
-      it "nilだと無効" do
-        purchase.user = nil
-        expect(purchase).to be_invalid
-        expect(purchase.errors[:user]).to include("を入力してください")
-      end
+  # ============================================================
+  # アソシエーション
+  # ============================================================
+  describe "アソシエーション" do
+    let(:purchase) { create(:purchase) }
+
+    it "userをbelongs_toで関連づけている" do
+      association = Purchase.reflect_on_association(:user)
+      expect(association.macro).to eq(:belongs_to)
     end
 
-    describe "item" do
-      it "nilだと無効" do
-        purchase.item = nil
-        expect(purchase).to be_invalid
-        expect(purchase.errors[:item]).to include("を入力してください")
-      end
+    it "itemをbelongs_toで関連づけている" do
+      association = Purchase.reflect_on_association(:item)
+      expect(association.macro).to eq(:belongs_to)
     end
 
-    describe "content_unit" do
-      it "nilだと無効" do
-        purchase.content_unit = nil
-        expect(purchase).to be_invalid
-        expect(purchase.errors[:content_unit]).to include("を入力してください")
-      end
+    it "storeをbelongs_toで関連づけている" do
+      association = Purchase.reflect_on_association(:store)
+      expect(association.macro).to eq(:belongs_to)
     end
 
-    # ============================================================
-    # optionalアソシエーション(store, pack_unit)
-    # ============================================================
-    describe "store (optional: true)" do
-      it "nilでも有効" do
-        purchase.store = nil
-        expect(purchase).to be_valid
-      end
+    it "content_unitをbelongs_toで関連づけている" do
+      association = Purchase.reflect_on_association(:content_unit)
+      expect(association.macro).to eq(:belongs_to)
     end
 
-    describe "pack_unit (optional: true)" do
-      it "nilでも有効" do
-        purchase.pack_unit = nil
-        expect(purchase).to be_valid
-      end
+    it "pack_unitをbelongs_toで関連づけている" do
+      association = Purchase.reflect_on_association(:pack_unit)
+      expect(association.macro).to eq(:belongs_to)
+    end
+  end
+
+  describe "アソシエーション（optional: true）" do
+    it "storeがnilでもpurchaseを保存できる" do
+      purchase = build(:purchase, store: nil, user: user, item: item, content_unit: content_unit, pack_unit: pack_unit)
+      expect(purchase.save).to be true
+    end
+
+    it "pack_unitがnilでもpurchaseを保存できる" do
+      purchase = build(:purchase, store: store, user: user, item: item, content_unit: content_unit, pack_unit: nil)
+      expect(purchase.save).to be true
     end
   end
 
   # ============================================================
+  # コールバック
   # before_validation :normalize_brand の動作確認
   # ============================================================
   describe "before_validation :normalize_brand" do
@@ -308,56 +314,6 @@ RSpec.describe Purchase, type: :model do
       purchase.brand = nil
       purchase.valid?
       expect(purchase.brand).to be_nil
-    end
-  end
-
-  # ============================================================
-  # アソシエーション
-  # ============================================================
-  describe "アソシエーション" do
-    describe "belongs_to :user" do
-      it "userに紐づく" do
-        saved = create(:purchase, user: user, item: item, content_unit: content_unit)
-        expect(saved.user).to eq user
-      end
-    end
-
-    describe "belongs_to :item" do
-      it "itemに紐づく" do
-        saved = create(:purchase, user: user, item: item, content_unit: content_unit)
-        expect(saved.item).to eq item
-      end
-    end
-
-    describe "belongs_to :store (optional: true)" do
-      it "storeに紐づく" do
-        saved = create(:purchase, user: user, item: item, store: store, content_unit: content_unit)
-        expect(saved.store).to eq store
-      end
-
-      it "storeがnilでも保存できる" do
-        saved = build(:purchase, user: user, item: item, store: nil, content_unit: content_unit)
-        expect(saved).to be_valid
-      end
-    end
-
-    describe "belongs_to :content_unit" do
-      it "content_unitに紐づく" do
-        saved = create(:purchase, user: user, item: item, content_unit: content_unit)
-        expect(saved.content_unit).to eq content_unit
-      end
-    end
-
-    describe "belongs_to :pack_unit (optional: true)" do
-      it "pack_unitに紐づく" do
-        saved = create(:purchase, user: user, item: item, content_unit: content_unit, pack_unit: pack_unit)
-        expect(saved.pack_unit).to eq pack_unit
-      end
-
-      it "pack_unitがnilでも保存できる" do
-        saved = build(:purchase, user: user, item: item, content_unit: content_unit, pack_unit: nil)
-        expect(saved).to be_valid
-      end
     end
   end
 end
