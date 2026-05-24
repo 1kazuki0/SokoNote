@@ -52,7 +52,7 @@ gem "whenever", require: false
 gem "ransack"
 
 # 認証機能のgem
-gem "devise", "~> 4.9"
+gem "devise", "~> 5.0"
 
 # HTTP通信を簡易的に記載できるgem
 gem "faraday"
