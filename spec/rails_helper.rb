@@ -76,7 +76,7 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Devise::Test::ControllerHelpers, type: :view
 
-  # 外部HTTPリクエストを全部禁止（テスト中に意図しない通信を検知） 
+  # 外部HTTPリクエストを全部禁止（テスト中に意図しない通信を検知）
   WebMock.disable_net_connect!(allow_localhost: true)
 
   # # webdriverの設定

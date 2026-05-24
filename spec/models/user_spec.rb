@@ -265,6 +265,7 @@ RSpec.describe User, type: :model do
           user = User.from_line(uid: uid, name: name)
           expect(user.name).to eq(name)
         end
+      end
 
       context "同じuidのLINEユーザーが既に存在する場合" do
         let!(:existing_user) { create(:user, :line_user, uid: uid, name: "既存ユーザー") }
