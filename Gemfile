@@ -111,6 +111,9 @@ group :test do
 
   # Ruby用のコードカバレッジ計測するgem
   gem "simplecov", require: false
+
+  # 外部API通信を「偽物」にするgem
+  gem "webmock"
 end
 
 # 本番環境のみ

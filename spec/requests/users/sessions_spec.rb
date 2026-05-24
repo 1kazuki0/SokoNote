@@ -22,7 +22,7 @@ RSpec.describe "User::Sessions", type: :request do
       end
 
       it "LINEログインへのリンクが含まれる" do
-        expect(response.body).to include(user_line_omniauth_authorize_path)
+        expect(response.body).to include(line_auth_path)
       end
 
       it "ログインの文言が含まれる" do

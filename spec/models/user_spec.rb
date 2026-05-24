@@ -242,6 +242,49 @@ RSpec.describe User, type: :model do
   # ビジネスロジック
   # ============================================================
   describe "ビジネスロジック" do
+    describe ".from_line (クラスメソッド)" do
+      let(:uid)  { "U1234567890abcdef1234567890abcdef" }
+      let(:name) { "山田太郎" }
+
+      context "新規LINEユーザーの場合" do
+        it "新しいUserレコードを作成する" do
+          expect { User.from_line(uid: uid, name: name) }.to change(User, :count).by(1)
+        end
+
+        it "providerに'line'がセットされる" do
+          user = User.from_line(uid: uid, name: name)
+          expect(user.provider).to eq("line")
+        end
+
+        it "uidが正しく保存される" do
+          user = User.from_line(uid: uid, name: name)
+          expect(user.uid).to eq(uid)
+        end
+
+        it "nameが正しく保存される" do
+          user = User.from_line(uid: uid, name: name)
+          expect(user.name).to eq(name)
+        end
+
+      context "同じuidのLINEユーザーが既に存在する場合" do
+        let!(:existing_user) { create(:user, :line_user, uid: uid, name: "既存ユーザー") }
+
+        it "新しいUserレコードを作成しない" do
+          expect { User.from_line(uid: uid, name: name) }.not_to change(User, :count)
+        end
+
+        it "既存のUserオブジェクトを返す" do
+          user = User.from_line(uid: uid, name: name)
+          expect(user.id).to eq(existing_user.id)
+        end
+
+        it "既存ユーザーのnameは上書きされない" do
+          user = User.from_line(uid: uid, name: name)
+          expect(user.name).to eq("既存ユーザー")
+        end
+      end
+    end
+
     describe "#line_user?" do
       context "LINEログイン経由の登録ではない場合" do
         let(:user) { create(:user) }  # このブロックだけ create で上書き
