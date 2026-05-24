@@ -3,9 +3,12 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
     registrations: "users/registrations",
     passwords: "users/passwords",
-    sessions: "users/sessions",
-    omniauth_callbacks: "users/omniauth_callbacks"
+    sessions: "users/sessions"
   }
+
+  # LINEログイン用ルーティング
+  get "/users/auth/line",          to: "line_auth#authorize", as: :line_auth
+  get "/users/auth/line/callback", to: "line_auth#callback",  as: :line_callback
 
   # 未ログイン時のトップ画面
   root "home#top"

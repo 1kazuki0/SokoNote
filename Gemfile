@@ -48,16 +48,14 @@ gem "resend"
 # 定期実行処理を行うgem
 gem "whenever", require: false
 
-# LINEログインをOAuth/OIDCを実装できるgem
-gem "omniauth-line"
-# RailsアプリをCSRF攻撃から守るためのgem
-gem "omniauth-rails_csrf_protection"
-
 # 検索機能を実装できるgem
 gem "ransack"
 
 # 認証機能のgem
 gem "devise", "~> 4.9"
+
+# HTTP通信を簡易的に記載できるgem
+gem "faraday"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -113,6 +111,9 @@ group :test do
 
   # Ruby用のコードカバレッジ計測するgem
   gem "simplecov", require: false
+
+  # 外部API通信を「偽物」にするgem
+  gem "webmock"
 end
 
 # 本番環境のみ

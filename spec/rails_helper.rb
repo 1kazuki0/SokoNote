@@ -11,6 +11,7 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 # RSpecとRailsを連携させるライブラリを読み込む
 require 'rspec/rails'
 # 追加のライブラリはこれより下に書く。
+require "webmock/rspec"
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -74,6 +75,9 @@ RSpec.configure do |config|
   config.include Devise::Test::IntegrationHelpers, type: :request
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Devise::Test::ControllerHelpers, type: :view
+
+  # 外部HTTPリクエストを全部禁止（テスト中に意図しない通信を検知）
+  WebMock.disable_net_connect!(allow_localhost: true)
 
   # # webdriverの設定
   # config.before(:each, type: :system) do

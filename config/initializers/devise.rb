@@ -297,7 +297,8 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # OmniAuthにLINEログインを使う設定を行い、チャネルIDとシークレットIDは環境変数から取得
-  config.omniauth :line, ENV["LINE_CHANNEL_ID"], ENV["LINE_CHANNEL_SECRET"]
+  # → OmniAuthを使用せず自前実装するのでコメントアウト
+  # config.omniauth :line, ENV["LINE_CHANNEL_ID"], ENV["LINE_CHANNEL_SECRET"]
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
