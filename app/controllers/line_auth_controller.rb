@@ -55,7 +55,7 @@ class LineAuthController < ApplicationController
 
     # IDトークンで検証した結果をpayloadに保存
     payload = verify_id_token(id_token, expected_nonce)
-    
+
     # payloadがnilの場合、ログイン画面にリダイレクト
     if payload.nil?
       redirect_to new_user_session_path, alert: "LINEログインに失敗しました"
