@@ -19,12 +19,17 @@ class User < ApplicationRecord
          :registerable,
          :recoverable,
          :rememberable,
-         :validatable,
-         :omniauthable,
-         omniauth_providers: %i[line]
+         :validatable
 
   # デモユーザーを変更処理させないコールバック
   before_update :prevent_demo_user_changes
+
+  # LINEのプロフィール情報からユーザーを作成/取得
+  def self.from_line(uid:, name:)
+    find_or_create_by(provider: "line", uid: uid) do |u|
+      u.name = name
+    end
+  end
 
   # LINEログイン経由の登録かどうか確認
   # LINEログイン経由ならtrue。それ以外はfalse。
