@@ -21,7 +21,7 @@ RSpec.describe "Users::Registrations", type: :request do
       end
 
       it "LINE新規登録画面へのリンクが含まれる" do
-        expect(response.body).to include(user_line_omniauth_authorize_path)
+        expect(response.body).to include(line_auth_path)
       end
 
       it "ログイン画面へのリンクが含まれる" do
