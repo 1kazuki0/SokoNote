@@ -85,7 +85,7 @@
  - パスワードリセット機能
 - 商品一覧・編集・削除機能
 - 購入履歴一覧・編集・削除機能
-- マスタ機能（カテゴリー・店舗・単位（内容量）
+- マスタ機能（カテゴリー・店舗・単位（内容量））
 - 同一商品比較機能
 - 検索・フィルタリング機能
 - スマートフォン使用を想定したレスポンシブデザイン
@@ -106,7 +106,7 @@
 |-|-|
 | 開発環境 | Docker（docker-compose） |
 | フロントエンド | Hotwire（Turbo / Stimulus）, Tailwind CSS |
-| バックエンド | Ruby 3.3. Ruby on Rails 7.2.3 |
+| バックエンド | Ruby 3.4.8 Ruby on Rails 7.2.3 |
 | データベース | PostgreSQL（Neon） |
 | デプロイ | Render |
 | 認証 | Devise, LINE Login v2.1 API |
@@ -135,7 +135,7 @@ erDiagram
     bigint id PK "ユーザーID（主キー）"
     string name "ニックネーム"
     string email "メールアドレス"
-    string privider "外部ログインサービス名（LINEなど）"
+    string provider "外部ログインサービス名（LINEなど）"
     string uid "外部ログインサービス側のユーザー識別ID"
     string encrypted_password "ログイン用パスワード"
     string reset_password_token "パスワード再設定用トークン"
