@@ -60,7 +60,7 @@
       <% end %>
       <%= yield %>
     </main>
-    <% if user_signed_in? %>
+    <% if user_signed_in? && !content_for?(:lp_layout) %>
       <%= render 'shared/footer' %>
     <% end %>
   </body>
