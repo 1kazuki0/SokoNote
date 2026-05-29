@@ -4,7 +4,7 @@
 <section class="w-full border-b border-primary bg-neutral">
   <nav class="flex flex-row justify-between items-center h-16 mx-4">
     <%= link_to root_path do %>
-      <%= image_tag "lp/logo.png", class: "md:h-12 h-10", alt: "SokoNote ロゴ" %>
+      <%= image_tag "lp/logo.png", class: "md:h-12 h-10", alt: "SokoNote" %>
     <% end %> 
     <%= link_to "ログイン", new_user_session_path, class: "card bg-primary text-white rounded-full font-bold mt-2 px-6 py-2", data: { controller: "button", action: "touchstart->button#press touchend->button#release touchcancel->button#release" } %>
   </nav>
