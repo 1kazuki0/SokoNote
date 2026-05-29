@@ -110,8 +110,9 @@
 | データベース | PostgreSQL（Neon） |
 | デプロイ | Render |
 | 認証 | Devise, LINE Login v2.1 API |
-| CI | GitHub Actions（Breakman, Rubocop, RSpec, coderabbit） |
+| CI/CD | GitHub Actions（Breakman, Rubocop, RSpec）, CodeRabbit |
 | メール送信 | Resend |
+| 監視 | Sentry, UptimeRobot |
 
 # 画面遷移図
 [Figma：画面遷移図](https://www.figma.com/design/2nRhzOQEsA78fdodbD6kym/%E5%8D%92%E6%A5%AD%E5%88%B6%E4%BD%9C_%E7%94%BB%E9%9D%A2%E9%81%B7%E7%A7%BB%E5%9B%B3?node-id=127-2208&t=o3Y9NkUTTp4F2Rtg-1)
