@@ -68,4 +68,7 @@
   }
 }
 
-
+/* ダイアログの中央配置 */
+#turbo-confirm {
+  margin: auto;
+}
