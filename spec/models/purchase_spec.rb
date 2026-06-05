@@ -316,4 +316,36 @@ RSpec.describe Purchase, type: :model do
       expect(purchase.brand).to be_nil
     end
   end
+
+  # ============================================================
+  # コールバック
+  # after_update :cleanup_unused_item の動作確認
+  # ============================================================
+  describe "after_update :cleanup_unused_item" do
+    context "保存した商品名（item_id）が変更された時" do
+      let(:new_item) { create(:item, user: user) }
+      context "保存前の商品名の購入履歴が0件の時" do
+        it "変更前の商品名（item）は削除される" do
+          purchase.save!
+          purchase.update!(item: new_item)
+          expect(Item.exists?(item.id)).to be false
+        end
+      end
+      context "保存前の商品名の購入履歴が1件以上がある場合" do
+        it "変更前の商品名（item）は削除されない" do
+          purchase.save!
+          create(:purchase, user: user, item: item, store: store, content_unit: content_unit, pack_unit: pack_unit)
+          purchase.update!(item: new_item)
+          expect(Item.exists?(item.id)).to be true
+        end
+      end
+    end
+    context "商品名（item_id）が変更されていない時" do
+      it "削除処理は実行されない（既存のitemは削除されない）" do
+        purchase.save!
+        purchase.update!(content_quantity: 99)
+        expect(Item.exists?(item.id)).to be true
+      end
+    end
+  end
 end

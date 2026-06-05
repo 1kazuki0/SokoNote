@@ -11,6 +11,8 @@ class Purchase < ApplicationRecord
   # --- バリデーション前に実行 ---
   before_validation :normalize_brand
 
+  # --- purchasesのupdateアクション後に実行 ---
+  after_update :cleanup_unused_item
 
   # --- Purchaseモデルのアソシエーション ---
   belongs_to :user
@@ -36,5 +38,13 @@ class Purchase < ApplicationRecord
   def normalize_brand
     self.brand = brand&.gsub(/\A[[:space:]]+|[[:space:]]+\z/, "")   # 全角半角空白削除
     self.brand = nil if brand.blank? # 空ならnil
+  end
+
+  # --- 商品名更新時、更新前の商品名の購入履歴が0件になった場合、削除する処理 ---
+  def cleanup_unused_item
+    return unless saved_change_to_item_id?
+    old_item_id = item_id_before_last_save
+    return if Purchase.where(item_id: old_item_id).exists?
+    Item.find_by(id: old_item_id)&.destroy
   end
 end
