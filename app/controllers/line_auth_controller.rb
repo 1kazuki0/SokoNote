@@ -16,7 +16,7 @@ class LineAuthController < ApplicationController
     session[:line_oauth_state] = state
     session[:line_oauth_nonce] = nonce
 
-    # LINEへのリダイレクト時に付与するクエリパラメータの準備
+      # LINEへのリダイレクト時に付与するクエリパラメータの準備
     query = { response_type: "code", client_id: ENV["LINE_CHANNEL_ID"], redirect_uri: line_callback_url, state: state, scope: "profile openid", nonce: nonce }
 
     # リダイレクト時のURL
