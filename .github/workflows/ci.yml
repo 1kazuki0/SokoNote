@@ -18,7 +18,7 @@ jobs:
 
     steps:                        # steps以下は実行するステップが記載
       - name: Checkout code       # ステップの名前（省略可能だが、何をしているステップなのかがわかる名前をつけとくとデバッグ容易）
-        uses: actions/checkout@v4 # usesで既存アクションを呼び出せる GitHub上にある「actions/checkout」というリポジトリのv4バージョンを呼び出し
+        uses: actions/checkout@v7 # usesで既存アクションを呼び出せる GitHub上にある「actions/checkout」というリポジトリのv4バージョンを呼び出し
 
       - name: Set up Ruby             # ステップの名前
         uses: ruby/setup-ruby@v1      # usesで既存アクションを呼び出せる GitHub上の「ruby/setup-ruby」というリポジトリの「v1タグ（バージョン）」を呼び出し
@@ -37,7 +37,7 @@ jobs:
 
     steps:                        # steps以下は実行するステップが記載
       - name: Checkout code       # ステップの名前
-        uses: actions/checkout@v4 # usesで既存アクションを呼び出せる GitHub上にある「actions/checkout」というリポジトリのv4バージョンを呼び出し
+        uses: actions/checkout@v7 # usesで既存アクションを呼び出せる GitHub上にある「actions/checkout」というリポジトリのv4バージョンを呼び出し
 
       - name: Set up Ruby             # ステップの名前
         uses: ruby/setup-ruby@v1      # usesで既存アクションを呼び出せる GitHub上の「ruby/setup-ruby」というリポジトリの「v1タグ（バージョン）」を使う
@@ -87,7 +87,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y google-chrome-stable curl libjemalloc2 libvips postgresql-client # runはシェルコマンドを実行できる
 
       - name: Checkout code       # ステップの名前
-        uses: actions/checkout@v4 # userで既存アクションを呼び出せる GitHub上にある「actions/checkout」というリポジトリのv4バージョンを使っている
+        uses: actions/checkout@v7 # userで既存アクションを呼び出せる GitHub上にある「actions/checkout」というリポジトリのv4バージョンを使っている
 
       - name: Set up Ruby             # ステップの名前
         uses: ruby/setup-ruby@v1      # usesで既存アクションを呼び出せる GitHub上の「ruby/setup-ruby」というリポジトリの「v1タグ（バージョン）」を使う
