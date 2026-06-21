@@ -48,7 +48,7 @@
 
   また、共働きで時間が限られているため初回利用時は商品登録が必要ですが、一度登録すれば次回以降は即座に比較できるため、買い物中の素早い判断できるというニーズに着目しました。
 
-# サービス利用のイメージ
+## サービス利用のイメージ
 
 | トップページ | 商品一覧 | 商品登録 |
 |:---:|:---:|:---:|
@@ -106,18 +106,74 @@
 |-|-|
 | 開発環境 | Docker（docker-compose） |
 | フロントエンド | Hotwire（Turbo / Stimulus）, Tailwind CSS |
-| バックエンド | Ruby 3.4.8 Ruby on Rails 7.2.3 |
+| バックエンド | Ruby 3.4.8 / Ruby on Rails 7.2.3 |
 | データベース | PostgreSQL（Neon） |
 | デプロイ | Render |
 | 認証 | Devise, LINE Login v2.1 API |
-| CI/CD | GitHub Actions（Breakman, Rubocop, RSpec）, CodeRabbit |
+| CI・CD/ テスト | GitHub Actions（Breakman, Rubocop, RSpec）, CodeRabbit |
 | メール送信 | Resend |
 | 監視 | Sentry, UptimeRobot |
 
-# 画面遷移図
+## 選定理由
+### 開発環境：Docker（docker-compose）
+ローカル環境での開発と比較し、ローカルPCに依存せずバージョンを固定した状態で開発が可能。
+- Ruby・PostgreSQLなどのバージョンをコードで管理し、ローカルPCの環境に依存しない開発を実現
+- 複数プロジェクトの並行管理やチーム開発を意識した構成
+- Web/DBを別コンテナとして構成し、```docker compose up```で1コマンドで開発環境を起動・停止
+
+### フロントエンド
+#### Hotwire（Turbo / Stimulus）
+Reactと比較し、SPAほどの複雑さを持ち込まず、「比較結果の即時表示」を満たせるHotwireを採用。
+- Rails7標準搭載で、追加の環境構築・ビルド設定が不要
+- サーバーサイドでHTMLを返しつつ、部分的な画面更新が可能
+#### Tailwind CSS
+素のCSS、Bootstrapと比較し、細かなUI調整とモバイルファースト設計を両立できるため採用。
+- 細かなUI調整を行えるユーティリティファースト
+- CSSファイルを別途管理する手間が省ける
+- ブレイクポイント（`sm:`、`md:`など）でレスポンシブ対応が簡易的に書ける
+
+### バックエンド
+#### Ruby 3.4.8 / Ruby on Rails 7.2.3
+本アプリはCRUDが中心で、「設定より規約」の思想により明確で開発速度が早いため採用。
+- 開発着手時点で安定版かつセキュリティサポート対象のバージョンであるRails7.2系を採用
+- Rails7.2系との互換性を確保しつつ、最新の言語機能を活用できるRuby3.4系を採用
+- ファイル配置や命名規則、MVCの規約が明確で迷いが少ない
+
+### データベース
+#### PostgreSQL
+「ユーザー」「商品」といった関連性の強いデータを扱うためリレーショナルDBから選定。
+MySQL・SQLiteと比較して、以下の利用で採用。
+- データの整合性のチェックが厳密
+- 多数の同時書き込みを捌ける
+- Neon・Renderなどのデプロイ環境で標準サポートされており、親和性がある
+#### Neon（DBサーバー）
+MVPリリース時点ではRenderを採用したが、長期運用を見据え無料で使用可能なためNeonを採用
+- MVP時は、Webサーバー（Render）と同じプラットフォーム内で完結できるため使用
+- PostgreSQLを標準として使用でき、無料枠が永続的に利用可能
+- スケールトゥゼロでCU-hoursを消費しない
+
+### デプロイ：Render
+Heroku・Fly.ioと比較し、以下の理由で採用。
+- 無料枠の継続利用が可能（Fli.io・Herokuは無料枠廃止）
+- GitHub連携による自動デプロイでCI/CDフローを簡潔に構築
+- GUIによる直感的な操作性で、設定変更や環境変数管理が容易
+- MVPリリース時ではDBサーバーと同じプラットフォーム内で完結
+
+### 認証:Devise・LINE Login
+- 長年運用実績をもつDeviseを採用し、自前実装によるパスワード管理・セッション管理のリスクを回避
+- ユーザーの利便性を考え、スマートフォン利用を想定し、かつターゲット層の多くが利用するLINEによる外部認証を採用
+- LINEログイン用gem（omniauth-line gem）の更新停止を受け、自前での実装
+
+### メール送信：Resend
+- 100通/日が永続無料で利用でき、無料枠が手厚い
+- Cloudflare（DNS管理サービス）の管理画面から直接ドメイン認証が完結でき、SPF・DKIM・DMARC設定がスムーズ
+- resend gemが提供されており、導入が容易
+
+
+## 画面遷移図
 [Figma：画面遷移図](https://www.figma.com/design/2nRhzOQEsA78fdodbD6kym/%E5%8D%92%E6%A5%AD%E5%88%B6%E4%BD%9C_%E7%94%BB%E9%9D%A2%E9%81%B7%E7%A7%BB%E5%9B%B3?node-id=127-2208&t=o3Y9NkUTTp4F2Rtg-1)
 
-# ER図
+## ER図
 ```mermaid
 erDiagram
   users ||--o{ categories : "1人のユーザーは0以上の自分用のカテゴリを持つ"
