@@ -281,6 +281,7 @@ Heroku・Fly.ioと比較し、以下の理由で採用。
 個人開発でありながら、チーム開発を想定した運用を意識し、Git Flowを簡略化した運用を採用。
 
 main + develop + featureの3層構造にすることで、本番への未検証の状態でマージするリスクを回避。
+
 | ブランチ名 | 役割 |
 |-|-|
 | `main` | 本番反映用。常にデプロイ可能な状態に保つことで、本番への影響を最小化 |
@@ -288,7 +289,8 @@ main + develop + featureの3層構造にすることで、本番への未検証�
 | `feature/*` | 機能ごとの実装用。目的によってプレフィックスを変更（fix,docs,test等） |
 
 ### CI（継続的インテグレーション）
-個人開発において、コードの品質を客観的に担保する仕組みがないため、複数の自動チェックを走らせ、人間のレビューだけに頼らない多層的な品質担保の仕組みを構築
+個人開発において、コードの品質を客観的に担保する仕組みがないため、複数の自動チェックを走らせ、人間のレビューだけに頼らない多層的な品質担保の仕組みを構築。
+
 | ツール | 役割 |
 |-|-|
 | Brakeman | セキュリティ脆弱性のスキャン |
@@ -308,7 +310,7 @@ main + develop + featureの3層構造にすることで、本番への未検証�
 
 
 ## 画面遷移図
-[![画面遷移図](https://gyazo.com/a900b170c8e7da5f530d7342e54f0034.png")](https://www.figma.com/design/2nRhzOQEsA78fdodbD6kym/%E5%8D%92%E6%A5%AD%E5%88%B6%E4%BD%9C_%E7%94%BB%E9%9D%A2%E9%81%B7%E7%A7%BB%E5%9B%B3?node-id=127-2208&t=o3Y9NkUTTp4F2Rtg-1)
+[![画面遷移図](https://gyazo.com/a900b170c8e7da5f530d7342e54f0034.png)](https://www.figma.com/design/2nRhzOQEsA78fdodbD6kym/%E5%8D%92%E6%A5%AD%E5%88%B6%E4%BD%9C_%E7%94%BB%E9%9D%A2%E9%81%B7%E7%A7%BB%E5%9B%B3?node-id=127-2208&t=o3Y9NkUTTp4F2Rtg-1)
 
 [Figma：画面遷移図](https://www.figma.com/design/2nRhzOQEsA78fdodbD6kym/%E5%8D%92%E6%A5%AD%E5%88%B6%E4%BD%9C_%E7%94%BB%E9%9D%A2%E9%81%B7%E7%A7%BB%E5%9B%B3?node-id=127-2208&t=o3Y9NkUTTp4F2Rtg-1)
 
@@ -320,12 +322,12 @@ erDiagram
   users ||--o{ stores :  "1人のユーザーは0以上の自分用の店舗を持つ"
   users ||--o{ purchases : "1人のユーザーは0以上の自分の購入履歴を持つ"
   users ||--o{ content_units : "1人のユーザーは0以上の自分用の内容量単位を持つ"
-  users ||--o{ package_units : "1人のユーザーは0以上の自分用の包装単位を持つ"
+  users ||--o{ pack_units : "1人のユーザーは0以上の自分用の包装単位を持つ"
   categories ||--o{ items : "1つのカテゴリは0以上の商品をもつ"
   items ||--o{ purchases : "1つの商品は0以上の購入履歴を持つ" 
   stores||--o{ purchases : "1つの店舗は0以上の購入履歴を持つ"
   content_units||--o{ purchases : "1つの内容量単位は0以上の購入履歴を持つ"
-  package_units||--o{ purchases : "1つの包装単位は0以上の購入履歴を持つ"
+  pack_units||--o{ purchases : "1つの包装単位は0以上の購入履歴を持つ"
 
   users {
     bigint id PK "ユーザーID（主キー）"
@@ -392,7 +394,7 @@ erDiagram
     datetime updated_at "更新日時"
   }
 
-  package_units {
+  pack_units {
     bigint id PK "包装単位ID（主キー）"
     bigint user_id FK "ユーザーID（外部キー）"
     string name "包装単位名"
