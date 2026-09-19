@@ -1,0 +1,23 @@
+{
+  "language": "japanese",
+  "permissions": {
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./config/master.key)",
+      "Read(./config/credentials.yml.enc)",
+      "Read(./config/database.yml)",
+      "Edit(./.env)",
+      "Edit(./.env.*)",
+      "Edit(./config/master.key)",
+      "Edit(./config/credentials.yml.enc)",
+      "Edit(./config/database.yml)",
+      "Read(./log/**)",
+      "Read(./tmp/**)",
+      "Read(./storage/**)",
+      "Bash(git push --force*)",
+      "Bash(git reset --hard*)",
+      "Bash(rm -rf*)"
+    ]
+  }
+}
