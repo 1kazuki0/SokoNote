@@ -213,7 +213,7 @@ session[:line_oauth_nonce] = nonce
 |-|-|
 | 開発環境 | Docker（docker-compose） |
 | フロントエンド | Hotwire（Turbo / Stimulus）, Tailwind CSS |
-| バックエンド | Ruby 3.4.8 / Ruby on Rails 7.2.3 |
+| バックエンド | Ruby 3.4.8 / Ruby on Rails 8.1.3 |
 | データベース | PostgreSQL（Neon） |
 | デプロイ | Render |
 | 認証 | Devise, LINE Login v2.1 API |
@@ -240,10 +240,10 @@ Reactと比較し、SPAほどの複雑さを持ち込まず、「比較結果の
 - ブレイクポイント（`sm:`、`md:`など）でレスポンシブ対応が簡易的に書ける
 
 ### バックエンド
-#### Ruby 3.4.8 / Ruby on Rails 7.2.3
+#### Ruby 3.4.8 / Ruby on Rails 8.1.3
 本アプリはCRUDが中心で、「設定より規約」の思想により明確で開発速度が早いため採用。
-- 開発着手時点で安定版かつセキュリティサポート対象のバージョンであるRails7.2系を採用
-- Rails7.2系との互換性を確保しつつ、最新の言語機能を活用できるRuby3.4系を採用
+- サポート期限内のバージョンに追従し、安定版かつセキュリティサポート対象のRails8.1系を採用
+- Rails8.1系との互換性を確保しつつ、最新の言語機能を活用できるRuby3.4系を採用
 - ファイル配置や命名規則、MVCの規約が明確で迷いが少ない
 
 ### データベース
