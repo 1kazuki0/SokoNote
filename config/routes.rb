@@ -15,7 +15,8 @@ Rails.application.routes.draw do
 
   # 商品簡易登録用（登録用new・create・完了ダイアログcomplete・自動補助入力last_purchase）
   resource :item_registration, only: [ :new, :create ] do
-    get :complete, :last_purchase
+    get :complete
+    get :last_purchase
   end
 
   # カテゴリ一覧・登録・編集・削除
