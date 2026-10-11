@@ -83,7 +83,8 @@ RSpec.configure do |config|
   end
 
   # 外部HTTPリクエストを全部禁止（テスト中に意図しない通信を検知）
-  WebMock.disable_net_connect!(allow_localhost: true)
+  # ローカルのSystem spec（JSドライバ）で使うchromeコンテナへの通信は許可する
+  WebMock.disable_net_connect!(allow_localhost: true, allow: "chrome:4444")
 
   # # webdriverの設定
   # config.before(:each, type: :system) do
