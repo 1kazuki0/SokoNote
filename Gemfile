@@ -5,7 +5,7 @@ gem "rails", "~> 8.1.4"
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 # Use postgresql as the database for Active Record
-gem "pg", "~> 1.1"
+gem "pg", "~> 1.7"
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
 # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
@@ -52,7 +52,7 @@ gem "whenever", require: false
 gem "ransack"
 
 # 認証機能のgem
-gem "devise", "~> 4.9"
+gem "devise", "~> 5.0"
 
 # HTTP通信を簡易的に記載できるgem
 gem "faraday"
