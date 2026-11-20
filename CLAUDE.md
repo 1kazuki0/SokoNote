@@ -4,7 +4,7 @@
 
 ## 技術スタック
 
-- Rails 8.0.5 / Ruby（`.ruby-version`参照）
+- Rails 8.1 / Ruby（`.ruby-version`参照）
 - PostgreSQL
 - Devise（+ devise-i18n）による認証
 - Hotwire（Turbo + Stimulus）、Tailwind CSS v4、esbuild
@@ -26,7 +26,9 @@
 
 ## 開発ワークフロー
 
-- 作業前に必ず`main`から新しいブランチを作成する。ブランチ名は `<type>/<kebab-case-の英語説明>`（type: `feature` / `fix` / `chore` / `docs` / `test`）。例: `feature/add-search-filter`, `fix/login-redirect-bug`
+- ブランチ戦略は `main`（本番反映用）+ `develop`（開発統合用）+ 作業ブランチの3層構造（詳細はREADMEの「開発フロー」参照）
+- 作業前に必ず最新の`develop`から新しいブランチを作成し、PRの向き先も`develop`にする。`main`へは`develop`→`main`のPRでのみ反映する（`main`へのマージでRenderに自動デプロイされる）
+- ブランチ名は `<type>/<kebab-case-の英語説明>`（type: `feature` / `fix` / `chore` / `docs` / `test`）。例: `feature/add-search-filter`, `fix/login-redirect-bug`
 - コミットメッセージは `<type>: 日本語での説明`（例: `feature: 検索フィルタ機能を実装`, `fix: ログイン後のリダイレクト先を修正`）
 - Issueを作成する場合は `.github/ISSUE_TEMPLATE/issueテンプレート.md` のフォーマット（As Is / To Be / やることリスト / 補足）に従い、`gh issue create --assignee 1kazuki0` で作成する
 - PRを作成する場合は `gh pr create` を使い、本文は `.github/PULL_REQUEST_TEMPLATE.md`（関連ISSUE / 変更内容 / 動作確認 / 補足・レビュアーへのメモ）に従う

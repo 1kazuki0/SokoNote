@@ -76,8 +76,15 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Devise::Test::ControllerHelpers, type: :view
 
+  # Rails 8はルートを遅延読み込みするため、eager_loadが無効なローカル環境ではルート未読み込みのまま
+  # sign_inするとDeviseのマッピングが見つからずエラーになる。テスト開始前にルートを読み込んでおく
+  config.before(:suite) do
+    Rails.application.reload_routes_unless_loaded
+  end
+
   # 外部HTTPリクエストを全部禁止（テスト中に意図しない通信を検知）
-  WebMock.disable_net_connect!(allow_localhost: true)
+  # ローカルのSystem spec（JSドライバ）で使うchromeコンテナへの通信は許可する
+  WebMock.disable_net_connect!(allow_localhost: true, allow: "chrome:4444")
 
   # # webdriverの設定
   # config.before(:each, type: :system) do

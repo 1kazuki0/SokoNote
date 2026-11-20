@@ -52,7 +52,7 @@
 
 | トップページ | 商品一覧 | 商品登録 |
 |:---:|:---:|:---:|
-| <img src="https://i.gyazo.com/9dbd1693522169a11c9bec2963d12d14.gif" width="200"> | <img src="https://i.gyazo.com/ef11035a4599c66161f29a55a7d9460a.gif" width="200"> | <img src="https://i.gyazo.com/75d3db5446e133c66e32d7bba477f2ec.gif" width="200"> |
+| <img src="https://i.gyazo.com/b064b185bfec400152c6b6e0d1fc96a4.gif" width="200"> | <img src="https://i.gyazo.com/ef11035a4599c66161f29a55a7d9460a.gif" width="200"> | <img src="https://i.gyazo.com/75d3db5446e133c66e32d7bba477f2ec.gif" width="200"> |
 | メールアドレス・LINEで会員登録・ログインができます | 登録した商品を一覧で確認することができます | 購入した商品を登録することができます |
 
 | 商品詳細登録 | 購入履歴一覧 | 同一単価比較 |
