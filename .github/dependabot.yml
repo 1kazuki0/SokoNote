@@ -12,6 +12,18 @@ updates:
       update-types:
         - minor
         - patch
+- package-ecosystem: npm
+  directory: "/"
+  target-branch: develop # PRの向き先をdevelopに固定
+  schedule:
+    interval: weekly
+  open-pull-requests-limit: 10
+  groups:
+    # パッチ・マイナー更新は1つのPRにまとめる（メジャー更新は個別PRのまま）
+    npm-minor-and-patch:
+      update-types:
+        - minor
+        - patch
 - package-ecosystem: github-actions
   directory: "/"
   target-branch: develop # PRの向き先をdevelopに固定
