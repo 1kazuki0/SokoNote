@@ -13,7 +13,7 @@ on:                             # onで実行する対象のブランチを絞�
 jobs:
   # --- brakeman(Railsコードの危険な書き方をチェック)の実行 ---
   scan_ruby:               # ジョブの名前（自由命名）
-    runs-on: ubuntu-latest # GitHun　Actionsがbrakemanを実行するOS環境 ubuntu-latestはGitHubが用意しているLinux環境 runs-onで実行環境の指定
+    runs-on: ubuntu-24.04 # GitHub Actionsがbrakemanを実行するOS環境 runs-onで実行環境の指定（ubuntu-latestだとOS更新時にruby/setup-rubyが対応前でRubyを用意できずCIが失敗するため、バージョンを固定）
     timeout-minutes: 15    # 15分以上経ったらジョブ停止
 
     steps:                        # steps以下は実行するステップが記載
@@ -32,7 +32,7 @@ jobs:
 
   # --- RuboCopの実行 ---
   lint:                    # ジョブの名前（自由命名）
-    runs-on: ubuntu-latest # 実行環境 ubuntu-latestはLinux環境 runs-onで実行環境の指定
+    runs-on: ubuntu-24.04  # 実行環境 runs-onで実行環境の指定（scan_rubyと同じ理由でバージョンを固定）
     timeout-minutes: 15    # 15分以上経ったらジョブ停止
 
     steps:                        # steps以下は実行するステップが記載
@@ -51,7 +51,7 @@ jobs:
 
   # --- RSpecの実行 ---
   test:                    # ジョブの名前（自由命名）
-    runs-on: ubuntu-latest # 実行環境 ubuntu-latestはLinux環境 runs-onで実行環境の指定
+    runs-on: ubuntu-24.04  # 実行環境 runs-onで実行環境の指定（scan_rubyと同じ理由でバージョンを固定）
     timeout-minutes: 15    # 15分以上経ったらジョブ停止
 
     services:                         # ジョブの実行中に Dockerコンテナをサイドカー（補助的なコンテナ）として起動する テスト用のデータベースをジョブの実行環境内に立ち上げることができる
