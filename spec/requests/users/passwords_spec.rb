@@ -48,26 +48,6 @@ RSpec.describe "User::Passwords", type: :request do
       end
     end
 
-    context "デモユーザーのemailの場合" do
-      let(:demo_params) { { user: { email: ENV.fetch("DEMO_USER_EMAIL") } } }
-
-      it "メールが送信されない" do
-        expect {
-          post user_password_path, params: demo_params
-        }.not_to change { ActionMailer::Base.deliveries.count }
-      end
-
-      it "リセット要求フォームへリダイレクトされる" do
-        post user_password_path, params: demo_params
-        expect(response).to redirect_to(new_user_password_path)
-      end
-
-      it "エラーメッセージがフラッシュに設定される" do
-        post user_password_path, params: demo_params
-        expect(flash[:error]).to eq("デモユーザーのパスワードはリセットできません")
-      end
-    end
-
     context "存在しないemailの場合" do
       let(:user_params) { { user: { email: "nonexistent@example.com" } } }
 

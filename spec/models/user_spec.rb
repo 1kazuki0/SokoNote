@@ -353,46 +353,5 @@ RSpec.describe User, type: :model do
         end
       end
     end
-
-    describe "#demo?" do
-      context "emailがデモユーザーのメールアドレスと一致する場合" do
-        let(:demo_user) { create(:user, name: ENV.fetch("DEMO_USER_NAME"), email: ENV.fetch("DEMO_USER_EMAIL"), password: ENV.fetch("DEMO_USER_PASSWORD")) } # デモユーザーの作成
-        it "trueを返す" do
-          expect(demo_user.demo?).to be true
-        end
-      end
-
-      context "emailがデモユーザーのメールアドレスと一致しない場合" do
-        let(:user) { build(:user, email: "sample@email.com") }
-        it "falseを返す" do
-          expect(user.demo?).to be false
-        end
-      end
-    end
-  end
-  # ============================================================
-  # コールバック
-  # before_update :prevent_demo_user_changes の動作確認
-  # ============================================================
-  describe "コールバック" do
-    describe "before_update :prevent_demo_user_changes" do
-      context "デモユーザーではない場合" do
-        let(:user) { create(:user) }  # このブロックだけ create で上書き
-        it "nameは変更することができる" do
-          user.name = "名前変更"
-          expect(user.save).to be true
-        end
-      end
-
-      context "デモユーザーの場合" do
-        let(:demo_user) { create(:user, name: ENV.fetch("DEMO_USER_NAME"), email: ENV.fetch("DEMO_USER_EMAIL"), password: ENV.fetch("DEMO_USER_PASSWORD")) } # デモユーザーの作成
-        context "name,email,passwordのいずれかを変更しようとした場合" do
-          it "保存に失敗してエラーメッセージを返す" do
-            demo_user.name = "名前変更"
-            expect(demo_user.save).to be false
-          end
-        end
-      end
-    end
   end
 end

@@ -45,9 +45,6 @@ gem "devise-i18n"
 # メール送信サービスResendのgem
 gem "resend"
 
-# 定期実行処理を行うgem
-gem "whenever", require: false
-
 # 検索機能を実装できるgem
 gem "ransack"
 
