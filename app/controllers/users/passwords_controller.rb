@@ -17,13 +17,6 @@ class Users::PasswordsController < Devise::PasswordsController
       flash[:error] = "メールアドレスを入力してください"
       redirect_to new_user_password_path and return
     end
-
-    # メールアドレスがデモユーザーだった時の処理
-    if email == ENV.fetch("DEMO_USER_EMAIL", nil)
-      flash[:error] = "デモユーザーのパスワードはリセットできません"
-      redirect_to new_user_password_path
-      return
-    end
     super
   end
 

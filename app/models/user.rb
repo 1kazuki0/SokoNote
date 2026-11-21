@@ -21,9 +21,6 @@ class User < ApplicationRecord
          :rememberable,
          :validatable
 
-  # デモユーザーを変更処理させないコールバック
-  before_update :prevent_demo_user_changes
-
   # LINEのプロフィール情報からユーザーを作成/取得
   def self.from_line(uid:, name:)
     find_or_create_by(provider: "line", uid: uid) do |u|
@@ -51,25 +48,6 @@ class User < ApplicationRecord
     return false if line_user?
     return false if persisted? && password.blank? && password_confirmation.blank?
     true
-  end
-
-  # デモユーザーかどうか判断するメソッド
-  def demo?
-    email == ENV.fetch("DEMO_USER_EMAIL", nil)
-  end
-
-  private
-
-  # デモユーザーのメールアドレス・パスワード・ニックネームの変更を禁止するメソッド
-  def prevent_demo_user_changes
-    return unless demo?
-    protected_attributes = %w[ email encrypted_password name ]
-    changed_protected = changes.keys & protected_attributes
-
-    if changed_protected.any?
-      errors.add(:base, "デモユーザーの#{changed_protected.join(", ")}は変更できません")
-      throw(:abort)
-    end
   end
 end
 
