@@ -41,19 +41,6 @@ RSpec.describe "購入履歴一覧画面", type: :system do
     all(".swipe-card").map { |card| card.text[/\d{4}-\d{2}-\d{2}/] }
   end
 
-  # 購入履歴カードを左にスワイプして編集・削除ボタンを表示し、削除をクリックする
-  # （headless Chromeはホバー非対応のため、スマホと同じくタッチイベントでスワイプを再現する）
-  def swipe_and_click_delete(purchase)
-    card = purchase_card(purchase)
-    page.execute_script(<<~JS, card)
-      const card = arguments[0];
-      const touch = (x) => new Touch({ identifier: 1, target: card, clientX: x, clientY: 10 });
-      card.dispatchEvent(new TouchEvent("touchstart", { touches: [touch(300)], changedTouches: [touch(300)], bubbles: true }));
-      card.dispatchEvent(new TouchEvent("touchend", { touches: [], changedTouches: [touch(200)], bubbles: true }));
-    JS
-    within(card) { click_link "削除" }
-  end
-
   describe "購入履歴がある場合" do
     before do
       cheapest_purchase
@@ -175,7 +162,7 @@ RSpec.describe "購入履歴一覧画面", type: :system do
       before { visit item_purchases_path(item) }
 
       it "確認ダイアログで「削除する」を選ぶと削除される" do
-        swipe_and_click_delete(newest_purchase)
+        swipe_and_click_delete(purchase_card(newest_purchase))
         within("#turbo-confirm") do
           expect(page).to have_content("本当に削除しますか？")
           click_button "削除する"
@@ -186,7 +173,7 @@ RSpec.describe "購入履歴一覧画面", type: :system do
       end
 
       it "確認ダイアログで「キャンセル」を選ぶと削除されない" do
-        swipe_and_click_delete(newest_purchase)
+        swipe_and_click_delete(purchase_card(newest_purchase))
         within("#turbo-confirm") { click_button "キャンセル" }
         expect(page).to have_css(".swipe-card", text: "2026-10-01")
         expect(Purchase.exists?(newest_purchase.id)).to be true
@@ -201,7 +188,7 @@ RSpec.describe "購入履歴一覧画面", type: :system do
     end
 
     it "購入履歴がない状態の画面が表示される" do
-      swipe_and_click_delete(cheapest_purchase)
+      swipe_and_click_delete(purchase_card(cheapest_purchase))
       within("#turbo-confirm") { click_button "削除する" }
       expect(page).to have_content("購入履歴を削除しました")
       expect(page).to have_content("購入履歴がありません")
